@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Channel – Diego Rivada</title>
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+  <header>
+    <h1>📺 My YouTube Clips</h1>
+    <p>Latest videos from my channel, updated automatically.</p>
+  </header>
+
+  <main>
+    <section class="youtube-feed">
+      <div id="video-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Diego Rivada. All rights reserved.
+  </footer>
+
+  <script>
+    const API_KEY = "AIzaSyDmts6Ch46s2EBI9Qnwo2WayZn3F0sv8jk"; // Replace with your API key
+    const CHANNEL_ID = "UCczZZW1eQkX-u-FJtrTQN6g; // Replace with your YouTube Channel ID";
+    const videoGrid = document.getElementById("video-grid");
+
+    fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=6`)
+      .then(response => response.json())
+      .then(data => {
+        data.items.forEach(item => {
+          if (item.id.kind === "youtube#video") {
+            const video = document.createElement("iframe");
+            video.src = `https://www.youtube.com/embed/${item.id.videoId}`;
+            video.width = "300";
+            video.height = "170";
+            video.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            video.allowFullscreen = true;
+            videoGrid.appendChild(video);
+          }
+        });
+      })
+      .catch(err => {
+        videoGrid.innerHTML = `<p>Could not load videos. Error: ${err.message}</p>`;
+      });
+  </script>
+</body>
+</html>
