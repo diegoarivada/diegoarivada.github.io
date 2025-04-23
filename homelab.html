@@ -13,43 +13,62 @@
   </header>
 
   <main>
-    <section>
-      <h2>Overview</h2>
+    <section aria-labelledby="overview">
+      <h2 id="overview">Overview</h2>
       <p>
-        My homelab is a personal space for experimenting with networking, virtualization, and cybersecurity tools. It includes self-hosted services, monitoring, and secure networking setups.
+        My homelab is a digital playground for experimenting with networking, virtualization, and cybersecurity tools. It’s home to self-hosted services, secure network setups, and a minimalist desktop environment tuned for performance and control.
       </p>
     </section>
 
-    <section>
-      <h2>Technologies Used</h2>
+    <section aria-labelledby="technologies">
+      <h2 id="technologies">Technologies Used</h2>
       <ul>
-        <li>Proxmox VE for virtualization</li>
-        <li>Pi-hole DNS sinkhole</li>
-        <li>Docker & Portainer for container management</li>
-        <li>WireGuard VPN</li>
-        <li>OpenMediaVault NAS</li>
+        <li><strong>Proxmox VE</strong> – Virtualization platform</li>
+        <li><strong>Pi-hole</strong> – DNS sinkhole & ad blocker</li>
+        <li><strong>Docker & Portainer</strong> – Containerized service orchestration</li>
+        <li><strong>WireGuard</strong> – Secure VPN for remote access</li>
+        <li><strong>OpenMediaVault</strong> – Home NAS for media & backups</li>
+        <li><strong>Arch Linux</strong> – Lightweight, rolling-release distro for total control</li>
+        <li><strong>Hyprland</strong> – Dynamic Wayland compositor powering my custom desktop</li>
       </ul>
     </section>
 
-    <section>
-      <h2>Current Projects</h2>
+    <section aria-labelledby="projects">
+      <h2 id="projects">Current Projects</h2>
       <ul>
-        <li>🔐 Self-hosted password manager behind a reverse proxy</li>
-        <li>📊 Homeassistant</li>
-        <li>🧼 Reverse DNS to have access my remote server</li>
+        <li>🔐 Self-hosted password manager with reverse proxy & 2FA</li>
+        <li>📊 Smart home automation with Home Assistant</li>
+        <li>🧼 Reverse DNS + dynamic DNS setup for remote service access</li>
       </ul>
     </section>
 
-    <section>
-      <h2>More to Come</h2>
+    <section aria-labelledby="workstation">
+      <h2 id="workstation">My Workstation</h2>
       <p>
-        As I expand the lab, I plan to document setup guides, diagrams, and logs for reference and sharing. Stay tuned!
+        I run <strong>Arch Linux</strong> with <strong>Hyprland</strong> for a clean, high-performance desktop experience. My setup includes:
+      </p>
+      <ul>
+        <li><code>waybar</code> – Status bar with custom modules</li>
+        <li><code>kitty</code> – GPU-accelerated terminal</li>
+        <li><code>neovim</code> – Configured as my primary IDE</li>
+        <li><code>Thunar</code> + <code>zathura</code> – Lightweight file and PDF tools</li>
+        <li>Dotfiles synced with a private Git repo</li>
+      </ul>
+      <p>
+        Everything is themed with a dark, minimal aesthetic. I prioritize speed, keyboard-driven workflows, and simplicity.
+      </p>
+    </section>
+
+    <section aria-labelledby="future">
+      <h2 id="future">More to Come</h2>
+      <p>
+        As my lab grows, I’ll be sharing config guides, diagrams, and logs. I’m always learning and iterating — follow along if you’re into self-hosting, privacy-first tooling, or just building cool stuff.
       </p>
     </section>
   </main>
 
   <footer>
-    &copy; 2025 Diego Rivada. All rights reserved.
+    <p>&copy; 2025 Diego Rivada. All rights reserved.</p>
   </footer>
 </body>
 </html>
