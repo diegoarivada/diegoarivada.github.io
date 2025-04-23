@@ -1,41 +1,46 @@
-Diego A Rivada's Personal Website
+# 🌐 Diego A. Rivada — Personal Website
+
 A sleek, responsive portfolio showcasing my projects, interests, and online presence.
-📄 Overview
 
-This repository hosts the source code for my personal website, built using HTML and CSS. The site features multiple sections, including:
+---
 
-    Home: Introduction and welcome page.
+## 📄 Overview
 
-    Coding: Highlights of my programming projects.
+Welcome to the source code of my personal website — a digital space built with care using **HTML** and **CSS**. The site is designed to be clean, responsive, and easy to navigate, featuring sections like:
 
-    Homelab: Insights into my home lab setup and experiments.
+- **Home** — A warm introduction and overview.
+- **Coding** — A showcase of my programming projects.
+- **Homelab** — Glimpses into my home lab experiments and setups.
+- **Pictures** — A curated gallery of personal photography.
+- **YouTube** — Embedded content from my channel.
 
-    Pictures: A gallery of personal photographs.
+---
 
-    YouTube: Embedded videos from my YouTube channel.
+## 🛠️ Technologies Used
 
-🛠️ Technologies Used
+- **HTML** — For structuring the content and layout.
+- **CSS** — For styling and responsive design across devices.
 
-    HTML: Structuring the content and layout.
+---
 
-    CSS: Styling and responsive design.
+## 📁 Project Structure
 
-📁 Project Structure
-
+```
 ├── index.html          # Main landing page
-├── coding.html         # Coding projects section
-├── homelab.html        # Homelab details
-├── pictures.html       # Photo gallery
-├── youtube.html        # YouTube video embeds
-├── styles.css          # Stylesheet for consistent design
-├── images/             # Directory containing image assets
+├── coding.html         # Programming projects
+├── homelab.html        # Home lab experiments
+├── pictures.html       # Photography gallery
+├── youtube.html        # YouTube embeds
+├── styles.css          # Central stylesheet
+├── images/             # Image assets
 ├── profile.JPG         # Profile picture
-└── README.md           # Project documentation
+└── README.md           # This file
+```
 
-📬 Contact
+---
 
-Feel free to reach out or connect with me:
+## 📬 Contact
 
-    GitHub: @diegoarivada
+Want to connect or explore more of my work?
 
-
+- GitHub: [@diegoarivada](https://github.com/diegoarivada)
