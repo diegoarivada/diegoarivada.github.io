@@ -216,3 +216,34 @@ iframe {
     font-size: 0.95rem;
   }
 }
+
+/* ===============================
+   Page Dropdown Navigation
+================================== */
+.page-selector {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.page-selector label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+  color: var(--dark-blue);
+}
+
+.page-selector select {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--primary-blue);
+  border-radius: 8px;
+  background-color: white;
+  color: var(--dark-blue);
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.page-selector select:hover,
+.page-selector select:focus {
+  border-color: var(--accent-red);
+  box-shadow: 0 0 5px rgba(230, 57, 70, 0.4);
+}

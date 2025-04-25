@@ -7,11 +7,26 @@
   <link rel="stylesheet" href="styles.css">
 
 </head>
+
+
 <body>
   <header>
     <h1>📺 My YouTube Clips</h1>
     <p>Latest videos from my channel, updated automatically.</p>
   </header>
+
+  <nav class="page-selector">
+    <label for="pageDropdown">Navigate to:</label>
+    <select id="pageDropdown" onchange="handleNavigation(this.value)">
+      <option value="">-- Select a Page --</option>
+      <option value="index.html">🏠 Home</option>
+      <option value="pictures.html">📸 Pictures</option>
+      <option value="coding.html">💻 Coding Projects</option>
+      <option value="homelab.html">🧪 Homelab</option>
+      <option value="youtube.html">📺 YouTube Channel</option>
+    </select>
+  </nav>
+  
 
   <main>
     <section class="youtube-feed">
@@ -47,5 +62,21 @@
         videoGrid.innerHTML = `<p>Could not load videos. Error: ${err.message}</p>`;
       });
   </script>
+<script>
+  function handleNavigation(page) {
+    if (page) {
+      window.location.href = page;
+    }
+  }
+
+  // Automatically highlight the current page
+  const dropdown = document.getElementById('pageDropdown');
+  const currentPage = window.location.pathname.split('/').pop();
+  if (dropdown && currentPage) {
+    dropdown.value = currentPage;
+  }
+</script>
+
+
 </body>
 </html>

@@ -6,11 +6,41 @@
   <title>picture – Diego Rivada</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
+<script>
+  function handleNavigation(page) {
+    if (page) {
+      window.location.href = page;
+    }
+  }
+
+  // Automatically highlight the current page
+  const dropdown = document.getElementById('pageDropdown');
+  const currentPage = window.location.pathname.split('/').pop();
+  if (dropdown && currentPage) {
+    dropdown.value = currentPage;
+  }
+</script>
+
+
 <body>
   <header>
     <h1>📸 Pictures</h1>
     <p>Personal Gallery</p>
   </header>
+
+  <nav class="page-selector">
+    <label for="pageDropdown">Navigate to:</label>
+    <select id="pageDropdown" onchange="handleNavigation(this.value)">
+      <option value="">-- Select a Page --</option>
+      <option value="index.html">🏠 Home</option>
+      <option value="pictures.html">📸 Pictures</option>
+      <option value="coding.html">💻 Coding Projects</option>
+      <option value="homelab.html">🧪 Homelab</option>
+      <option value="youtube.html">📺 YouTube Channel</option>
+    </select>
+  </nav>
+  
 
   <main>
     <section class="gallery">
