@@ -7,20 +7,6 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 
-<script>
-  function handleNavigation(page) {
-    if (page) {
-      window.location.href = page;
-    }
-  }
-
-  // Automatically highlight the current page
-  const dropdown = document.getElementById('pageDropdown');
-  const currentPage = window.location.pathname.split('/').pop();
-  if (dropdown && currentPage) {
-    dropdown.value = currentPage;
-  }
-</script>
 
 
 <body>
@@ -98,5 +84,29 @@
   <footer>
     <p>&copy; 2025 Diego Rivada. All rights reserved.</p>
   </footer>
+  <script>
+    function handleNavigation(page) {
+      if (page) {
+        window.location.href = page;
+      }
+    }
+
+    // Wait until the page is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdown = document.getElementById('pageDropdown');
+      if (!dropdown) return;
+
+      let currentPage = window.location.pathname.split('/').pop().split('?')[0];
+
+      // If no file specified (like just "yourdomain.com/"), assume "index.html"
+      if (currentPage === '') {
+        currentPage = 'index.html';
+      }
+
+      dropdown.value = currentPage;
+    });
+  </script>
+
+
 </body>
 </html>
