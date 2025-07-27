@@ -10,6 +10,7 @@
 
 
 <body>
+  <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
   <header>
     <h1>📺 My YouTube Clips</h1>
     <p>Latest videos from my channel, updated automatically.</p>
@@ -38,44 +39,73 @@
     &copy; 2025 Diego Rivada. All rights reserved.
   </footer>
 
-  <script>
+<script>
     const API_KEY = "AIzaSyDmts6Ch46s2EBI9Qnwo2WayZn3F0sv8jk"; // Replace with your API key
-    const CHANNEL_ID = "UCczZZW1eQkX-u-FJtrTQN6g"; //Replace with your YouTube Channel ID"
+    const CHANNEL_ID = "UCczZZW1eQkX-u-FJtrTQN6g"; // Replace with your YouTube Channel ID
     const videoGrid = document.getElementById("video-grid");
 
-    fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=6`)
-      .then(response => response.json())
-      .then(data => {
-        data.items.forEach(item => {
+    fetch(
+      `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=6`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        data.items.forEach((item) => {
           if (item.id.kind === "youtube#video") {
             const video = document.createElement("iframe");
             video.src = `https://www.youtube.com/embed/${item.id.videoId}`;
             video.width = "300";
             video.height = "170";
-            video.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            video.allow =
+              "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
             video.allowFullscreen = true;
             videoGrid.appendChild(video);
           }
         });
       })
-      .catch(err => {
+      .catch((err) => {
         videoGrid.innerHTML = `<p>Could not load videos. Error: ${err.message}</p>`;
       });
-  </script>
-<script>
-  function handleNavigation(page) {
-    if (page) {
-      window.location.href = page;
-    }
-  }
 
-  // Automatically highlight the current page
-  const dropdown = document.getElementById('pageDropdown');
-  const currentPage = window.location.pathname.split('/').pop();
-  if (dropdown && currentPage) {
-    dropdown.value = currentPage;
-  }
-</script>
+    function handleNavigation(page) {
+      if (page) {
+        window.location.href = page;
+      }
+    }
+
+    // Automatically highlight the current page
+    const dropdown = document.getElementById("pageDropdown");
+    const currentPage = window.location.pathname.split("/").pop();
+    if (dropdown && currentPage) {
+      dropdown.value = currentPage;
+    }
+
+    // Dark mode toggle logic
+    const themeToggle = document.getElementById("theme-toggle");
+    const savedTheme =
+      localStorage.getItem("theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light");
+
+    function applyTheme(theme) {
+      if (theme === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        themeToggle.textContent = "☀️";
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+        themeToggle.textContent = "🌙";
+      }
+    }
+
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const newTheme = current === "dark" ? "light" : "dark";
+      applyTheme(newTheme);
+      localStorage.setItem("theme", newTheme);
+    });
+  </script>
 
 
 </body>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>picture – Diego Rivada</title>
+  <title>Pictures – Diego Rivada</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -24,7 +24,9 @@
       <option value="youtube.html">📺 YouTube Channel</option>
     </select>
   </nav>
-  
+
+  <!-- Dark mode toggle button -->
+  <button id="theme-toggle" aria-label="Toggle Dark Mode" style="position: fixed; top: 1rem; right: 1rem; z-index:1000; font-size:1.2rem; padding: 0.3rem 0.6rem; border-radius: 6px; border: 2px solid; cursor: pointer;">🌙</button>
 
   <main>
     <section class="gallery">
@@ -34,37 +36,69 @@
       <img src="images/photo4.JPG" alt="Deep in the mountains" />
       <img src="images/photo5.JPG" alt="Seattle Rooftop" />
       <img src="images/photo6.jpeg" alt="Space Needle" />
-      
     </section>
   </main>
 
   <footer>
     &copy; 2025 Diego Rivada. All rights reserved.
   </footer>
+
   <script>
-    function handleNavigation(page) {
-      if (page) {
-        window.location.href = page;
+    // Handle page navigation from dropdown
+    function handleNavigation(value) {
+      if (value) {
+        window.location.href = value;
       }
     }
 
-    // Wait until the page is loaded
+    // Set dropdown to current page and initialize dark mode toggle button
     document.addEventListener('DOMContentLoaded', function() {
       const dropdown = document.getElementById('pageDropdown');
       if (!dropdown) return;
 
       let currentPage = window.location.pathname.split('/').pop().split('?')[0];
-
-      // If no file specified (like just "yourdomain.com/"), assume "index.html"
       if (currentPage === '') {
         currentPage = 'index.html';
       }
-
       dropdown.value = currentPage;
+
+      // Dark mode toggle setup
+      const toggleBtn = document.getElementById('theme-toggle');
+      if (!toggleBtn) return;
+
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        toggleBtn.textContent = '☀️';
+        toggleBtn.style.borderColor = 'var(--light-white)';
+        toggleBtn.style.color = 'var(--light-white)';
+        toggleBtn.style.background = 'var(--dark-blue)';
+      } else {
+        toggleBtn.textContent = '🌙';
+        toggleBtn.style.borderColor = 'var(--dark-blue)';
+        toggleBtn.style.color = 'var(--dark-blue)';
+        toggleBtn.style.background = 'transparent';
+      }
+
+      toggleBtn.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'dark') {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+          toggleBtn.textContent = '🌙';
+          toggleBtn.style.borderColor = 'var(--dark-blue)';
+          toggleBtn.style.color = 'var(--dark-blue)';
+          toggleBtn.style.background = 'transparent';
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+          toggleBtn.textContent = '☀️';
+          toggleBtn.style.borderColor = 'var(--light-white)';
+          toggleBtn.style.color = 'var(--light-white)';
+          toggleBtn.style.background = 'var(--dark-blue)';
+        }
+      });
     });
   </script>
-
-
-
 </body>
 </html>
