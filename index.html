@@ -7,13 +7,13 @@
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
   <header>
     <img src="profile.JPG" alt="Diego Rivada" class="profile-pic">
     <h1>Diego A. Rivada</h1>
     <p>Product Security Engineer</p>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
   </header>
 
 
@@ -85,28 +85,50 @@
     &copy; 2025 Diego Rivada. All rights reserved.
   </footer>
 
-  <script>
-    function handleNavigation(page) {
-      if (page) {
-        window.location.href = page;
-      }
+<script>
+  // Handle page navigation from dropdown
+  function handleNavigation(value) {
+    if (value) {
+      window.location.href = value;
+    }
+  }
+
+  // Set the dropdown value to current page after DOM loads
+  document.addEventListener('DOMContentLoaded', function() {
+    const dropdown = document.getElementById('pageDropdown');
+    if (!dropdown) return;
+
+    let currentPage = window.location.pathname.split('/').pop().split('?')[0];
+    if (currentPage === '') {
+      currentPage = 'index.html';
+    }
+    dropdown.value = currentPage;
+
+    // Dark mode toggle setup
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggleBtn.textContent = '☀️';
+    } else {
+      toggleBtn.textContent = '🌙';
     }
 
-    // Wait until the page is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      const dropdown = document.getElementById('pageDropdown');
-      if (!dropdown) return;
-
-      let currentPage = window.location.pathname.split('/').pop().split('?')[0];
-
-      // If no file specified (like just "yourdomain.com/"), assume "index.html"
-      if (currentPage === '') {
-        currentPage = 'index.html';
+    toggleBtn.addEventListener('click', () => {
+      let theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        toggleBtn.textContent = '🌙';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        toggleBtn.textContent = '☀️';
       }
-
-      dropdown.value = currentPage;
     });
-  </script>
-
+  });
+</script>
 </body>
 </html>

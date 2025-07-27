@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 
-
 <body>
 
   <header>
@@ -27,63 +26,101 @@
     </select>
   </nav>
 
-  
+  <!-- Dark mode toggle button -->
+  <button id="theme-toggle" aria-label="Toggle Dark Mode" 
+    style="position: fixed; top: 1rem; right: 1rem; z-index:1000; font-size:1.2rem; padding: 0.3rem 0.6rem; border-radius: 6px; border: 2px solid; cursor: pointer;">
+    🌙
+  </button>
+
   <main>
     <section class="projects">
       <div class="project-card">
         <h2>🧪 MATTY</h2>
         <p>A JavaScript-based tool designed for efficient data manipulation and analysis.</p>
-        <a href="https://github.com/diegoarivada/MATTY" target="_blank">🔗 View on GitHub</a>
+        <a href="https://github.com/diegoarivada/MATTY" target="_blank" rel="noopener noreferrer">🔗 View on GitHub</a>
       </div>
-  
+
       <div class="project-card">
         <h2>🐍 ShellHacks Project</h2>
         <p>A Python project focused on shell scripting techniques and automation.</p>
-        <a href="https://github.com/diegoarivada/shellhacks-project" target="_blank">🔗 View on GitHub</a>
+        <a href="https://github.com/diegoarivada/shellhacks-project" target="_blank" rel="noopener noreferrer">🔗 View on GitHub</a>
       </div>
-  
+
       <div class="project-card">
         <h2>🌐 Old Website</h2>
         <p>An archived version of my personal website, showcasing earlier web development work.</p>
-        <a href="https://github.com/diegoarivada/old_website" target="_blank">🔗 View on GitHub</a>
+        <a href="https://github.com/diegoarivada/old_website" target="_blank" rel="noopener noreferrer">🔗 View on GitHub</a>
       </div>
-  
+
       <div class="project-card">
         <h2>💧 Water Quality Prediction</h2>
         <p>Implemented a machine learning model to predict water quality based on various parameters.</p>
-        <a href="https://github.com/diegoarivada/Water-Quality-Prediction-using-ML-technique" target="_blank">🔗 View on GitHub</a>
+        <a href="https://github.com/diegoarivada/Water-Quality-Prediction-using-ML-technique" target="_blank" rel="noopener noreferrer">🔗 View on GitHub</a>
       </div>
     </section>
   </main>
-  
 
   <footer>
     &copy; 2025 Diego Rivada. All rights reserved.
   </footer>
+
   <script>
+    // Navigation handler for dropdown
     function handleNavigation(page) {
       if (page) {
         window.location.href = page;
       }
     }
 
-    // Wait until the page is loaded
+    // Initialize dropdown and dark mode toggle on DOM load
     document.addEventListener('DOMContentLoaded', function() {
       const dropdown = document.getElementById('pageDropdown');
       if (!dropdown) return;
 
       let currentPage = window.location.pathname.split('/').pop().split('?')[0];
-
-      // If no file specified (like just "yourdomain.com/"), assume "index.html"
       if (currentPage === '') {
         currentPage = 'index.html';
       }
-
       dropdown.value = currentPage;
+
+      // Dark mode toggle
+      const toggleBtn = document.getElementById('theme-toggle');
+      if (!toggleBtn) return;
+
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        toggleBtn.textContent = '☀️';
+        toggleBtn.style.borderColor = 'var(--light-white)';
+        toggleBtn.style.color = 'var(--light-white)';
+        toggleBtn.style.background = 'var(--dark-blue)';
+      } else {
+        toggleBtn.textContent = '🌙';
+        toggleBtn.style.borderColor = 'var(--dark-blue)';
+        toggleBtn.style.color = 'var(--dark-blue)';
+        toggleBtn.style.background = 'transparent';
+      }
+
+      toggleBtn.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'dark') {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+          toggleBtn.textContent = '🌙';
+          toggleBtn.style.borderColor = 'var(--dark-blue)';
+          toggleBtn.style.color = 'var(--dark-blue)';
+          toggleBtn.style.background = 'transparent';
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+          toggleBtn.textContent = '☀️';
+          toggleBtn.style.borderColor = 'var(--light-white)';
+          toggleBtn.style.color = 'var(--light-white)';
+          toggleBtn.style.background = 'var(--dark-blue)';
+        }
+      });
     });
   </script>
-
-
 
 </body>
 </html>
