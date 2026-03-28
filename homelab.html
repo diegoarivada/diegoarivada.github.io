@@ -3,14 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta property="og:image" content="/images/og.svg" />
+  <meta name="description" content="Homelab projects and tools — Proxmox, WireGuard, Docker, and self-hosted services." />
+  <link rel="canonical" href="https://diegoarivada.github.io/homelab.html" />
+  <meta property="og:title" content="Homelab – Diego Rivada" />
+  <meta property="og:description" content="My homelab: virtualization, containerization, and privacy-focused services." />
+  <meta name="twitter:card" content="summary" />
   <title>Homelab – Diego Rivada</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+  <a class="skip-link" href="#maincontent">Skip to content</a>
+
   <header>
     <h1>🧪 My Homelab</h1>
     <p>Exploring self-hosted tech, security testing, and server experiments</p>
+    <nav class="anchor-nav" aria-label="Page sections">
+      <a href="index.html">Home</a>
+      <a href="homelab.html">Overview</a>
+      <a href="homelab.html#projects">Projects</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
   </header>
 
   <nav class="page-selector">
@@ -25,13 +41,9 @@
     </select>
   </nav>
   
-  <!-- Dark mode toggle button -->
-  <button id="theme-toggle" aria-label="Toggle Dark Mode" 
-    style="position: fixed; top: 1rem; right: 1rem; z-index:1000; font-size:1.2rem; padding: 0.3rem 0.6rem; border-radius: 6px; border: 2px solid; cursor: pointer;">
-    🌙
-  </button>
+  <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
 
-  <main>
+  <main id="maincontent">
     <section aria-labelledby="overview">
       <h2 id="overview">Overview</h2>
       <p>
@@ -89,7 +101,6 @@
   <footer>
     <p>&copy; 2025 Diego Rivada. All rights reserved.</p>
   </footer>
-
   <script>
     // Navigation handler for dropdown
     function handleNavigation(page) {
@@ -98,18 +109,15 @@
       }
     }
 
-    // Initialize dropdown and dark mode toggle on DOM load
+    // Initialize dropdown and theme toggle behavior (consistent across pages)
     document.addEventListener('DOMContentLoaded', function() {
       const dropdown = document.getElementById('pageDropdown');
-      if (!dropdown) return;
-
-      let currentPage = window.location.pathname.split('/').pop().split('?')[0];
-      if (currentPage === '') {
-        currentPage = 'index.html';
+      if (dropdown) {
+        let currentPage = window.location.pathname.split('/').pop().split('?')[0];
+        if (currentPage === '') currentPage = 'index.html';
+        dropdown.value = currentPage;
       }
-      dropdown.value = currentPage;
 
-      // Dark mode toggle
       const toggleBtn = document.getElementById('theme-toggle');
       if (!toggleBtn) return;
 
@@ -117,14 +125,8 @@
       if (currentTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         toggleBtn.textContent = '☀️';
-        toggleBtn.style.borderColor = 'var(--light-white)';
-        toggleBtn.style.color = 'var(--light-white)';
-        toggleBtn.style.background = 'var(--dark-blue)';
       } else {
         toggleBtn.textContent = '🌙';
-        toggleBtn.style.borderColor = 'var(--dark-blue)';
-        toggleBtn.style.color = 'var(--dark-blue)';
-        toggleBtn.style.background = 'transparent';
       }
 
       toggleBtn.addEventListener('click', () => {
@@ -133,18 +135,27 @@
           document.documentElement.removeAttribute('data-theme');
           localStorage.setItem('theme', 'light');
           toggleBtn.textContent = '🌙';
-          toggleBtn.style.borderColor = 'var(--dark-blue)';
-          toggleBtn.style.color = 'var(--dark-blue)';
-          toggleBtn.style.background = 'transparent';
         } else {
           document.documentElement.setAttribute('data-theme', 'dark');
           localStorage.setItem('theme', 'dark');
           toggleBtn.textContent = '☀️';
-          toggleBtn.style.borderColor = 'var(--light-white)';
-          toggleBtn.style.color = 'var(--light-white)';
-          toggleBtn.style.background = 'var(--dark-blue)';
         }
       });
+
+      // Scroll reveal initialization
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches !== true) {
+        const sections = document.querySelectorAll('main section');
+        sections.forEach(s => s.classList.add('reveal'));
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+      }
     });
   </script>
 </body>

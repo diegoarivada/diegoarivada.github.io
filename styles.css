@@ -48,6 +48,28 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Skip link visible when focused */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 8px;
+  background: var(--primary-blue);
+  color: white;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  z-index: 10000;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 8px;
+}
+
+/* Focus outline for keyboard users */
+:focus {
+  outline: 3px solid rgba(10,102,194,0.18);
+  outline-offset: 3px;
+}
+
 /* ===============================
    Typography
 ================================== */
@@ -85,6 +107,28 @@ header img {
   border: 4px solid white;
   margin-bottom: 1rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.anchor-nav {
+  margin: 0.75rem 0 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.anchor-nav a {
+  color: white;
+  text-decoration: none;
+  background: rgba(255,255,255,0.08);
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.12s ease;
+}
+
+.anchor-nav a:hover {
+  background: rgba(255,255,255,0.16);
+  transform: translateY(-2px);
 }
 
 header h1 {
@@ -139,6 +183,23 @@ section {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Skills list */
+.skills .skill-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.5rem 1rem;
+}
+
+.skills .skill-list li {
+  background: linear-gradient(90deg, rgba(0,0,0,0.04), rgba(0,0,0,0.02));
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
 /* ===============================
    Footer
 ================================== */
@@ -160,6 +221,68 @@ footer {
   flex-wrap: wrap;
   gap: 1rem;
   margin-top: 1rem;
+}
+
+/* Featured project card */
+.featured-project {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.featured-project img {
+  width: 220px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.featured-meta h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.featured-meta a {
+  margin-right: 0.6rem;
+  color: var(--primary-blue);
+  text-decoration: underline;
+}
+
+.contact-actions {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+/* Contact form styles */
+.contact-form {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: 1fr;
+  max-width: 720px;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.12);
+  font-family: inherit;
+}
+
+.contact-form button[type="submit"] {
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.contact-form .hint {
+  font-size: 0.9rem;
+  color: var(--dark-blue);
 }
 
 .projects .project-links a {
@@ -196,6 +319,69 @@ footer {
 
 .links a:hover {
   background: var(--accent-red);
+}
+
+/* Reusable CTA button for header and resume links */
+.links-cta {
+  display: inline-block;
+  background: var(--primary-blue);
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 0.9rem;
+  margin: 0 0.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: background 0.2s ease, transform 0.12s ease;
+}
+
+.links-cta:hover {
+  background: var(--link-hover-bg);
+  transform: translateY(-2px);
+}
+
+/* Form submit spinner and success icon */
+.btn-spinner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.success-check {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  color: white;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 560ms cubic-bezier(.2,.8,.2,1), transform 560ms cubic-bezier(.2,.8,.2,1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transition: none !important; transform: none !important; }
+  .spinner { animation: none !important; }
 }
 
 /* ===============================

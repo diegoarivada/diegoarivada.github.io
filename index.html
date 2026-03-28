@@ -3,20 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Diego A Rivada — Product Security Engineer. Portfolio, projects, and contact information." />
+  <meta name="author" content="Diego A Rivada" />
+  <link rel="canonical" href="https://diegoarivada.github.io/index.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Diego A Rivada — Product Security Engineer" />
+  <meta property="og:description" content="Portfolio of Diego Rivada: product security, embedded systems, and systems engineering student at USC." />
+  <meta property="og:image" content="/profile.JPG" />
+  <meta property="og:url" content="https://diegoarivada.github.io/" />
+  <meta name="twitter:card" content="summary_large_image" />
   <title>Diego A Rivada</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+  <a class="skip-link" href="#maincontent">Skip to content</a>
 
   <header>
-    <img src="profile.JPG" alt="Diego Rivada" class="profile-pic">
+    <img src="profile.JPG" alt="Diego Rivada" class="profile-pic" loading="lazy">
     <h1>Diego A Rivada</h1>
     <p>Product Security Engineer</p>
-    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    <nav class="anchor-nav" aria-label="Page sections">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-actions" style="display:flex;gap:0.5rem;align-items:center;justify-content:center;margin-top:0.75rem;">
+      <a class="hire-cta links-cta" href="mailto:diegoarivada@gmail.com">Hire Me</a>
+      <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    </div>
   </header>
-
 
   <nav class="page-selector">
     <label for="pageDropdown">Navigate to:</label>
@@ -24,14 +42,13 @@
       <option value="">-- Select a Page --</option>
       <option value="index.html">🏠 Home</option>
       <option value="pictures.html">📸 Pictures</option>
-      <option value="coding.html">💻 Coding Projects</option>
       <option value="homelab.html">🧪 Homelab</option>
       <option value="youtube.html">📺 YouTube Channel</option>
     </select>
   </nav>
   
-  <main>
-    <section>
+  <main id="maincontent">
+    <section id="about">
       <h2>About Me</h2>
       <p>
         I'm Diego Rivada, a Product Security Engineer at Boeing with a Bachelor's in Computer Engineering from Florida International University. My work and passion revolve around cybersecurity, embedded systems, and staying ahead in an ever-evolving tech landscape.
@@ -43,7 +60,16 @@
       </p>
     </section>
 
-    <section>
+    <section id="resume">
+      <h2>Resume</h2>
+      <p>Preview or download my resume.</p>
+      <div style="max-width:900px;margin:0 auto;">
+          <iframe src="https://drive.google.com/file/d/1LOgUp4Dcfa77cLmO7YWPy3_TWesphvhh/preview" width="100%" height="520" title="Resume preview"></iframe>
+        </div>
+        <p style="margin-top:0.5rem;"><a href="https://drive.google.com/uc?export=download&id=1LOgUp4Dcfa77cLmO7YWPy3_TWesphvhh" target="_blank" rel="noopener noreferrer">Download PDF</a></p>
+    </section>
+
+    <section id="education">
       <h2>Education</h2>
       <ul>
         <li>B.S. in Computer Engineering – Florida International University (2022)</li>
@@ -51,7 +77,7 @@
       </ul>
     </section>
 
-    <section>
+    <section id="interests">
       <h2>Interests</h2>
       <p>
         I’m deeply interested in the blend of security and technology, and how systems engineering intersects with innovation. Traveling and exploring new perspectives fuels my creativity and curiosity.
@@ -61,8 +87,30 @@
       </blockquote>
     </section>
 
-    <section class="projects">
-      <h2>My Projects</h2>
+    <section id="skills" class="skills">
+      <h2>Skills & Tech</h2>
+      <p>Primary areas: product security, embedded systems, systems engineering, and software development.</p>
+      <ul class="skill-list">
+        <li>Security: Threat Modeling, Static Analysis, Secure SDLC</li>
+        <li>Languages: C, C++, Python, JavaScript</li>
+        <li>Embedded: RTOS, bare-metal, hardware interfacing</li>
+        <li>Tools: Git, Docker, CI/CD, Burp Suite</li>
+      </ul>
+    </section>
+
+    <section id="projects" class="projects">
+      <h2>Featured Project</h2>
+      <div class="featured-project">
+        <picture>
+          <source type="image/svg+xml" srcset="images/network.svg">
+          <img src="images/network.svg" alt="Animated illustration of network equipment" loading="lazy">
+        </picture>
+        <div class="featured-meta">
+          <h3>Smart Home & Homelab — Proxmox + Ubiquiti Backbone</h3>
+          <p>I built a smart home and homelab using Proxmox for virtualization and Ubiquiti networking as the backbone. The stack hosts containerized services, Home Assistant integrations, and secure remote access via WireGuard. Focus areas: resilient networking, automation, and secure infrastructure for IoT devices.</p>
+        </div>
+      </div>
+
       <div class="project-links">
         <a href="pictures.html">📸 Pictures</a>
         <a href="coding.html">💻 Coding Projects</a>
@@ -71,14 +119,34 @@
       </div>
     </section>
 
-    <section class="links">
+    <section id="contact" class="links">
       <h2>Connect with Me</h2>
-      <a href="https://www.linkedin.com/in/diego-rivada/" target="_blank">🔗 LinkedIn</a>
-      <a href="https://github.com/diegoarivada" target="_blank">💻 GitHub</a>
-      <a href="https://linktr.ee/diegoarivada" target="_blank">🌐 Linktree</a>
-      <a href="https://www.instagram.com/officialdiegor/" target="_blank">📸 Instagram</a>
-      <a href="https://www.youtube.com/@diegoarivada" target="_blank">📺 YouTube</a>
-      <a href="https://drive.google.com/file/d/1LOgUp4Dcfa77cLmO7YWPy3_TWesphvhh/view?usp=sharing" target="_blank">📝 Resume</a>
+      <a href="https://www.linkedin.com/in/diego-rivada/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
+      <a href="https://github.com/diegoarivada" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
+      <a href="https://linktr.ee/diegoarivada" target="_blank" rel="noopener noreferrer">🌐 Linktree</a>
+      <a href="https://www.instagram.com/officialdiegor/" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
+      <a href="https://www.youtube.com/@diegoarivada" target="_blank" rel="noopener noreferrer">📺 YouTube</a>
+      
+      <p class="contact-actions">Prefer email? <a href="mailto:diegoarivada@gmail.com">diegoarivada@gmail.com</a></p>
+
+      <!-- Contact form (replace FORM_ID with your Formspree form id) -->
+      <form class="contact-form" action="https://formspree.io/f/xgopawlq" method="POST" aria-label="Contact form">
+        <input type="text" name="name" placeholder="Your name" required />
+        <input type="email" name="email" placeholder="Your email" required />
+        <textarea name="message" rows="5" placeholder="Message for Diego" required></textarea>
+        <!-- honeypot for spam bots -->
+        <input type="text" name="_gotcha" style="display:none" />
+        <!-- optional subject and reply-to fields for Formspree -->
+        <input type="hidden" name="_subject" value="Website contact form" />
+        <input type="hidden" name="_replyto" value="diegoarivada@gmail.com" />
+        <!-- redirect to thank-you page on success -->
+        <input type="hidden" name="_next" value="/thankyou.html" />
+        <button type="submit">Send Message</button>
+        <p class="hint">If you prefer, email me directly at <a href="mailto:diegoarivada@gmail.com">diegoarivada@gmail.com</a>.</p>
+        <noscript>
+          <p>Please enable JavaScript to use the form — or email <a href="mailto:diegoarivada@gmail.com">diegoarivada@gmail.com</a>.</p>
+        </noscript>
+      </form>
     </section>
   </main>
 
@@ -97,38 +165,95 @@
   // Set the dropdown value to current page after DOM loads
   document.addEventListener('DOMContentLoaded', function() {
     const dropdown = document.getElementById('pageDropdown');
-    if (!dropdown) return;
-
-    let currentPage = window.location.pathname.split('/').pop().split('?')[0];
-    if (currentPage === '') {
-      currentPage = 'index.html';
+    if (dropdown) {
+      let currentPage = window.location.pathname.split('/').pop().split('?')[0];
+      if (currentPage === '') currentPage = 'index.html';
+      dropdown.value = currentPage;
     }
-    dropdown.value = currentPage;
 
     // Dark mode toggle setup
     const toggleBtn = document.getElementById('theme-toggle');
-    if (!toggleBtn) return;
+    if (toggleBtn) {
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        toggleBtn.textContent = '☀️';
+      } else {
+        toggleBtn.textContent = '🌙';
+      }
 
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    if (currentTheme === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      toggleBtn.textContent = '☀️';
-    } else {
-      toggleBtn.textContent = '🌙';
+      toggleBtn.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'dark') {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+          toggleBtn.textContent = '🌙';
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+          toggleBtn.textContent = '☀️';
+        }
+      });
     }
 
-    toggleBtn.addEventListener('click', () => {
-      let theme = document.documentElement.getAttribute('data-theme');
-      if (theme === 'dark') {
-        document.documentElement.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
-        toggleBtn.textContent = '🌙';
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        toggleBtn.textContent = '☀️';
-      }
-    });
+    // Scroll reveal: add .reveal to main sections then observe
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches !== true) {
+      const sections = document.querySelectorAll('main section');
+      sections.forEach(s => s.classList.add('reveal'));
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    }
+
+    // AJAX form submission for better UX (spinner + success)
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!submitBtn) return;
+
+        // disable and show spinner
+        submitBtn.disabled = true;
+        const originalContent = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="btn-spinner"><span class="spinner" aria-hidden></span>Sending…</span>';
+
+        try {
+          const formData = new FormData(contactForm);
+          const resp = await fetch(contactForm.action, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: formData
+          });
+
+          if (resp.ok) {
+            // show success state
+            submitBtn.innerHTML = '<span class="btn-spinner"><svg class="success-check" viewBox="0 0 24 24" aria-hidden><path fill="currentColor" d="M9 16.2l-3.5-3.5L4 14.2 9 19 20 8l-1.4-1.4z"></path></svg>Sent</span>';
+            setTimeout(() => {
+              // redirect to thank you page (if desired)
+              window.location.href = '/thankyou.html';
+            }, 1100);
+          } else {
+            const data = await resp.json().catch(() => ({}));
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalContent;
+            alert(data.error || 'Submission failed — please try again.');
+          }
+        } catch (err) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalContent;
+          alert('Network error — please try again.');
+        }
+      });
+    }
   });
 </script>
 </body>
