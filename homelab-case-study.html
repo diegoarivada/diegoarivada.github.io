@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Homelab Case Study — Diego Rivada</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta property="og:image" content="/images/og.svg" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header>
+    <h1>Homelab Case Study</h1>
+    <p>Proxmox + Ubiquiti backbone for a secure, resilient smart home</p>
+  </header>
+  <main id="main" style="max-width:900px;margin:2rem auto;padding:1rem;">
+    <section>
+      <h2>Problem</h2>
+      <p>Need a reliable homelab that hosts home automation, media services, and developer tooling while keeping IoT devices isolated and secure.</p>
+    </section>
+    <section>
+      <h2>Approach</h2>
+      <ul>
+        <li>Use Proxmox VE for virtualization and container management.</li>
+        <li>Use Ubiquiti UniFi for routing, VLANs, and Wi‑Fi with clear segmentation.</li>
+        <li>Host Home Assistant and edge services in containers with reverse proxy and TLS.</li>
+        <li>Use WireGuard for secure remote access with strict ACLs.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Result</h2>
+      <p>Stable homelab with automated backups, segmented network, and secure remote access. Developer-friendly environment for experimentation without impacting production IoT devices.</p>
+      <ul>
+        <li>Uptime: >99.9% for key services</li>
+        <li>Automated backups to NAS using scheduled snapshots</li>
+        <li>Zero-trust remote access via WireGuard</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Tech Stack</h2>
+      <p>Proxmox, LXC/KVM, Docker, Home Assistant, Ubiquiti UniFi, WireGuard, Nginx reverse-proxy, OpenMediaVault</p>
+    </section>
+    <section>
+      <h2>Artifacts</h2>
+      <p><a href="/images/homelab-arch.svg">Architecture Diagram</a> • <a href="https://github.com/diegoarivada">Project Repositories</a></p>
+    </section>
+  </main>
+  <footer style="text-align:center;padding:2rem 0;">&copy; 2025 Diego Rivada</footer>
+</body>
+</html>
