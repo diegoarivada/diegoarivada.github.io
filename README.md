@@ -26,15 +26,22 @@ Welcome to the source code of my personal website — a digital space built with
 ## 📁 Project Structure
 
 ```
-├── index.html          # Main landing page
-├── coding.html         # Programming projects
-├── homelab.html        # Home lab experiments
-├── pictures.html       # Photography gallery
-├── youtube.html        # YouTube embeds
-├── styles.css          # Central stylesheet
-├── images/             # Image assets
-├── profile.JPG         # Profile picture
-└── README.md           # This file
+├── index.html                 # Main landing page
+├── coding.html                # Programming projects
+├── homelab.html               # Home lab experiments
+├── homelab-case-study.html    # Detailed case study of homelab setup
+├── pictures.html              # Photography gallery
+├── youtube.html               # YouTube embeds
+├── thankyou.html              # Thank you page
+├── styles.css                 # Central stylesheet
+├── CNAME                      # Custom domain configuration for GitHub Pages
+├── favicon.ico                # Website favicon
+├── resume.pdf                 # Resume document
+├── profile.JPG                # Profile picture
+├── images/                    # Image assets
+├── scripts/                   # Utility scripts
+│   └── convert_svg_to_gif.ps1 # PowerShell script for SVG to GIF conversion
+└── README.md                  # This file
 ```
 
 ---
