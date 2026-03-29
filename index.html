@@ -18,6 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div id="scroll-progress" aria-hidden="true"></div>
   <a class="skip-link" href="#maincontent">Skip to content</a>
 
   <header>
@@ -54,7 +55,7 @@
         I'm Diego Rivada, a Product Security Engineer at Boeing with a Bachelor's in Computer Engineering from Florida International University. My work and passion revolve around cybersecurity, embedded systems, and staying ahead in an ever-evolving tech landscape.
       </p>
       <p>
-        This fall, I’ll be starting my Master’s in Systems Architecting and Engineering at USC, with the goal of deepening my understanding of complex systems and exploring how AI can enhance efficiency across engineering disciplines. I’m especially interested in how we can leverage AI not just to streamline workflows, but also to develop next-generation cybersecurity tools—particularly in fighting malware in smarter, more adaptive ways.      </p>
+        I’m currently pursuing my Master’s in Systems Architecting and Engineering at USC, deepening my understanding of complex systems and exploring how AI can enhance efficiency across engineering disciplines. I’m especially interested in how we can leverage AI not just to streamline workflows, but also to develop next-generation cybersecurity tools—particularly in fighting malware in smarter, more adaptive ways.      </p>
       <p>
         With a strong technical foundation and a forward-looking mindset, I aim to contribute to innovative teams building secure, resilient systems for the future.
       </p>
@@ -64,9 +65,9 @@
       <h2>Resume</h2>
       <p>Preview or download my resume.</p>
       <div style="max-width:900px;margin:0 auto;">
-          <iframe src="https://drive.google.com/file/d/1LOgUp4Dcfa77cLmO7YWPy3_TWesphvhh/preview" width="100%" height="520" title="Resume preview"></iframe>
+          <iframe src="resume.pdf" width="100%" height="520" title="Resume preview"></iframe>
         </div>
-        <p style="margin-top:0.5rem;"><a href="https://drive.google.com/uc?export=download&id=1LOgUp4Dcfa77cLmO7YWPy3_TWesphvhh" target="_blank" rel="noopener noreferrer">Download PDF</a></p>
+        <p style="margin-top:0.75rem;"><a class="links-cta" href="resume.pdf" download>Download PDF</a></p>
     </section>
 
     <section id="education">
@@ -210,6 +211,65 @@
       document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     }
 
+    // Scroll progress bar
+    const progressBar = document.getElementById('scroll-progress');
+    if (progressBar) {
+      window.addEventListener('scroll', () => {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        if (total > 0) progressBar.style.width = (window.scrollY / total * 100) + '%';
+      }, { passive: true });
+    }
+
+    // Typing effect for header subtitle
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const subtitleEl = document.querySelector('header > p');
+      if (subtitleEl) {
+        const roles = [
+          'Product Security Engineer',
+          'Systems Engineer @ USC',
+          'Embedded Systems Dev',
+          'Cybersecurity Researcher',
+        ];
+        let roleIndex = 0;
+        let charIndex = roles[0].length;
+        let deleting = true;
+
+        const textSpan = document.createElement('span');
+        textSpan.textContent = roles[0];
+        const cursor = document.createElement('span');
+        cursor.className = 'typing-cursor';
+        cursor.setAttribute('aria-hidden', 'true');
+        subtitleEl.textContent = '';
+        subtitleEl.appendChild(textSpan);
+        subtitleEl.appendChild(cursor);
+
+        function typeStep() {
+          const current = roles[roleIndex];
+          if (!deleting) {
+            charIndex++;
+            textSpan.textContent = current.slice(0, charIndex);
+            if (charIndex >= current.length) {
+              setTimeout(() => { deleting = true; typeStep(); }, 2200);
+              return;
+            }
+            setTimeout(typeStep, 72);
+          } else {
+            charIndex--;
+            textSpan.textContent = current.slice(0, charIndex);
+            if (charIndex <= 0) {
+              deleting = false;
+              roleIndex = (roleIndex + 1) % roles.length;
+              setTimeout(typeStep, 350);
+              return;
+            }
+            setTimeout(typeStep, 40);
+          }
+        }
+
+        setTimeout(typeStep, 2800);
+      }
+    }
+
     // AJAX form submission for better UX (spinner + success)
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
@@ -253,5 +313,6 @@
     }
   });
 </script>
+<script src="site.js" defer></script>
 </body>
 </html>

@@ -5,12 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Thanks — Diego Rivada</title>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <main style="max-width:720px;margin:4rem auto;padding:1rem;text-align:center;">
-    <h1>Thanks — message sent</h1>
-    <p>Thanks for getting in touch. I'll respond as soon as I can.</p>
-    <p><a href="/">Return to homepage</a></p>
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <header>
+    <h1>Message Sent</h1>
+    <p>Thanks for reaching out</p>
+    <nav class="anchor-nav" aria-label="Page sections">
+      <a href="index.html">Home</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+
+  <main style="max-width:720px;margin:3rem auto;padding:0 1.5rem;">
+    <section style="text-align:center;">
+      <h2>Thanks — message sent</h2>
+      <p>Thanks for getting in touch. I'll respond as soon as I can.</p>
+      <p><a class="links-cta" href="/">Return to homepage</a></p>
+    </section>
   </main>
+
+  <footer>&copy; 2025 Diego Rivada. All rights reserved.</footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const toggleBtn = document.getElementById('theme-toggle');
+      if (toggleBtn) {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          toggleBtn.textContent = '☀️';
+        } else {
+          toggleBtn.textContent = '🌙';
+        }
+        toggleBtn.addEventListener('click', () => {
+          let theme = document.documentElement.getAttribute('data-theme');
+          if (theme === 'dark') {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            toggleBtn.textContent = '🌙';
+          } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            toggleBtn.textContent = '☀️';
+          }
+        });
+      }
+    });
+  </script>
+  <script src="site.js" defer></script>
 </body>
 </html>

@@ -16,7 +16,7 @@
 </head>
 
 <body>
-
+  <div id="scroll-progress" aria-hidden="true"></div>
   <a class="skip-link" href="#maincontent">Skip to content</a>
 
   <header>
@@ -148,6 +148,15 @@ PersistentKeepalive = 25
         }
       });
 
+      // Scroll progress bar
+      const progressBar = document.getElementById('scroll-progress');
+      if (progressBar) {
+        window.addEventListener('scroll', () => {
+          const total = document.documentElement.scrollHeight - window.innerHeight;
+          if (total > 0) progressBar.style.width = (window.scrollY / total * 100) + '%';
+        }, { passive: true });
+      }
+
       // Scroll reveal initialization
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches !== true) {
         const sections = document.querySelectorAll('main section');
@@ -164,6 +173,7 @@ PersistentKeepalive = 25
       }
     });
   </script>
+  <script src="site.js" defer></script>
 
 </body>
 </html>

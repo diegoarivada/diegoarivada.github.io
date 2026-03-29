@@ -16,6 +16,7 @@
 </head>
 
 <body>
+  <div id="scroll-progress" aria-hidden="true"></div>
   <a class="skip-link" href="#maincontent">Skip to content</a>
 
   <header>
@@ -45,12 +46,30 @@
 
   <main id="maincontent">
     <section class="gallery">
-      <img src="images/photo1.JPG" alt="Tremendo Raton" />
-      <img src="images/photo2.JPG" alt="The Perfect Day in SD" />
-      <img src="images/photo3.jpeg" alt="On top of the Empire State" />
-      <img src="images/photo4.JPG" alt="Deep in the mountains" />
-      <img src="images/photo5.JPG" alt="Seattle Rooftop" />
-      <img src="images/photo6.jpeg" alt="Space Needle" />
+      <figure>
+        <img src="images/photo1.JPG" alt="Tremendo Raton" loading="lazy" />
+        <figcaption>Tremendo Raton</figcaption>
+      </figure>
+      <figure>
+        <img src="images/photo2.JPG" alt="The Perfect Day in SD" loading="lazy" />
+        <figcaption>The Perfect Day in SD</figcaption>
+      </figure>
+      <figure>
+        <img src="images/photo3.jpeg" alt="On top of the Empire State" loading="lazy" />
+        <figcaption>Empire State</figcaption>
+      </figure>
+      <figure>
+        <img src="images/photo4.JPG" alt="Deep in the mountains" loading="lazy" />
+        <figcaption>Deep in the Mountains</figcaption>
+      </figure>
+      <figure>
+        <img src="images/photo5.JPG" alt="Seattle Rooftop" loading="lazy" />
+        <figcaption>Seattle Rooftop</figcaption>
+      </figure>
+      <figure>
+        <img src="images/photo6.jpeg" alt="Space Needle" loading="lazy" />
+        <figcaption>Space Needle</figcaption>
+      </figure>
     </section>
   </main>
 
@@ -99,6 +118,15 @@
         }
       });
 
+      // Scroll progress bar
+      const progressBar = document.getElementById('scroll-progress');
+      if (progressBar) {
+        window.addEventListener('scroll', () => {
+          const total = document.documentElement.scrollHeight - window.innerHeight;
+          if (total > 0) progressBar.style.width = (window.scrollY / total * 100) + '%';
+        }, { passive: true });
+      }
+
       // Scroll reveal initialization
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches !== true) {
         const sections = document.querySelectorAll('main section');
@@ -115,5 +143,6 @@
       }
     });
   </script>
+  <script src="site.js" defer></script>
 </body>
 </html>

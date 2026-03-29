@@ -1,53 +1,52 @@
-# 🌐 Diego A. Rivada — Personal Website
+# Diego A. Rivada — Personal Website
 
-A sleek, responsive portfolio showcasing my projects, interests, and online presence.
+A clean, responsive personal portfolio built with HTML and CSS. Currently pursuing a Master's degree at the University of Southern California (USC).
 
 ---
 
-## 📄 Overview
+## Overview
 
-Welcome to the source code of my personal website — a digital space built with care using **HTML** and **CSS**. The site is designed to be clean, responsive, and easy to navigate, featuring sections like:
+Source code for my personal website — a single-page portfolio with additional dedicated pages. The site covers:
 
-- **Home** — A warm introduction and overview.
-- **Coding** — A showcase of my programming projects.
-- **Homelab** — Glimpses into my home lab experiments and setups.
-- **Pictures** — A curated gallery of personal photography.
+- **Home (index.html)** — About me, resume, education, interests, skills, and contact form.
+- **Coding** — Showcase of programming and engineering projects.
+- **Homelab** — Home lab experiments, network diagrams, and a detailed case study.
+- **Pictures** — Personal photography gallery.
 - **YouTube** — Embedded content from my channel.
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
-- **HTML** — For structuring the content and layout.
-- **CSS** — For styling and responsive design across devices.
+- **HTML** — Content and layout.
+- **CSS** — Styling and responsive design.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-├── index.html                 # Main landing page
+├── index.html                 # Main portfolio page (about, resume, skills, contact)
 ├── coding.html                # Programming projects
 ├── homelab.html               # Home lab experiments
-├── homelab-case-study.html    # Detailed case study of homelab setup
+├── homelab-case-study.html    # Detailed homelab case study
 ├── pictures.html              # Photography gallery
 ├── youtube.html               # YouTube embeds
-├── thankyou.html              # Thank you page
+├── thankyou.html              # Post-contact thank you page
 ├── styles.css                 # Central stylesheet
-├── CNAME                      # Custom domain configuration for GitHub Pages
-├── favicon.ico                # Website favicon
+├── CNAME                      # Custom domain for GitHub Pages
+├── favicon.ico                # Site favicon
 ├── resume.pdf                 # Resume document
 ├── profile.JPG                # Profile picture
-├── images/                    # Image assets
+├── images/                    # Image assets (photos, SVG diagrams)
 ├── scripts/                   # Utility scripts
-│   └── convert_svg_to_gif.ps1 # PowerShell script for SVG to GIF conversion
+│   └── convert_svg_to_gif.ps1 # SVG to GIF conversion script
 └── README.md                  # This file
 ```
 
 ---
 
-## 📬 Contact
-
-Want to connect or explore more of my work?
+## Contact
 
 - GitHub: [@diegoarivada](https://github.com/diegoarivada)
+- LinkedIn: [diego-rivada](https://www.linkedin.com/in/diego-rivada/)
