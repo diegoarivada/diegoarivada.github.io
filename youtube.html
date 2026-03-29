@@ -8,9 +8,11 @@
   <meta property="og:title" content="YouTube Channel – Diego Rivada" />
   <meta property="og:description" content="Videos: security, homelab, and project demos." />
   <meta name="twitter:card" content="summary" />
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <meta property="og:image" content="/images/og.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/images/og.svg" />
   <title>YouTube Channel – Diego Rivada</title>
   <link rel="stylesheet" href="styles.css">
 
@@ -19,9 +21,9 @@
 
 <body>
   <div id="scroll-progress" aria-hidden="true"></div>
-  <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+  <a class="skip-link" href="#maincontent">Skip to content</a>
+
   <header>
-   <a class="skip-link" href="#maincontent">Skip to content</a>
     <h1>📺 My YouTube Clips</h1>
     <p>Latest videos from my channel, updated automatically.</p>
     <nav class="anchor-nav" aria-label="Page sections">
@@ -29,7 +31,6 @@
       <a href="youtube.html">YouTube</a>
       <a href="index.html#projects">Projects</a>
       <a href="index.html#contact">Contact</a>
-      </nav>
     </nav>
   </header>
 
@@ -44,7 +45,8 @@
       <option value="youtube.html">📺 YouTube Channel</option>
     </select>
   </nav>
-  
+
+  <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
 
   <main id="maincontent">
     <section class="youtube-feed">
@@ -53,8 +55,7 @@
   </main>
 
   <footer>
-    &copy; 2025 Diego Rivada. All rights reserved.
-    </footer>
+    &copy; 2026 Diego Rivada. All rights reserved.
   </footer>
 
 <script>
