@@ -148,6 +148,15 @@ header p {
   margin-top: 0.5rem;
 }
 
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+
 /* Dark mode toggle button */
 #theme-toggle {
   position: fixed;
@@ -321,11 +330,12 @@ footer {
   padding: 0.6rem 1.2rem;
   margin: 0.3rem 0.5rem 0 0;
   border-radius: 8px;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.12s ease;
 }
 
 .links a:hover {
   background: var(--accent-red);
+  transform: translateY(-2px);
 }
 
 /* Reusable CTA button for header and resume links */
@@ -334,7 +344,7 @@ footer {
   background: var(--primary-blue);
   color: white;
   text-decoration: none;
-  padding: 0.5rem 0.9rem;
+  padding: 0.6rem 1rem;
   margin: 0 0.25rem;
   border-radius: 8px;
   font-weight: 600;
@@ -465,6 +475,10 @@ iframe {
 .page-selector {
   text-align: center;
   margin: 2rem 0;
+  background: rgba(10,102,194,0.04);
+  border: 1px solid rgba(10,102,194,0.12);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
 }
 
 .page-selector label {
