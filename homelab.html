@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/images/og.svg" />
+  <meta name="description" content="Homelab projects and tools — Proxmox, WireGuard, Docker, and self-hosted services." />
+  <link rel="canonical" href="https://diegoarivada.github.io/homelab.html" />
+  <meta property="og:title" content="Homelab – Diego Rivada" />
+  <meta property="og:description" content="My homelab: virtualization, containerization, and privacy-focused services." />
+  <meta name="twitter:card" content="summary" />
+  <title>Homelab – Diego Rivada</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div id="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#maincontent">Skip to content</a>
+
+  <header>
+    <h1>🧪 My Homelab</h1>
+    <p>Exploring self-hosted tech, security testing, and server experiments</p>
+    <nav class="anchor-nav" aria-label="Page sections">
+      <a href="index.html">Home</a>
+      <a href="homelab.html">Overview</a>
+      <a href="homelab.html#projects">Projects</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <nav class="page-selector">
+    <label for="pageDropdown">Navigate to:</label>
+    <select id="pageDropdown" onchange="handleNavigation(this.value)">
+      <option value="">-- Select a Page --</option>
+      <option value="index.html">🏠 Home</option>
+      <option value="pictures.html">📸 Pictures</option>
+      <option value="coding.html">💻 Coding Projects</option>
+      <option value="homelab.html">🧪 Homelab</option>
+      <option value="youtube.html">📺 YouTube Channel</option>
+    </select>
+  </nav>
+  
+  <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+
+  <main id="maincontent">
+    <section aria-labelledby="overview">
+      <h2 id="overview">Overview</h2>
+      <p>
+        My homelab is a digital playground for experimenting with networking, virtualization, and cybersecurity tools. It’s home to self-hosted services, secure network setups, and a minimalist desktop environment tuned for performance and control.
+      </p>
+    </section>
+
+    <section aria-labelledby="technologies">
+      <h2 id="technologies">Technologies Used</h2>
+      <ul>
+        <li><strong>Proxmox VE</strong> – Virtualization platform</li>
+        <li><strong>Pi-hole</strong> – DNS sinkhole & ad blocker</li>
+        <li><strong>Docker & Portainer</strong> – Containerized service orchestration</li>
+        <li><strong>WireGuard</strong> – Secure VPN for remote access</li>
+        <li><strong>OpenMediaVault</strong> – Home NAS for media & backups</li>
+        <li><strong>Arch Linux</strong> – Lightweight, rolling-release distro for total control</li>
+        <li><strong>Hyprland</strong> – Dynamic Wayland compositor powering my custom desktop</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="projects">
+      <h2 id="projects">Current Projects</h2>
+      <ul>
+        <li>🔐 Self-hosted password manager with reverse proxy & 2FA</li>
+        <li>📊 Smart home automation with Home Assistant</li>
+        <li>🧼 Reverse DNS + dynamic DNS setup for remote service access</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="workstation">
+      <h2 id="workstation">My Workstation</h2>
+      <p>
+        I run <strong>Arch Linux</strong> with <strong>Hyprland</strong> for a clean, high-performance desktop experience. My setup includes:
+      </p>
+      <ul>
+        <li><code>waybar</code> – Status bar with custom modules</li>
+        <li><code>kitty</code> – GPU-accelerated terminal</li>
+        <li><code>neovim</code> – Configured as my primary IDE</li>
+        <li><code>Thunar</code> + <code>zathura</code> – Lightweight file and PDF tools</li>
+        <li>Dotfiles synced with a private Git repo</li>
+      </ul>
+      <p>
+        Everything is themed with a dark, minimal aesthetic. I prioritize speed, keyboard-driven workflows, and simplicity.
+      </p>
+    </section>
+
+    <section aria-labelledby="future">
+      <h2 id="future">More to Come</h2>
+      <p>
+        As my lab grows, I’ll be sharing config guides, diagrams, and logs. I’m always learning and iterating — follow along if you’re into self-hosting, privacy-first tooling, or just building cool stuff.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 Diego Rivada. All rights reserved.
+  </footer>
+  <script>
+    // Navigation handler for dropdown
+    function handleNavigation(page) {
+      if (page) {
+        window.location.href = page;
+      }
+    }
+
+    // Initialize dropdown and theme toggle behavior (consistent across pages)
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdown = document.getElementById('pageDropdown');
+      if (dropdown) {
+        let currentPage = window.location.pathname.split('/').pop().split('?')[0];
+        if (currentPage === '') currentPage = 'index.html';
+        dropdown.value = currentPage;
+      }
+
+      const toggleBtn = document.getElementById('theme-toggle');
+      if (!toggleBtn) return;
+
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        toggleBtn.textContent = '☀️';
+      } else {
+        toggleBtn.textContent = '🌙';
+      }
+
+      toggleBtn.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'dark') {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+          toggleBtn.textContent = '🌙';
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+          toggleBtn.textContent = '☀️';
+        }
+      });
+
+      // Scroll progress bar
+      const progressBar = document.getElementById('scroll-progress');
+      if (progressBar) {
+        window.addEventListener('scroll', () => {
+          const total = document.documentElement.scrollHeight - window.innerHeight;
+          if (total > 0) progressBar.style.width = (window.scrollY / total * 100) + '%';
+        }, { passive: true });
+      }
+
+      // Scroll reveal initialization
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches !== true) {
+        const sections = document.querySelectorAll('main section');
+        sections.forEach(s => s.classList.add('reveal'));
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+      }
+    });
+  </script>
+  <script src="site.js" defer></script>
+</body>
+</html>
