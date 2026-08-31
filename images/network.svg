@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 340" width="700" height="340" role="img" aria-label="Animated homelab rack with blinking LEDs and plugging cable">
+  <style>
+    .rack { stroke:#222; stroke-width:4; stroke-linecap:round; fill: none }
+    .unit { fill:#f7fbff; stroke:#dbe7fb; stroke-width:1 }
+    .led { fill:#4cd964; stroke:#2e8b3a; }
+    .led-off { fill:#d8d8d8; stroke:#b5b5b5; }
+    .cable { stroke:#f39c12; stroke-width:6; stroke-linecap:round; fill:none }
+
+    /* blinking LEDs */
+    @keyframes blink {
+      0% { opacity: 1 }
+      50% { opacity: 0.15 }
+      100% { opacity: 1 }
+    }
+
+    .led.blink { animation: blink 1.2s linear infinite }
+
+    /* cable draw animation */
+    .cable { stroke-dasharray: 200 200; stroke-dashoffset: 200; animation: draw 2s ease-in-out infinite; }
+    @keyframes draw { 0% { stroke-dashoffset: 200 } 50% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: 200 } }
+
+    /* small device connector movement */
+    .plug { animation: plugMove 2s ease-in-out infinite }
+    @keyframes plugMove { 0% { transform: translateX(-60px) } 50% { transform: translateX(0px) } 100% { transform: translateX(-60px) } }
+  </style>
+
+  <!-- background to improve contrast -->
+  <rect x="0" y="0" width="100%" height="100%" fill="#dbeeff" />
+
+  <!-- floor line for grounding -->
+  <line x1="0" y1="300" x2="700" y2="300" stroke="#f0f4f8" stroke-width="2" />
+
+  <!-- rack area -->
+  <g transform="translate(420,40)">
+    <rect class="rack" x="-80" y="0" width="160" height="240" rx="8" ry="8" />
+    <!-- units -->
+    <g id="units">
+      <!-- rack unit 1 -->
+      <rect class="unit" x="-70" y="12" width="140" height="44" rx="6" ry="6" />
+      <circle class="led blink" cx="-40" cy="34" r="5" />
+      <circle class="led-off" cx="-22" cy="34" r="5" />
+      <circle class="led-off" cx="-4" cy="34" r="5" />
+
+      <!-- rack unit 2 -->
+      <rect class="unit" x="-70" y="70" width="140" height="44" rx="6" ry="6" />
+      <circle class="led-off" cx="-40" cy="92" r="5" />
+      <circle class="led blink" cx="-22" cy="92" r="5" />
+      <circle class="led-off" cx="-4" cy="92" r="5" />
+
+      <!-- rack unit 3 -->
+      <rect class="unit" x="-70" y="128" width="140" height="44" rx="6" ry="6" />
+      <circle class="led-off" cx="-40" cy="150" r="5" />
+      <circle class="led-off" cx="-22" cy="150" r="5" />
+      <circle class="led blink" cx="-4" cy="150" r="5" />
+
+      <!-- rack unit 4 -->
+      <rect class="unit" x="-70" y="186" width="140" height="44" rx="6" ry="6" />
+      <circle class="led blink" cx="-40" cy="208" r="5" />
+      <circle class="led-off" cx="-22" cy="208" r="5" />
+      <circle class="led-off" cx="-4" cy="208" r="5" />
+    </g>
+  </g>
+
+  <!-- animated cable coming from left to the rack -->
+  <g transform="translate(0,0)">
+    <!-- cable path -->
+    <path class="cable" d="M120 210 C 220 210, 300 210, 360 210" />
+    <!-- plug moving towards the rack -->
+    <g class="plug" transform="translate(60,190)">
+      <rect x="0" y="0" width="36" height="20" rx="4" ry="4" fill="#2b2b2b" />
+      <rect x="4" y="4" width="28" height="12" rx="2" ry="2" fill="#f39c12" />
+    </g>
+  </g>
+
+  <!-- subtle shadow under the rack -->
+  <ellipse cx="420" cy="302" rx="68" ry="8" fill="rgba(0,0,0,0.06)" />
+
+</svg>

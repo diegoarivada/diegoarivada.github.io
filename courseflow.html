@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CourseFlow | Syllabus to schedule</title>
+  <link rel="stylesheet" href="courseflow.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#"><span class="brand-mark">✓</span> CourseFlow</a>
+      <nav><a class="active" href="#planner">Planner</a><a href="#materials">Materials</a><a href="#calendar">Calendar</a></nav>
+      <div class="topbar-actions"><a class="home-btn" href="index.html">← Home</a><button class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode">🌙</button><span class="static-user" aria-label="Current user">Diego R</span></div>
+    </header>
+
+    <main id="planner">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Fall semester 2026</p>
+          <h1>Turn your syllabus into a plan.</h1>
+          <p class="hero-copy">Import deadlines, make room for the work, and keep every resource close at hand.</p>
+        </div>
+        <div class="week-chip"><span>Next up</span><strong>3 tasks this week</strong></div>
+      </section>
+
+      <section class="workspace-grid">
+        <div class="primary-column">
+          <section class="card import-card">
+            <div class="section-heading">
+              <div><p class="eyebrow">01 / Import</p><h2>Add a syllabus</h2></div>
+              <span class="status-dot">Ready</span>
+            </div>
+            <div class="import-tabs" role="tablist">
+              <button class="tab active" data-tab="paste">Paste text</button>
+              <button class="tab" data-tab="file">Upload file</button>
+            </div>
+            <div id="paste-panel" class="tab-panel">
+              <label for="syllabus-input">Syllabus content</label>
+              <textarea id="syllabus-input" placeholder="Paste assignment lines, for example:
+Reading response — Sep 12
+Midterm exam — Oct 06
+Final project — Dec 10"></textarea>
+              <div class="input-footer"><span id="line-count">0 lines detected</span><button id="parse-btn" class="primary-btn">Extract deadlines <span>→</span></button></div>
+            </div>
+            <div id="file-panel" class="tab-panel hidden">
+              <label class="drop-zone" for="file-input"><span class="upload-icon">↑</span><strong>Drop a PDF or document here</strong><small>or click to browse your files</small></label>
+              <input id="file-input" type="file" accept=".txt,.pdf,.doc,.docx">
+              <p id="file-name" class="file-name"></p>
+            </div>
+            <div id="parse-message" class="message" role="status"></div>
+          </section>
+
+          <section class="card assignments-card" id="calendar">
+            <div class="section-heading">
+              <div><p class="eyebrow">02 / Plan</p><h2>Upcoming assignments <span id="assignment-count" class="count-badge">0</span></h2></div>
+              <button id="download-all" class="text-btn">Add all to calendar ↗</button>
+            </div>
+            <div id="assignments-list" class="assignments-list">
+              <div class="empty-state"><span>◌</span><p>Your extracted assignments will appear here.</p></div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="secondary-column" id="materials">
+          <section class="card focus-card">
+            <p class="eyebrow">Today</p>
+            <h2>Your focus</h2>
+            <div class="focus-task"><span class="task-check"></span><div><strong>Read chapter 4</strong><small>Biology 101 · due tomorrow</small></div><span class="task-time">45m</span></div>
+            <div class="focus-task"><span class="task-check"></span><div><strong>Outline essay</strong><small>World History · due Sep 12</small></div><span class="task-time">30m</span></div>
+            <button class="outline-btn" id="add-task-btn">+ Add a focus task</button>
+          </section>
+
+          <section class="card materials-card">
+            <div class="section-heading compact"><div><p class="eyebrow">03 / Prepare</p><h2>Materials</h2></div><button id="add-material-btn" class="icon-btn" aria-label="Add material">+</button></div>
+            <p class="muted">Keep what you need attached to the work.</p>
+            <div id="materials-list" class="materials-list">
+              <label class="material-item"><input type="checkbox" checked><span>Lab notebook</span><small>Biology 101</small></label>
+              <label class="material-item"><input type="checkbox"><span>Library book: The Odyssey</span><small>World History</small></label>
+              <label class="material-item"><input type="checkbox"><span>Poster board</span><small>Final project</small></label>
+            </div>
+            <button class="outline-btn" id="organize-btn">Organize materials</button>
+          </section>
+        </aside>
+      </section>
+    </main>
+    <footer><span>CourseFlow</span><span>Built for calmer semesters.</span></footer>
+  </div>
+  <script src="courseflow.js"></script>
+</body>
+</html>
