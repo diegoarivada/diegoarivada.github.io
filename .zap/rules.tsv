@@ -7,3 +7,7 @@
 10049	IGNORE	(Storable content: public static pages are meant to be cacheable)
 10055	IGNORE	(frame-ancestors: not allowed in a meta CSP and GitHub Pages cannot send headers. Same known gap as 10020)
 10063	IGNORE	(Permissions-Policy: GitHub Pages cannot send custom headers)
+10109	IGNORE	(Modern Web Application: informational only, flags the noscript tag on the contact form)
+10110	IGNORE	(Dangerous JS Functions: the eval is the deliberate live CSP test in security.js, and the CSP blocks it)
+10202	IGNORE	(Anti-CSRF tokens: the contact form posts to Formspree and the site has no sessions to protect)
+90004	IGNORE	(Cross-origin isolation headers: GitHub Pages cannot send custom headers)
