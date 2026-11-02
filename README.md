@@ -57,6 +57,8 @@ Source code for my personal website — a single-page portfolio with additional 
 ## Security Notes
 
 - Every page sets its own Content Security Policy in a meta tag, because GitHub Pages can't send custom headers. Keep scripts and styles in external files, or the policy will block them.
+- CodeQL and a ZAP baseline scan run on pull requests, pushes to `main`, and weekly. ZAP only scans a local copy inside the runner, never the live site.
+- GitHub Actions are pinned to commit SHAs, and Dependabot proposes updates.
 - `.well-known/security.txt` has an `Expires` date. Update it before it passes, at least once a year.
 
 ---

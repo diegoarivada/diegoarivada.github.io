@@ -564,6 +564,7 @@ iframe {
 }
 
 .info-card.gap {
+  grid-column: 1 / -1;
   border-left-color: var(--accent-red);
 }
 
