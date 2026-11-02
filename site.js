@@ -9,13 +9,17 @@
   // ─────────────────────────────────────────────────────
   // 0. Page basics: navigation, theme, progress, reveal
   // ─────────────────────────────────────────────────────
+  const sitePages = ['index.html', 'pictures.html', 'coding.html', 'homelab.html', 'security.html', 'youtube.html'];
+
   const dropdown = document.getElementById('pageDropdown');
   if (dropdown) {
     let currentPage = window.location.pathname.split('/').pop().split('?')[0];
     if (currentPage === '') currentPage = 'index.html';
     dropdown.value = currentPage;
     dropdown.addEventListener('change', () => {
-      if (dropdown.value) window.location.href = dropdown.value;
+      // Only ever navigate to a known page, never to whatever the DOM holds
+      const target = sitePages.find(page => page === dropdown.value);
+      if (target) window.location.href = target;
     });
   }
 
