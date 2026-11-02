@@ -7,6 +7,154 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ─────────────────────────────────────────────────────
+  // 0. Page basics: navigation, theme, progress, reveal
+  // ─────────────────────────────────────────────────────
+  const dropdown = document.getElementById('pageDropdown');
+  if (dropdown) {
+    let currentPage = window.location.pathname.split('/').pop().split('?')[0];
+    if (currentPage === '') currentPage = 'index.html';
+    dropdown.value = currentPage;
+    dropdown.addEventListener('change', () => {
+      if (dropdown.value) window.location.href = dropdown.value;
+    });
+  }
+
+  const toggleBtn = document.getElementById('theme-toggle');
+  if (toggleBtn) {
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggleBtn.textContent = '☀️';
+    } else {
+      toggleBtn.textContent = '🌙';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      const theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        toggleBtn.textContent = '🌙';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        toggleBtn.textContent = '☀️';
+      }
+    });
+  }
+
+  const progressBar = document.getElementById('scroll-progress');
+  if (progressBar) {
+    window.addEventListener('scroll', () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      if (total > 0) progressBar.style.width = (window.scrollY / total * 100) + '%';
+    }, { passive: true });
+  }
+
+  if (!reducedMotion) {
+    const sections = document.querySelectorAll('main section');
+    sections.forEach(s => s.classList.add('reveal'));
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    sections.forEach(s => io.observe(s));
+  }
+
+  // Typing effect for the home page subtitle
+  const subtitleEl = document.querySelector('header > p[data-typing]');
+  if (subtitleEl && !reducedMotion) {
+    const roles = [
+      'Product Security Engineer | Backup Team Lead',
+      'Securing Aircraft Systems @ Boeing',
+      'Systems Engineering @ USC',
+      'Vulnerability Management',
+    ];
+    let roleIndex = 0;
+    let charIndex = roles[0].length;
+    let deleting = true;
+
+    const textSpan = document.createElement('span');
+    textSpan.textContent = roles[0];
+    const cursor = document.createElement('span');
+    cursor.className = 'typing-cursor';
+    cursor.setAttribute('aria-hidden', 'true');
+    subtitleEl.textContent = '';
+    subtitleEl.appendChild(textSpan);
+    subtitleEl.appendChild(cursor);
+
+    function typeStep() {
+      const current = roles[roleIndex];
+      if (!deleting) {
+        charIndex++;
+        textSpan.textContent = current.slice(0, charIndex);
+        if (charIndex >= current.length) {
+          setTimeout(() => { deleting = true; typeStep(); }, 2200);
+          return;
+        }
+        setTimeout(typeStep, 72);
+      } else {
+        charIndex--;
+        textSpan.textContent = current.slice(0, charIndex);
+        if (charIndex <= 0) {
+          deleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+          setTimeout(typeStep, 350);
+          return;
+        }
+        setTimeout(typeStep, 40);
+      }
+    }
+
+    setTimeout(typeStep, 2800);
+  }
+
+  // AJAX contact form submission (spinner + success)
+  const contactForm = document.querySelector('.contact-form');
+  if (contactForm) {
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!submitBtn) return;
+
+      submitBtn.disabled = true;
+      const originalContent = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span class="btn-spinner"><span class="spinner" aria-hidden></span>Sending…</span>';
+
+      try {
+        const formData = new FormData(contactForm);
+        const resp = await fetch(contactForm.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: formData
+        });
+
+        if (resp.ok) {
+          submitBtn.innerHTML = '<span class="btn-spinner"><svg class="success-check" viewBox="0 0 24 24" aria-hidden><path fill="currentColor" d="M9 16.2l-3.5-3.5L4 14.2 9 19 20 8l-1.4-1.4z"></path></svg>Sent</span>';
+          setTimeout(() => {
+            window.location.href = '/thankyou.html';
+          }, 1100);
+        } else {
+          const data = await resp.json().catch(() => ({}));
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalContent;
+          alert(data.error || 'Submission failed — please try again.');
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalContent;
+        alert('Network error — please try again.');
+      }
+    });
+  }
+
+  // ─────────────────────────────────────────────────────
   // 1. Click ripple on buttons and links
   // ─────────────────────────────────────────────────────
   function createRipple(e) {

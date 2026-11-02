@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="/images/og.svg" />
@@ -34,12 +34,13 @@
 
   <nav class="page-selector">
     <label for="pageDropdown">Navigate to:</label>
-    <select id="pageDropdown" onchange="handleNavigation(this.value)">
+    <select id="pageDropdown">
       <option value="">-- Select a Page --</option>
       <option value="index.html">🏠 Home</option>
       <option value="pictures.html">📸 Pictures</option>
       <option value="coding.html">💻 Coding Projects</option>
       <option value="homelab.html">🧪 Homelab</option>
+      <option value="security.html">🛡️ Security</option>
       <option value="youtube.html">📺 YouTube Channel</option>
     </select>
   </nav>
@@ -51,7 +52,7 @@
       <section class="project-card featured">
         <h2>🏠 Homelab — Proxmox + Ubiquiti</h2>
         <p>I run a resilient homelab using Proxmox to host VMs/containers and Ubiquiti for networking. Key components: Home Assistant, containerized services, NAS backups, and WireGuard for secure remote access.</p>
-        <img src="images/homelab-arch.svg" alt="Homelab architecture diagram" style="max-width:100%; border-radius:12px;" loading="lazy" />
+        <img src="images/homelab-arch.svg" alt="Homelab architecture diagram" class="project-diagram" loading="lazy" />
         <h3>Key details</h3>
         <ul>
           <li>Virtualization: Proxmox VE (KVM + LXC)</li>
@@ -61,8 +62,7 @@
         </ul>
         <details>
           <summary>Sample WireGuard peer config (redacted)</summary>
-          <pre style="white-space:pre-wrap; background:#f8f9fa; padding:0.6rem; border-radius:8px;
-          border:1px solid rgba(0,0,0,0.06);">[Interface]
+          <pre class="code-sample">[Interface]
 Address = 10.10.0.2/32
 PrivateKey = &lt;private-key&gt;
 
@@ -78,6 +78,19 @@ PersistentKeepalive = 25
           <a href="https://github.com/diegoarivada" target="_blank" rel="noopener noreferrer" class="links-cta">More projects on GitHub</a>
         </p>
       </section>
+      <div class="project-card">
+        <h2>🎧 EarDeck</h2>
+        <p>A free, lightweight AirPods app for Windows with battery levels, one-click connect, and easy pairing, built in Rust.</p>
+        <ul>
+          <li>Runs without admin rights, installs no drivers, and sends no data anywhere</li>
+          <li>Threat modeled against someone nearby, since any Bluetooth device can broadcast anything</li>
+          <li>Bluetooth parser tested against 200,000 random packets</li>
+          <li><code>cargo audit</code> runs on every change and weekly, with Dependabot proposing updates</li>
+        </ul>
+        <a href="security.html#eardeck" class="links-cta">🛡️ Explore the threat model</a>
+        <a href="https://github.com/diegoarivada/eardeck" target="_blank" rel="noopener noreferrer" class="links-cta">🔗 View on GitHub</a>
+      </div>
+
       <div class="project-card">
         <h2>🔄 UpdateAll</h2>
         <p>A free Windows desktop app that scans for outdated software and lets you update everything in one click — OS patches, installed apps (via winget), npm/pip global packages, and hardware drivers.</p>
@@ -125,72 +138,6 @@ PersistentKeepalive = 25
     &copy; 2026 Diego Rivada. All rights reserved.
   </footer>
 
-  <script>
-    // Navigation handler for dropdown
-    function handleNavigation(page) {
-      if (page) {
-        window.location.href = page;
-      }
-    }
-
-    // Initialize dropdown and theme toggle behavior (consistent across pages)
-    document.addEventListener('DOMContentLoaded', function() {
-      const dropdown = document.getElementById('pageDropdown');
-      if (dropdown) {
-        let currentPage = window.location.pathname.split('/').pop().split('?')[0];
-        if (currentPage === '') currentPage = 'index.html';
-        dropdown.value = currentPage;
-      }
-
-      const toggleBtn = document.getElementById('theme-toggle');
-      if (!toggleBtn) return;
-
-      const currentTheme = localStorage.getItem('theme') || 'light';
-      if (currentTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        toggleBtn.textContent = '☀️';
-      } else {
-        toggleBtn.textContent = '🌙';
-      }
-
-      toggleBtn.addEventListener('click', () => {
-        let theme = document.documentElement.getAttribute('data-theme');
-        if (theme === 'dark') {
-          document.documentElement.removeAttribute('data-theme');
-          localStorage.setItem('theme', 'light');
-          toggleBtn.textContent = '🌙';
-        } else {
-          document.documentElement.setAttribute('data-theme', 'dark');
-          localStorage.setItem('theme', 'dark');
-          toggleBtn.textContent = '☀️';
-        }
-      });
-
-      // Scroll progress bar
-      const progressBar = document.getElementById('scroll-progress');
-      if (progressBar) {
-        window.addEventListener('scroll', () => {
-          const total = document.documentElement.scrollHeight - window.innerHeight;
-          if (total > 0) progressBar.style.width = (window.scrollY / total * 100) + '%';
-        }, { passive: true });
-      }
-
-      // Scroll reveal initialization
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches !== true) {
-        const sections = document.querySelectorAll('main section');
-        sections.forEach(s => s.classList.add('reveal'));
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              io.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-      }
-    });
-  </script>
   <script src="site.js" defer></script>
 
 </body>
