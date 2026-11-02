@@ -1,0 +1,32 @@
+# Dynamic analysis. ZAP scans a throwaway copy of the site served inside the
+# runner on localhost. It never touches the live site.
+name: ZAP Baseline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 13 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Serve a local copy of the site
+        run: |
+          mkdir "$RUNNER_TEMP/site"
+          git archive HEAD | tar -x -C "$RUNNER_TEMP/site"
+          python3 -m http.server 8080 --bind 127.0.0.1 --directory "$RUNNER_TEMP/site" &
+          sleep 2
+          curl -fsS http://127.0.0.1:8080/index.html > /dev/null
+      - uses: zaproxy/action-baseline@de8ad967d3548d44ef623df22cf95c3b0baf8b25 # v0.15.0
+        with:
+          target: http://localhost:8080
+          fail_action: true
+          allow_issue_writing: false
