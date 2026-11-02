@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="YouTube highlights and clips from Diego Rivada — security demos and project walkthroughs." />
   <link rel="canonical" href="https://diegoarivada.github.io/youtube.html" />
   <meta property="og:title" content="YouTube Channel – Diego Rivada" />
   <meta property="og:description" content="Videos: security, homelab, and project demos." />
   <meta name="twitter:card" content="summary" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="/images/og.svg" />
@@ -36,12 +36,13 @@
 
   <nav class="page-selector">
     <label for="pageDropdown">Navigate to:</label>
-    <select id="pageDropdown" onchange="handleNavigation(this.value)">
+    <select id="pageDropdown">
       <option value="">-- Select a Page --</option>
       <option value="index.html">🏠 Home</option>
       <option value="pictures.html">📸 Pictures</option>
       <option value="coding.html">💻 Coding Projects</option>
       <option value="homelab.html">🧪 Homelab</option>
+      <option value="security.html">🛡️ Security</option>
       <option value="youtube.html">📺 YouTube Channel</option>
     </select>
   </nav>
@@ -50,7 +51,8 @@
 
   <main id="maincontent">
     <section class="youtube-feed">
-      <div id="video-grid"></div>
+      <iframe class="video-embed" src="https://www.youtube-nocookie.com/embed/videoseries?list=UUczZZW1eQkX-u-FJtrTQN6g" title="Latest videos from my YouTube channel" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
+      <p class="card-actions"><a class="links-cta" href="https://www.youtube.com/@diegoarivada" target="_blank" rel="noopener noreferrer">📺 Watch on YouTube</a></p>
     </section>
   </main>
 
@@ -58,95 +60,6 @@
     &copy; 2026 Diego Rivada. All rights reserved.
   </footer>
 
-<script>
-    const API_KEY = "REMOVED_API_KEY"; // Replace with your API key
-    const CHANNEL_ID = "UCczZZW1eQkX-u-FJtrTQN6g"; // Replace with your YouTube Channel ID
-    const videoGrid = document.getElementById("video-grid");
-
-    fetch(
-      `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=6`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        data.items.forEach((item) => {
-          if (item.id.kind === "youtube#video") {
-            const video = document.createElement("iframe");
-            video.src = `https://www.youtube.com/embed/${item.id.videoId}`;
-            video.width = "300";
-            video.height = "170";
-            video.allow =
-              "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-            video.allowFullscreen = true;
-            videoGrid.appendChild(video);
-          }
-        });
-      })
-      .catch((err) => {
-        videoGrid.innerHTML = `<p>Could not load videos. Error: ${err.message}</p>`;
-      });
-
-    // Navigation handler for dropdown
-    function handleNavigation(page) {
-      if (page) {
-        window.location.href = page;
-      }
-    }
-
-    // Initialize dropdown and theme toggle on DOM load (consistent behavior)
-    document.addEventListener('DOMContentLoaded', function() {
-      const dropdown = document.getElementById('pageDropdown');
-      if (dropdown) {
-        let currentPage = window.location.pathname.split('/').pop().split('?')[0];
-        if (currentPage === '') currentPage = 'index.html';
-        dropdown.value = currentPage;
-      }
-
-      const themeToggle = document.getElementById('theme-toggle');
-      if (!themeToggle) return;
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      if (savedTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        themeToggle.textContent = '☀️';
-      } else {
-        themeToggle.textContent = '🌙';
-      }
-      themeToggle.addEventListener('click', () => {
-        let theme = document.documentElement.getAttribute('data-theme');
-        if (theme === 'dark') {
-          document.documentElement.removeAttribute('data-theme');
-          localStorage.setItem('theme', 'light');
-          themeToggle.textContent = '🌙';
-        } else {
-          document.documentElement.setAttribute('data-theme', 'dark');
-          localStorage.setItem('theme', 'dark');
-          themeToggle.textContent = '☀️';
-        }
-      });
-        // Scroll progress bar
-        const progressBar = document.getElementById('scroll-progress');
-        if (progressBar) {
-          window.addEventListener('scroll', () => {
-            const total = document.documentElement.scrollHeight - window.innerHeight;
-            if (total > 0) progressBar.style.width = (window.scrollY / total * 100) + '%';
-          }, { passive: true });
-        }
-
-        // Scroll reveal initialization
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches !== true) {
-          const sections = document.querySelectorAll('main section');
-          sections.forEach(s => s.classList.add('reveal'));
-          const io = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                io.unobserve(entry.target);
-              }
-            });
-          }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-          document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-        }
-    });
-  </script>
   <script src="site.js" defer></script>
 
 </body>

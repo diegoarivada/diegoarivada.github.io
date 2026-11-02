@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Security work by Diego Rivada: aviation standards, the EarDeck threat model, and a live test of this site's own defenses." />
+  <link rel="canonical" href="https://diegoarivada.dev/security.html" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/images/og.svg" />
+  <meta property="og:title" content="Security – Diego Rivada" />
+  <meta property="og:description" content="Aviation security standards, a threat model you can click through, and a site that tests its own defenses." />
+  <meta name="twitter:card" content="summary" />
+  <title>Security – Diego Rivada</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div id="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#maincontent">Skip to content</a>
+
+  <header>
+    <h1>🛡️ Security</h1>
+    <p>How I think about threats, at work and in what I build</p>
+    <nav class="anchor-nav" aria-label="Page sections">
+      <a href="index.html">Home</a>
+      <a href="#eardeck">EarDeck</a>
+      <a href="#standards">Standards</a>
+      <a href="#this-site">This Site</a>
+      <a href="#report">Report</a>
+    </nav>
+  </header>
+
+  <nav class="page-selector">
+    <label for="pageDropdown">Navigate to:</label>
+    <select id="pageDropdown">
+      <option value="">-- Select a Page --</option>
+      <option value="index.html">🏠 Home</option>
+      <option value="pictures.html">📸 Pictures</option>
+      <option value="coding.html">💻 Coding Projects</option>
+      <option value="homelab.html">🧪 Homelab</option>
+      <option value="security.html">🛡️ Security</option>
+      <option value="youtube.html">📺 YouTube Channel</option>
+    </select>
+  </nav>
+
+  <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+
+  <main id="maincontent">
+    <section id="approach">
+      <h2>What I Do</h2>
+      <p>I secure commercial aircraft systems as a Product Security Engineer II and Backup Team Lead at Boeing, helping them meet FAA and EASA airworthiness and cybersecurity requirements. That work stays private, so this page shows how I think through the things I can share.</p>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>🔎 Security Assessments</h3>
+          <p>Leading assessments of aircraft systems against FAA and EASA requirements.</p>
+        </div>
+        <div class="info-card">
+          <h3>🩹 Vulnerability Management</h3>
+          <p>Scanning with Nessus and Nmap, triaging findings, and driving critical exposures to remediation.</p>
+        </div>
+        <div class="info-card">
+          <h3>✈️ Continued Airworthiness</h3>
+          <p>Log analysis and archive reviews that resolve airline Service Requests.</p>
+        </div>
+        <div class="info-card">
+          <h3>🔐 PKI and TLS</h3>
+          <p>Certificate Signing Requests and SSL/TLS configuration for web applications.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="eardeck">
+      <h2>🎧 EarDeck Threat Model</h2>
+      <p>EarDeck is my free, open source AirPods tray app for Windows, built in Rust. Any Bluetooth device in range can broadcast anything and pick any name, so the main threat is someone nearby. Pick a side of the attack surface to see what could go wrong there and what stops it.</p>
+
+      <div class="stat-row">
+        <div class="stat"><strong>10</strong><span>threats modeled</span></div>
+        <div class="stat"><strong>200,000</strong><span>random packets thrown at the parser</span></div>
+        <div class="stat"><strong>0</strong><span>admin rights, drivers, or data sent anywhere</span></div>
+      </div>
+
+      <div class="attack-map" id="attack-map" hidden>
+        <svg class="map-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <line data-zone="radio" x1="25" y1="25" x2="50" y2="50" />
+          <line data-zone="popup" x1="75" y1="25" x2="50" y2="50" />
+          <line data-zone="local" x1="25" y1="75" x2="50" y2="50" />
+          <line data-zone="supply" x1="75" y1="75" x2="50" y2="50" />
+        </svg>
+        <button class="zone-btn" type="button" data-zone="radio" aria-pressed="false"><strong>📡 Bluetooth Range</strong><small>Someone nearby</small></button>
+        <button class="zone-btn" type="button" data-zone="popup" aria-pressed="false"><strong>🪟 The Popup</strong><small>Web content in the app</small></button>
+        <button class="zone-btn" type="button" data-zone="local" aria-pressed="false"><strong>💻 Your Computer</strong><small>Startup and settings</small></button>
+        <button class="zone-btn" type="button" data-zone="supply" aria-pressed="false"><strong>📦 Supply Chain</strong><small>Code I depend on</small></button>
+        <div class="map-core" aria-hidden="true"><span>🛡️</span>EarDeck</div>
+      </div>
+
+      <div class="threat-list" id="threat-list" aria-live="polite">
+        <article class="threat-card" data-zone="radio">
+          <h3>Malformed Bluetooth packets</h3>
+          <p>Written in Rust, packets must match an exact size and format, and the parser is tested against 200,000 random packets.</p>
+        </article>
+        <article class="threat-card" data-zone="radio">
+          <h3>A fake device that tries to pair</h3>
+          <p>Pairing only happens when you pick a device. Only AirPods and Beats names are accepted, and EarDeck refuses any device that asks for a PIN.</p>
+        </article>
+        <article class="threat-card" data-zone="radio">
+          <h3>Fake broadcasts that change the display or pause your media</h3>
+          <p>Broadcasts must match your model and be close by. Auto-pause only runs while your AirPods are connected and are the current output.</p>
+        </article>
+        <article class="threat-card" data-zone="popup">
+          <h3>A device name built to run code in the popup</h3>
+          <p>Names are escaped, and the content security policy blocks inline and remote scripts.</p>
+        </article>
+        <article class="threat-card" data-zone="popup">
+          <h3>The popup being sent to a website</h3>
+          <p>Navigation is blocked, and the popup can only load the pages built into the app.</p>
+        </article>
+        <article class="threat-card" data-zone="popup">
+          <h3>A compromised popup reaching more of the app</h3>
+          <p>It gets only the permissions it needs, and the backend checks inputs itself.</p>
+        </article>
+        <article class="threat-card" data-zone="local">
+          <h3>A planted program at startup</h3>
+          <p>The Open at Login path is quoted, which stops unquoted path attacks.</p>
+        </article>
+        <article class="threat-card" data-zone="local">
+          <h3>Remote debugging through an environment variable</h3>
+          <p>Cleared when the app starts.</p>
+        </article>
+        <article class="threat-card" data-zone="local">
+          <h3>A hand-edited settings file</h3>
+          <p>Values are range checked when loaded.</p>
+        </article>
+        <article class="threat-card" data-zone="supply">
+          <h3>A vulnerable dependency</h3>
+          <p><code>cargo audit</code> runs on every change and weekly, and Dependabot proposes updates.</p>
+        </article>
+      </div>
+
+      <h3>Known Limits</h3>
+      <p>A threat model that claims to stop everything isn't telling the truth, so these are written down too.</p>
+      <ul>
+        <li>Fake broadcasts can't be fully stopped, because AirPods broadcasts are not authenticated. Someone nearby could show false battery levels or trigger a pause, but they can't reach your files or your audio.</li>
+        <li>Pairing relies on the device's name, so only pick a device you just put in pairing mode.</li>
+        <li>Releases aren't code signed yet, so the releases page lists a SHA-256 value to check your download against.</li>
+        <li>Malware already running as your user is out of scope, since it could already change anything EarDeck can.</li>
+      </ul>
+      <p class="card-actions">
+        <a class="links-cta" href="https://github.com/diegoarivada/eardeck" target="_blank" rel="noopener noreferrer">🔗 View on GitHub</a>
+        <a class="links-cta" href="https://github.com/diegoarivada/eardeck/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">📄 Read SECURITY.md</a>
+      </p>
+    </section>
+
+    <section id="standards">
+      <h2>📜 Standards and Tooling</h2>
+      <p>In aviation, security has to be shown to a regulator, not just claimed. These are the public standards and tools behind my work.</p>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>DO-326B</h3>
+          <p>The airworthiness security process: how aircraft security gets planned and shown during certification.</p>
+        </div>
+        <div class="info-card">
+          <h3>DO-356B</h3>
+          <p>The methods and considerations that put the airworthiness security process into practice.</p>
+        </div>
+        <div class="info-card">
+          <h3>DO-178</h3>
+          <p>Software considerations for airborne systems and equipment certification.</p>
+        </div>
+        <div class="info-card">
+          <h3>FAA and EASA</h3>
+          <p>Airworthiness and cybersecurity requirements, including continued airworthiness once aircraft are in service.</p>
+        </div>
+      </div>
+
+      <h3>Disciplines</h3>
+      <ul class="chip-list">
+        <li>Vulnerability Assessment</li>
+        <li>Penetration Testing</li>
+        <li>Threat Analysis</li>
+        <li>Log Analysis</li>
+        <li>Digital Forensics</li>
+        <li>Reverse Engineering</li>
+        <li>PKI and TLS</li>
+      </ul>
+
+      <h3>Toolbox</h3>
+      <ul class="chip-list">
+        <li>Nessus</li>
+        <li>Nmap</li>
+        <li>Wireshark</li>
+        <li>Kali Linux</li>
+        <li>Docker</li>
+        <li>Python</li>
+        <li>C</li>
+        <li>C++</li>
+      </ul>
+    </section>
+
+    <section id="this-site">
+      <h2>🔒 This Site Defends Itself</h2>
+      <p>A security engineer's website should practice what it preaches. GitHub Pages doesn't let me set response headers, so every defense here has to work from the page itself. For example, the Content Security Policy lives in a meta tag at the top of each page.</p>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>🧱 Content Security Policy</h3>
+          <p>Every page starts from <code>default-src 'none'</code> and only allows what it needs.</p>
+        </div>
+        <div class="info-card">
+          <h3>🚫 No Inline Code</h3>
+          <p>All scripts and styles ship as files, so the policy never needs <code>'unsafe-inline'</code>.</p>
+        </div>
+        <div class="info-card">
+          <h3>📦 No Third-Party Scripts</h3>
+          <p>Even the font is self-hosted, so no outside stylesheet or script can change under me.</p>
+        </div>
+        <div class="info-card">
+          <h3>🔐 HTTPS Everywhere</h3>
+          <p>GitHub enforces HTTPS, and every <code>.dev</code> domain is on the browser HSTS preload list.</p>
+        </div>
+        <div class="info-card">
+          <h3>📬 security.txt</h3>
+          <p>A standard <a href=".well-known/security.txt">RFC 9116 file</a> tells researchers how to reach me.</p>
+        </div>
+        <div class="info-card">
+          <h3>🔬 Static Analysis</h3>
+          <p>CodeQL checks the site's JavaScript on every change and weekly.</p>
+        </div>
+        <div class="info-card">
+          <h3>🕷️ Dynamic Analysis</h3>
+          <p>A ZAP baseline scan runs against a local copy of the site on every change and weekly.</p>
+        </div>
+        <div class="info-card">
+          <h3>📌 Pinned Actions</h3>
+          <p>GitHub Actions are pinned to exact commits, and Dependabot proposes updates.</p>
+        </div>
+        <div class="info-card gap">
+          <h3>⚠️ Known Gap</h3>
+          <p>Clickjacking protection, a few hardening headers, and violation reports need real response headers, which GitHub Pages can't send.</p>
+        </div>
+      </div>
+
+      <div class="csp-lab">
+        <h3>🧪 Live Test</h3>
+        <p>Press the button and this page will attack itself four ways. The results come from your own browser as it runs them, so nothing here is canned.</p>
+        <noscript><p>This test needs JavaScript, which is a fair trade on a page about blocking it.</p></noscript>
+        <button id="csp-run" class="links-cta" type="button" hidden>⚡ Try to break it</button>
+        <div id="csp-results" aria-live="polite"></div>
+        <details id="csp-details" hidden>
+          <summary>See the policy on this page</summary>
+          <pre id="csp-policy"></pre>
+        </details>
+      </div>
+    </section>
+
+    <section id="homelab">
+      <h2>🧪 Security at Home</h2>
+      <p>I practice the same habits in my homelab: IoT devices kept on their own segmented network, WireGuard for remote access, a Pi-hole DNS sinkhole, and services behind a reverse proxy with TLS.</p>
+      <p class="card-actions"><a class="links-cta" href="homelab-case-study.html">Read the homelab case study</a></p>
+    </section>
+
+    <section id="report">
+      <h2>📬 Found Something?</h2>
+      <p>If you find a security problem on this site, please email <a href="mailto:diegoarivada@gmail.com">diegoarivada@gmail.com</a> with the steps to reproduce it. This is a personal site, so there's no bug bounty, but I read every report.</p>
+      <p>For EarDeck, please use <a href="https://github.com/diegoarivada/eardeck/security/advisories/new" target="_blank" rel="noopener noreferrer">GitHub's private vulnerability reporting</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 Diego Rivada. All rights reserved.
+  </footer>
+
+  <script src="site.js" defer></script>
+  <script src="security.js" defer></script>
+</body>
+</html>
