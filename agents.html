@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agent Command Center: a local-first AI dev team running on Diego Rivada's RTX 5080 homelab." />
+  <link rel="canonical" href="https://diegoarivada.github.io/agents.html" />
+  <meta property="og:title" content="Agent Command Center – Diego Rivada" />
+  <meta property="og:description" content="Local AI agents that plan, build, test, and security-review code, with a human approving every push." />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/images/og.svg" />
+  <title>Agent Command Center – Diego Rivada</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#maincontent">Skip to content</a>
+
+  <header>
+    <h1>🤖 Agent Command Center</h1>
+    <p>A local AI dev team on my homelab. Sign-in is invite only.</p>
+    <nav class="anchor-nav" aria-label="Page sections">
+      <a href="index.html">Home</a>
+      <a href="agents.html">Agents</a>
+      <a href="homelab.html">Homelab</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <nav class="page-selector">
+    <label for="pageDropdown">Navigate to:</label>
+    <select id="pageDropdown">
+      <option value="">-- Select a Page --</option>
+      <option value="index.html">🏠 Home</option>
+      <option value="pictures.html">📸 Pictures</option>
+      <option value="coding.html">💻 Coding Projects</option>
+      <option value="homelab.html">🧪 Homelab</option>
+      <option value="security.html">🛡️ Security</option>
+      <option value="youtube.html">📺 YouTube Channel</option>
+      <option value="agents.html">🤖 Agents</option>
+    </select>
+  </nav>
+
+  <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+
+  <main id="maincontent">
+    <section>
+      <h2>What it is</h2>
+      <p>Four AI agents (Architect, Frontend, Backend, and QA) that run on my RTX 5080 through Ollama. You describe a task, they plan it, write the code, run the tests, and pass it through a security gate. Nothing gets pushed until a human approves it.</p>
+      <ul>
+        <li>🧠 Local models only, with no paid APIs and no code leaving the box for inference</li>
+        <li>🛡️ Secret scanning, dependency audits, and prompt-injection checks before every push</li>
+        <li>✅ Every push, PR, and repo creation needs an admin's approval, and every action is logged</li>
+        <li>🔐 Username and password accounts, invite-only sign-up, and members only see their own work</li>
+      </ul>
+      <p class="card-actions"><a class="links-cta" href="https://valid-2.tail317d6.ts.net" target="_blank" rel="noopener noreferrer">🚀 Open the dashboard</a></p>
+      <p>The dashboard runs on my PC, so it's only up while the homelab is. Need an invite? <a href="index.html#contact">Reach out</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 Diego Rivada. All rights reserved.
+  </footer>
+
+  <script src="site.js" defer></script>
+</body>
+</html>
