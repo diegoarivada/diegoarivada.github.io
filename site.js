@@ -9,7 +9,7 @@
   // ─────────────────────────────────────────────────────
   // 0. Page basics: navigation, theme, progress, reveal
   // ─────────────────────────────────────────────────────
-  const sitePages = ['index.html', 'pictures.html', 'coding.html', 'homelab.html', 'security.html', 'youtube.html'];
+  const sitePages = ['index.html', 'pictures.html', 'coding.html', 'homelab.html', 'security.html', 'youtube.html', 'agents.html'];
 
   const dropdown = document.getElementById('pageDropdown');
   if (dropdown) {
