@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mockup – UltroBot v2</title>
+  <link rel="stylesheet" href="mockup.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="home.html"><span class="monogram">DR</span><span>Diego Rivada</span></a>
+    <nav class="nav" aria-label="Site">
+      <a href="home.html">Home</a><a href="#">Security</a><a href="#">Coding</a><a href="#">Homelab</a>
+      <a class="active" href="#">UltroBot</a><a href="#">Pictures</a><a href="#">YouTube</a>
+    </nav>
+    <a class="status-pill" href="#"><span class="mini-bot" data-bot></span><span data-status-text>UltroBot sleeping</span><span class="dot show-awake"></span><span class="zz show-asleep">z z</span></a>
+    <button class="icon-btn" id="theme" aria-label="Toggle dark mode" data-icon="moon"></button>
+    <button class="icon-btn menu-btn" aria-label="Menu" data-icon="menu"></button>
+  </header>
+
+  <section class="bot-hero">
+    <div class="stars"></div><div class="moon"></div>
+    <div class="hero-grid">
+      <div>
+        <span class="state-badge"><span class="dot"></span><span class="show-awake">Online · answered in 140 ms</span><span class="show-asleep">Sleeping · UltroLab Server is powered down</span></span>
+        <h1 style="font-size:clamp(2.4rem,5vw,3.6rem);margin:1rem 0 .6rem">UltroBot</h1>
+        <p class="lead show-awake">My private AI workspace is awake. Chat, make files, run coding agents, and draft videos, all on my own hardware with nothing sent to a cloud AI.</p>
+        <p class="lead show-asleep">Shh, it's sleeping. The UltroLab Server naps when I'm not using it to save power, and wakes up remotely when I need it. Everything below still works while it's out.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary show-awake" href="#" data-icon="zap">Open UltroBot</a>
+          <a class="btn btn-primary show-asleep" href="#" aria-disabled="true" data-icon="moon">Open UltroBot (asleep)</a>
+          <a class="btn btn-ghost" href="#" data-icon="mail">Request an invite</a>
+        </div>
+        <div class="live-grid">
+          <div class="live"><strong>128</strong><span>tasks completed</span></div>
+          <div class="live"><strong>3</strong><span>video scripts drafted</span></div>
+          <div class="live"><strong class="show-awake">4h 12m</strong><strong class="show-asleep">—</strong><span>current uptime</span></div>
+          <div class="live"><strong>2h ago</strong><span>last seen awake</span></div>
+        </div>
+      </div>
+      <div class="pod"><div class="shadow"></div><div class="bot-wrap" data-bot></div></div>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <section class="section">
+      <div class="section-head"><div><div class="kicker">What it does</div><h2>One workspace, all local</h2></div></div>
+      <div class="features">
+        <div class="card"><span class="ico" data-icon="chat"></span><h3>Chat</h3><p>Like ChatGPT or Claude, with saved conversations per person.</p></div>
+        <div class="card"><span class="ico red" data-icon="image"></span><h3>Make files</h3><p>Images, PDFs, Word, PowerPoint, audio, and video, right in the chat.</p></div>
+        <div class="card"><span class="ico green" data-icon="code"></span><h3>Coding agents</h3><p>Architect, Frontend, Backend, and QA agents that plan, build, and test.</p></div>
+        <div class="card"><span class="ico" data-icon="file"></span><h3>Read your docs</h3><p>Upload PDFs, Word, PowerPoint, or Excel and get answers or rewrites.</p></div>
+        <div class="card"><span class="ico red" data-icon="shield"></span><h3>Guard rails</h3><p>Secret scanning, prompt-injection checks, and a human approves every push.</p></div>
+        <div class="card"><span class="ico green" data-icon="lock"></span><h3>Private by default</h3><p>Invite-only accounts, passkeys, and each person's chats stay theirs.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <div class="section-head" style="margin:0"><div><div class="kicker">Now building</div><h2>🎬 UltroBot Studio</h2><p>Topic in, finished draft of a ~10-minute YouTube video out.</p></div><a class="btn btn-outline" href="#" data-icon="branch">Local Video Studio</a></div>
+        <div class="bar"><i></i></div>
+        <div class="pipeline">
+          <div class="step done"><span class="st">Done</span><b>Outline</b>Editable plan</div>
+          <div class="step done"><span class="st">Done</span><b>Script</b>Written in my style</div>
+          <div class="step done"><span class="st">Done</span><b>Fact checklist</b>Every claim flagged</div>
+          <div class="step doing"><span class="st">In progress</span><b>Voice</b>Tuning my clone</div>
+          <div class="step todo"><span class="st">Next</span><b>Render</b>Footage, captions, music</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div><div class="kicker">Live from the board</div><h2>Recently shipped</h2><p>Pulled from UltroBot's sprint board. Only cards I mark public show up here.</p></div></div>
+      <ul class="feed">
+        <li><span class="lane claude">Claude</span><span>Passkey and Discord push sign-in for the Board</span><time>Nov 3</time></li>
+        <li><span class="lane claude">Claude</span><span>#agent-results channel for every output file</span><time>Nov 3</time></li>
+        <li><span class="lane copilot">Copilot</span><span>Studio script engine: outline to chapters</span><time>Nov 3</time></li>
+        <li><span class="lane diego">Diego</span><span>Remote wake through Home Assistant and UniFi</span><time>Nov 3</time></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site">© 2026 Diego Rivada · UltroBot runs on the UltroLab Server</footer>
+  <div class="mock-switch"><button data-state="awake">Awake</button><button data-state="asleep">Asleep</button></div>
+  <script src="mockup.js"></script>
+</body>
+</html>

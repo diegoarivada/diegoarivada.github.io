@@ -13,7 +13,7 @@
 
   <!-- Proxmox -->
   <rect class="box" x="50" y="50" width="180" height="80" />
-  <text x="140" y="95" text-anchor="middle" class="text">Proxmox (VMs & CTs)</text>
+  <text x="140" y="95" text-anchor="middle" class="text">Proxmox (VMs &amp; CTs)</text>
 
   <!-- Home Assistant -->
   <rect class="box" x="280" y="40" width="160" height="60" />
@@ -21,7 +21,7 @@
 
   <!-- Docker / Services -->
   <rect class="box" x="280" y="130" width="160" height="60" />
-  <text x="360" y="165" text-anchor="middle" class="text">Containers & Services</text>
+  <text x="360" y="165" text-anchor="middle" class="text">Containers &amp; Services</text>
 
   <!-- Ubiquiti -->
   <rect class="box" x="550" y="60" width="180" height="80" />

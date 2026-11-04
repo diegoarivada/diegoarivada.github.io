@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mockup – Home v2</title>
+  <link rel="stylesheet" href="mockup.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="monogram">DR</span><span>Diego Rivada</span></a>
+    <nav class="nav" aria-label="Site">
+      <a class="active" href="#">Home</a>
+      <a href="#">Security</a>
+      <a href="#">Coding</a>
+      <a href="#">Homelab</a>
+      <a href="ultrobot.html">UltroBot</a>
+      <a href="#">Pictures</a>
+      <a href="#">YouTube</a>
+    </nav>
+    <a class="status-pill" href="ultrobot.html"><span class="mini-bot" data-bot></span><span data-status-text>UltroBot sleeping</span><span class="dot show-awake"></span><span class="zz show-asleep">z z</span></a>
+    <button class="icon-btn" id="theme" aria-label="Toggle dark mode" data-icon="moon"></button>
+    <button class="icon-btn menu-btn" aria-label="Menu" data-icon="menu"></button>
+  </header>
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow" data-icon="plane">Securing commercial aircraft at Boeing</span>
+        <h1>Hi, I'm Diego.<br><span class="grad-text">I break things so planes don't.</span></h1>
+        <p class="lead"><span class="typing">Product Security Engineer · Backup Team Lead · USC Systems Architecting</span></p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#" data-icon="mail">Hire me</a>
+          <a class="btn btn-ghost" href="#" data-icon="file">Resume</a>
+          <a class="btn btn-ghost" href="#work" data-icon="arrow">See my work</a>
+        </div>
+        <div class="stats">
+          <div><strong>3+ yrs</strong><span>aircraft product security</span></div>
+          <div><strong>10</strong><span>threats modeled in EarDeck</span></div>
+          <div><strong>4</strong><span>live attacks you can run here</span></div>
+        </div>
+      </div>
+      <div class="portrait-card">
+        <img src="../../profile.JPG" alt="Diego Rivada">
+        <div class="float-chip one" data-icon="shield">DO-326B · DO-356B</div>
+        <div class="float-chip two" data-icon="server">Homelab on Proxmox</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <section class="section" id="work">
+      <div class="section-head">
+        <div><div class="kicker">What I build</div><h2>Projects and experiments</h2><p>Things I made because I wanted them to exist.</p></div>
+      </div>
+      <div class="bento">
+        <article class="card span-4 tile-ultrobot">
+          <div>
+            <span class="status-pill"><span class="dot show-awake"></span><span class="zz show-asleep">z z</span><span data-status-text>UltroBot sleeping</span></span>
+            <h3>UltroBot: my private AI workspace</h3>
+            <p class="show-asleep">It's napping right now because the UltroLab Server is powered down. Peek at what it does while it sleeps.</p>
+            <p class="show-awake">It's awake. Chat, files, coding agents, and a video studio, all running on my own hardware.</p>
+            <div class="tag-row"><span class="tag">Python</span><span class="tag">Local AI</span><span class="tag">Discord</span><span class="tag">Passkeys</span></div>
+            <a class="more" href="ultrobot.html">Meet UltroBot →</a>
+          </div>
+          <div class="bot-wrap" data-bot></div>
+        </article>
+        <article class="card span-2">
+          <span class="ico red" data-icon="shield"></span>
+          <h3>Security lab</h3>
+          <p>A click-through threat model and four attacks you can run against this site.</p>
+          <a class="more" href="#">Try to break it →</a>
+        </article>
+        <article class="card span-2">
+          <div class="thumb"><img src="../../images/eardeck.png" alt="EarDeck"></div>
+          <h3>EarDeck</h3>
+          <p>A threat-modeled AirPods tray app for Windows, in Rust.</p>
+          <a class="more" href="#">View on GitHub →</a>
+        </article>
+        <article class="card span-2">
+          <span class="ico" data-icon="server"></span>
+          <h3>Homelab</h3>
+          <p>Proxmox, UniFi VLANs, Home Assistant, and remote wake over Tailscale.</p>
+          <a class="more" href="#">Case study →</a>
+        </article>
+        <article class="card span-2">
+          <span class="ico green" data-icon="film"></span>
+          <h3>Local Video Studio</h3>
+          <p>Topic in, finished draft video out. Free, open source, runs on your PC.</p>
+          <a class="more" href="#">Get it →</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div><div class="kicker">Experience</div><h2>Where I've been</h2></div>
+        <a class="btn btn-outline" href="#" data-icon="file">Download resume</a></div>
+      <div class="timeline">
+        <div class="t-item now card">
+          <h3>Product Security Engineer II · Backup Team Lead</h3>
+          <div class="t-meta"><span>The Boeing Company</span><span>Seattle, WA</span><span>Aug 2026 – Present</span></div>
+          <ul><li>Lead security assessments of aircraft systems for FAA and EASA compliance.</li><li>Run Nessus and Nmap scanning and drive remediation of critical exposures.</li><li>Step in as lead, mentor and onboard new engineers.</li></ul>
+        </div>
+        <div class="t-item card">
+          <h3>Product Security Engineer II</h3>
+          <div class="t-meta"><span>The Boeing Company</span><span>Jun 2025 – Aug 2026</span></div>
+        </div>
+        <div class="t-item card">
+          <h3>Product Security Engineer</h3>
+          <div class="t-meta"><span>The Boeing Company</span><span>Feb 2023 – Jun 2025</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div><div class="kicker">Skills</div><h2>What I work with</h2></div></div>
+      <div class="chip-groups">
+        <div class="card"><span class="ico red" data-icon="shield"></span><h3>Security</h3><div class="chips"><span>Product security</span><span>Vuln management</span><span>Pen testing</span><span>Threat analysis</span><span>PKI · TLS</span><span>Forensics</span></div></div>
+        <div class="card"><span class="ico" data-icon="plane"></span><h3>Aviation &amp; compliance</h3><div class="chips"><span>DO-326B</span><span>DO-356B</span><span>DO-178</span><span>FAA</span><span>EASA</span><span>Continued airworthiness</span></div></div>
+        <div class="card"><span class="ico green" data-icon="code"></span><h3>Build &amp; tools</h3><div class="chips"><span>Python</span><span>Rust</span><span>C / C++</span><span>Nessus</span><span>Nmap</span><span>Wireshark</span><span>Docker</span><span>Local AI</span></div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="contact">
+        <div>
+          <div class="kicker">Contact</div><h2 style="margin-top:.3rem">Let's talk</h2>
+          <p style="color:var(--muted)">Questions about a role, a project, or an UltroBot invite? Send a note.</p>
+          <div class="socials">
+            <a href="#" data-icon="link">LinkedIn</a><a href="#" data-icon="branch">GitHub</a>
+            <a href="#" data-icon="play">YouTube</a><a href="#" data-icon="camera">Instagram</a>
+          </div>
+        </div>
+        <form class="card form" onsubmit="return false">
+          <input placeholder="Your name"><input placeholder="Your email"><textarea rows="4" placeholder="Message for Diego"></textarea>
+          <button class="btn btn-solid" data-icon="mail">Send message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site">© 2026 Diego Rivada · Built by hand, hosted on GitHub Pages</footer>
+
+  <div class="mock-switch"><button data-state="awake">Awake</button><button data-state="asleep">Asleep</button></div>
+  <script src="mockup.js"></script>
+</body>
+</html>

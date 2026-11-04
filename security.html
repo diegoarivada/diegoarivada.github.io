@@ -1,81 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="ub-unknown">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; connect-src https://ultrobot-status.homelab-alerts.workers.dev; base-uri 'none'; form-action 'none'" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Security | Diego Rivada</title>
   <meta name="description" content="Security work by Diego Rivada: aviation standards, the EarDeck threat model, and a live test of this site's own defenses." />
   <link rel="canonical" href="https://diegoarivada.dev/security.html" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/images/og.svg" />
-  <meta property="og:title" content="Security – Diego Rivada" />
+  <meta property="og:url" content="https://diegoarivada.dev/security.html" />
+  <meta property="og:title" content="Security | Diego Rivada" />
   <meta property="og:description" content="Aviation security standards, a threat model you can click through, and a site that tests its own defenses." />
-  <meta name="twitter:card" content="summary" />
-  <title>Security – Diego Rivada</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta property="og:image" content="https://diegoarivada.dev/assets/img/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="preload" href="assets/fonts/rubik-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/site.css" />
+  <script src="assets/js/theme-init.js"></script>
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/ultrobot-status.js" defer></script>
+  <script src="assets/js/security.js" defer></script>
 </head>
-
 <body>
-  <div id="scroll-progress" aria-hidden="true"></div>
-  <a class="skip-link" href="#maincontent">Skip to content</a>
-
-  <header>
-    <h1>🛡️ Security</h1>
-    <p>How I think about threats, at work and in what I build</p>
-    <nav class="anchor-nav" aria-label="Page sections">
-      <a href="index.html">Home</a>
-      <a href="#eardeck">EarDeck</a>
-      <a href="#standards">Standards</a>
-      <a href="#this-site">This Site</a>
-      <a href="#report">Report</a>
-    </nav>
-  </header>
-
-  <nav class="page-selector">
-    <label for="pageDropdown">Navigate to:</label>
-    <select id="pageDropdown">
-      <option value="">-- Select a Page --</option>
-      <option value="index.html">🏠 Home</option>
-      <option value="pictures.html">📸 Pictures</option>
-      <option value="coding.html">💻 Coding Projects</option>
-      <option value="homelab.html">🧪 Homelab</option>
-      <option value="security.html">🛡️ Security</option>
-      <option value="youtube.html">📺 YouTube Channel</option>
-      <option value="agents.html">🤖 UltroBot</option>
-    </select>
+<!-- build:sprite -->
+<svg xmlns="http://www.w3.org/2000/svg" class="sr-only" aria-hidden="true" focusable="false">
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="i-branch" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 9v6M18 9a9 9 0 0 1-9 9"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></symbol>
+  <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5M3 21v-5h5"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><path d="M12 19h8"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.7V17c0 .6-.5 1-1 1.2C7.8 18.8 7 20.2 7 22M14 14.7V17c0 .6.5 1 1 1.2 1.2.6 2 2 2 3.8M18 2H6v7a6 6 0 0 0 12 0V2z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></symbol>
+  <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5.5 12 2.5c-.5 3-2 5.4-4 7S5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></symbol>
+  <symbol id="i-grad" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+</svg>
+<!-- /build:sprite -->
+<!-- build:header -->
+<a class="skip-link" href="#maincontent">Skip to content</a>
+<div id="scroll-progress" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="Diego Rivada, home"><span class="monogram" aria-hidden="true">DR</span><span class="brand-name">Diego Rivada</span></a>
+  <nav class="nav" id="site-nav" aria-label="Site">
+    <a href="index.html">Home</a>
+    <a href="security.html" aria-current="page">Security</a>
+    <a href="coding.html">Coding</a>
+    <a href="homelab.html">Homelab</a>
+    <a href="agents.html">UltroBot</a>
+    <a href="pictures.html">Pictures</a>
+    <a href="youtube.html">YouTube</a>
   </nav>
+  <a class="status-pill" href="agents.html" data-ub-pill data-status-url="https://ultrobot-status.homelab-alerts.workers.dev/status">
+    <span class="mini-bot"><svg class="bot" viewBox="0 0 200 180" aria-hidden="true" focusable="false"><g class="body-g"><line class="stem" x1="100" y1="40" x2="100" y2="20"/><circle class="bulb" cx="100" cy="15" r="8"/><rect class="ear" x="16" y="78" width="16" height="32" rx="7"/><rect class="ear" x="168" y="78" width="16" height="32" rx="7"/><rect class="head" x="30" y="38" width="140" height="112" rx="34"/><rect class="visor" x="48" y="62" width="104" height="56" rx="24"/><g class="eyes"><ellipse class="eye" cx="78" cy="90" rx="9" ry="11"/><ellipse class="eye" cx="122" cy="90" rx="9" ry="11"/></g><path class="lid" d="M68 90 Q78 99 88 90"/><path class="lid" d="M112 90 Q122 99 132 90"/><path class="mouth" d="M88 132 Q100 140 112 132"/></g><text class="zz z1" x="150" y="44" font-size="18">z</text><text class="zz z2" x="150" y="44" font-size="24">z</text><text class="zz z3" x="150" y="44" font-size="30">Z</text></svg></span>
+    <span class="pill-text"><span class="if-awake">UltroBot online</span><span class="if-asleep">UltroBot sleeping</span></span>
+    <span class="pill-dot if-awake" aria-hidden="true"></span><span class="pill-zz if-asleep" aria-hidden="true">z z</span>
+  </a>
+  <button class="icon-btn theme-btn" id="theme-toggle" type="button" aria-label="Switch to dark mode"><svg class="i i-moon" aria-hidden="true"><use href="#i-moon"/></svg><svg class="i i-sun" aria-hidden="true"><use href="#i-sun"/></svg></button>
+  <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+</header>
+<!-- /build:header -->
 
-  <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+<section class="page-hero" aria-labelledby="page-title">
+  <span class="orb orb-blue" aria-hidden="true"></span><span class="orb orb-red" aria-hidden="true"></span>
+  <div class="inner">
+    <span class="eyebrow"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Security</span>
+    <h1 id="page-title">How I think about threats</h1>
+    <p class="lead">At work and in what I build. Click through a real threat model, then try to break this site.</p>
+    <div class="btn-row hero-jump">
+      <a class="btn btn-ghost" href="#eardeck">EarDeck threat model</a>
+      <a class="btn btn-ghost" href="#standards">Standards</a>
+      <a class="btn btn-ghost" href="#this-site">Break this site</a>
+    </div>
+  </div>
+</section>
 
-  <main id="maincontent">
-    <section id="approach">
-      <h2>What I Do</h2>
-      <p>I secure commercial aircraft systems as a Product Security Engineer II and Backup Team Lead at Boeing, helping them meet FAA and EASA airworthiness and cybersecurity requirements. That work stays private, so this page shows how I think through the things I can share.</p>
-      <div class="info-grid">
-        <div class="info-card">
-          <h3>🔎 Security Assessments</h3>
-          <p>Leading assessments of aircraft systems against FAA and EASA requirements.</p>
-        </div>
-        <div class="info-card">
-          <h3>🩹 Vulnerability Management</h3>
-          <p>Scanning with Nessus and Nmap, triaging findings, and driving critical exposures to remediation.</p>
-        </div>
-        <div class="info-card">
-          <h3>✈️ Continued Airworthiness</h3>
-          <p>Log analysis and archive reviews that resolve airline Service Requests.</p>
-        </div>
-        <div class="info-card">
-          <h3>🔐 PKI and TLS</h3>
-          <p>Certificate Signing Requests and SSL/TLS configuration for web applications.</p>
-        </div>
-      </div>
-    </section>
+<main id="maincontent" class="wrap">
+  <section class="block" id="approach" aria-labelledby="approach-title">
+    <div class="block-head"><div><span class="kicker">Day job</span><h2 id="approach-title">What I do</h2><p>I secure commercial aircraft systems as a Product Security Engineer II and Backup Team Lead at Boeing, helping them meet FAA and EASA airworthiness and cybersecurity requirements. That work stays private, so this page shows how I think through the things I can share.</p></div></div>
+    <div class="grid-2">
+      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Security assessments</h3><p>Leading assessments of aircraft systems against FAA and EASA requirements.</p></div>
+      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-refresh"/></svg></span><h3>Vulnerability management</h3><p>Scanning with Nessus and Nmap, triaging findings, and driving critical exposures to remediation.</p></div>
+      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-plane"/></svg></span><h3>Continued airworthiness</h3><p>Log analysis and archive reviews that resolve airline Service Requests.</p></div>
+      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg></span><h3>PKI and TLS</h3><p>Certificate Signing Requests and SSL/TLS configuration for web applications.</p></div>
+    </div>
+  </section>
 
-    <section id="eardeck">
-      <h2>🎧 EarDeck Threat Model</h2>
-      <p>EarDeck is my free, open source AirPods tray app for Windows, built in Rust. Any Bluetooth device in range can broadcast anything and pick any name, so the main threat is someone nearby. Pick a side of the attack surface to see what could go wrong there and what stops it.</p>
+  <section class="block" id="eardeck" aria-labelledby="eardeck-title">
+    <div class="card">
+      <span class="kicker">Threat model</span>
+      <h2 id="eardeck-title">🎧 EarDeck</h2>
+      <p class="muted">EarDeck is my free, open source AirPods tray app for Windows, built in Rust. Any Bluetooth device in range can broadcast anything and pick any name, so the main threat is someone nearby. Pick a side of the attack surface to see what could go wrong there and what stops it.</p>
 
       <div class="stat-row">
         <div class="stat"><strong>10</strong><span>threats modeled</span></div>
@@ -140,139 +178,95 @@
         </article>
       </div>
 
-      <h3>Known Limits</h3>
-      <p>A threat model that claims to stop everything isn't telling the truth, so these are written down too.</p>
+      <h3>Known limits</h3>
+      <p class="muted">A threat model that claims to stop everything isn't telling the truth, so these are written down too.</p>
       <ul>
         <li>Fake broadcasts can't be fully stopped, because AirPods broadcasts are not authenticated. Someone nearby could show false battery levels or trigger a pause, but they can't reach your files or your audio.</li>
         <li>Pairing relies on the device's name, so only pick a device you just put in pairing mode.</li>
         <li>Releases aren't code signed yet, so the releases page lists a SHA-256 value to check your download against.</li>
         <li>Malware already running as your user is out of scope, since it could already change anything EarDeck can.</li>
       </ul>
-      <p class="card-actions">
-        <a class="links-cta" href="https://github.com/diegoarivada/eardeck" target="_blank" rel="noopener noreferrer">🔗 View on GitHub</a>
-        <a class="links-cta" href="https://github.com/diegoarivada/eardeck/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">📄 Read SECURITY.md</a>
-      </p>
-    </section>
-
-    <section id="standards">
-      <h2>📜 Standards and Tooling</h2>
-      <p>In aviation, security has to be shown to a regulator, not just claimed. These are the public standards and tools behind my work.</p>
-      <div class="info-grid">
-        <div class="info-card">
-          <h3>DO-326B</h3>
-          <p>The airworthiness security process: how aircraft security gets planned and shown during certification.</p>
-        </div>
-        <div class="info-card">
-          <h3>DO-356B</h3>
-          <p>The methods and considerations that put the airworthiness security process into practice.</p>
-        </div>
-        <div class="info-card">
-          <h3>DO-178</h3>
-          <p>Software considerations for airborne systems and equipment certification.</p>
-        </div>
-        <div class="info-card">
-          <h3>FAA and EASA</h3>
-          <p>Airworthiness and cybersecurity requirements, including continued airworthiness once aircraft are in service.</p>
-        </div>
+      <div class="btn-row">
+        <a class="btn btn-solid" href="https://github.com/diegoarivada/eardeck" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="#i-branch"/></svg>View on GitHub</a>
+        <a class="btn btn-outline" href="https://github.com/diegoarivada/eardeck/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>Read SECURITY.md</a>
       </div>
+    </div>
+  </section>
 
-      <h3>Disciplines</h3>
-      <ul class="chip-list">
-        <li>Vulnerability Assessment</li>
-        <li>Penetration Testing</li>
-        <li>Threat Analysis</li>
-        <li>Log Analysis</li>
-        <li>Digital Forensics</li>
-        <li>Reverse Engineering</li>
-        <li>PKI and TLS</li>
-      </ul>
+  <section class="block" id="standards" aria-labelledby="standards-title">
+    <div class="block-head"><div><span class="kicker">Standards</span><h2 id="standards-title">📜 Standards and tooling</h2><p>In aviation, security has to be shown to a regulator, not just claimed. These are the public standards and tools behind my work.</p></div></div>
+    <div class="info-grid">
+      <div class="info-card"><h3>DO-326B</h3><p>The airworthiness security process: how aircraft security gets planned and shown during certification.</p></div>
+      <div class="info-card"><h3>DO-356B</h3><p>The methods and considerations that put the airworthiness security process into practice.</p></div>
+      <div class="info-card"><h3>DO-178</h3><p>Software considerations for airborne systems and equipment certification.</p></div>
+      <div class="info-card"><h3>FAA and EASA</h3><p>Airworthiness and cybersecurity requirements, including continued airworthiness once aircraft are in service.</p></div>
+    </div>
+    <div class="grid-2 chip-cards">
+      <div class="card"><h3>Disciplines</h3>
+        <ul class="chip-list"><li>Vulnerability Assessment</li><li>Penetration Testing</li><li>Threat Analysis</li><li>Log Analysis</li><li>Digital Forensics</li><li>Reverse Engineering</li><li>PKI and TLS</li></ul></div>
+      <div class="card"><h3>Toolbox</h3>
+        <ul class="chip-list"><li>Nessus</li><li>Nmap</li><li>Wireshark</li><li>Kali Linux</li><li>Docker</li><li>Python</li><li>C</li><li>C++</li></ul></div>
+    </div>
+  </section>
 
-      <h3>Toolbox</h3>
-      <ul class="chip-list">
-        <li>Nessus</li>
-        <li>Nmap</li>
-        <li>Wireshark</li>
-        <li>Kali Linux</li>
-        <li>Docker</li>
-        <li>Python</li>
-        <li>C</li>
-        <li>C++</li>
-      </ul>
-    </section>
+  <section class="block" id="this-site" aria-labelledby="site-title">
+    <div class="block-head"><div><span class="kicker">Live test</span><h2 id="site-title">🔒 This site defends itself</h2><p>A security engineer's website should practice what it preaches. GitHub Pages doesn't let me set response headers, so every defense here has to work from the page itself. For example, the Content Security Policy lives in a meta tag at the top of each page.</p></div></div>
+    <div class="info-grid">
+      <div class="info-card"><h3>🧱 Content Security Policy</h3><p>Every page starts from <code>default-src 'none'</code> and only allows what it needs.</p></div>
+      <div class="info-card"><h3>🚫 No inline code</h3><p>All scripts and styles ship as files, so the policy never needs <code>'unsafe-inline'</code>.</p></div>
+      <div class="info-card"><h3>📦 No third-party scripts</h3><p>Even the font and icons are self-hosted, so no outside stylesheet or script can change under me.</p></div>
+      <div class="info-card"><h3>🔐 HTTPS everywhere</h3><p>GitHub enforces HTTPS, and every <code>.dev</code> domain is on the browser HSTS preload list.</p></div>
+      <div class="info-card"><h3>🤖 UltroBot status, safely</h3><p>The status badge asks a separate signed-heartbeat service, never my home server, so this site opens no path into my network.</p></div>
+      <div class="info-card"><h3>📬 security.txt</h3><p>A standard <a href=".well-known/security.txt">RFC 9116 file</a> tells researchers how to reach me.</p></div>
+      <div class="info-card"><h3>🔬 Static analysis</h3><p>CodeQL checks the site's JavaScript on every change and weekly.</p></div>
+      <div class="info-card"><h3>🕷️ Dynamic analysis</h3><p>A ZAP baseline scan runs against a local copy of the site on every change and weekly.</p></div>
+      <div class="info-card"><h3>📌 Pinned actions</h3><p>GitHub Actions are pinned to exact commits, and Dependabot proposes updates.</p></div>
+      <div class="info-card gap"><h3>⚠️ Known gap</h3><p>Clickjacking protection, a few hardening headers, and violation reports need real response headers, which GitHub Pages can't send.</p></div>
+    </div>
 
-    <section id="this-site">
-      <h2>🔒 This Site Defends Itself</h2>
-      <p>A security engineer's website should practice what it preaches. GitHub Pages doesn't let me set response headers, so every defense here has to work from the page itself. For example, the Content Security Policy lives in a meta tag at the top of each page.</p>
-      <div class="info-grid">
-        <div class="info-card">
-          <h3>🧱 Content Security Policy</h3>
-          <p>Every page starts from <code>default-src 'none'</code> and only allows what it needs.</p>
-        </div>
-        <div class="info-card">
-          <h3>🚫 No Inline Code</h3>
-          <p>All scripts and styles ship as files, so the policy never needs <code>'unsafe-inline'</code>.</p>
-        </div>
-        <div class="info-card">
-          <h3>📦 No Third-Party Scripts</h3>
-          <p>Even the font is self-hosted, so no outside stylesheet or script can change under me.</p>
-        </div>
-        <div class="info-card">
-          <h3>🔐 HTTPS Everywhere</h3>
-          <p>GitHub enforces HTTPS, and every <code>.dev</code> domain is on the browser HSTS preload list.</p>
-        </div>
-        <div class="info-card">
-          <h3>📬 security.txt</h3>
-          <p>A standard <a href=".well-known/security.txt">RFC 9116 file</a> tells researchers how to reach me.</p>
-        </div>
-        <div class="info-card">
-          <h3>🔬 Static Analysis</h3>
-          <p>CodeQL checks the site's JavaScript on every change and weekly.</p>
-        </div>
-        <div class="info-card">
-          <h3>🕷️ Dynamic Analysis</h3>
-          <p>A ZAP baseline scan runs against a local copy of the site on every change and weekly.</p>
-        </div>
-        <div class="info-card">
-          <h3>📌 Pinned Actions</h3>
-          <p>GitHub Actions are pinned to exact commits, and Dependabot proposes updates.</p>
-        </div>
-        <div class="info-card gap">
-          <h3>⚠️ Known Gap</h3>
-          <p>Clickjacking protection, a few hardening headers, and violation reports need real response headers, which GitHub Pages can't send.</p>
-        </div>
-      </div>
+    <div class="csp-lab">
+      <h3>🧪 Live test</h3>
+      <p class="muted">Press the button and this page will attack itself four ways. The results come from your own browser as it runs them, so nothing here is canned.</p>
+      <noscript><p>This test needs JavaScript, which is a fair trade on a page about blocking it.</p></noscript>
+      <button id="csp-run" class="btn btn-solid" type="button" hidden>⚡ Try to break it</button>
+      <div id="csp-results" aria-live="polite"></div>
+      <details id="csp-details" hidden>
+        <summary>See the policy on this page</summary>
+        <pre id="csp-policy"></pre>
+      </details>
+    </div>
+  </section>
 
-      <div class="csp-lab">
-        <h3>🧪 Live Test</h3>
-        <p>Press the button and this page will attack itself four ways. The results come from your own browser as it runs them, so nothing here is canned.</p>
-        <noscript><p>This test needs JavaScript, which is a fair trade on a page about blocking it.</p></noscript>
-        <button id="csp-run" class="links-cta" type="button" hidden>⚡ Try to break it</button>
-        <div id="csp-results" aria-live="polite"></div>
-        <details id="csp-details" hidden>
-          <summary>See the policy on this page</summary>
-          <pre id="csp-policy"></pre>
-        </details>
-      </div>
-    </section>
+  <section class="block" id="homelab" aria-labelledby="home-title">
+    <div class="card">
+      <span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-server"/></svg></span>
+      <h2 id="home-title">🧪 Security at home</h2>
+      <p class="muted">I practice the same habits in my homelab: IoT devices kept on their own segmented network, WireGuard for remote access, a Pi-hole DNS sinkhole, and services behind a reverse proxy with TLS.</p>
+      <a class="more" href="homelab-case-study.html">Read the homelab case study<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </section>
 
-    <section id="homelab">
-      <h2>🧪 Security at Home</h2>
-      <p>I practice the same habits in my homelab: IoT devices kept on their own segmented network, WireGuard for remote access, a Pi-hole DNS sinkhole, and services behind a reverse proxy with TLS.</p>
-      <p class="card-actions"><a class="links-cta" href="homelab-case-study.html">Read the homelab case study</a></p>
-    </section>
+  <section class="block" id="report" aria-labelledby="report-title">
+    <div class="card">
+      <span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span>
+      <h2 id="report-title">📬 Found something?</h2>
+      <p class="muted">If you find a security problem on this site, please email <a href="mailto:diegoarivada@gmail.com">diegoarivada@gmail.com</a> with the steps to reproduce it. This is a personal site, so there's no bug bounty, but I read every report.</p>
+      <p class="muted">For EarDeck, please use <a href="https://github.com/diegoarivada/eardeck/security/advisories/new" target="_blank" rel="noopener noreferrer">GitHub's private vulnerability reporting</a>.</p>
+    </div>
+  </section>
+</main>
 
-    <section id="report">
-      <h2>📬 Found Something?</h2>
-      <p>If you find a security problem on this site, please email <a href="mailto:diegoarivada@gmail.com">diegoarivada@gmail.com</a> with the steps to reproduce it. This is a personal site, so there's no bug bounty, but I read every report.</p>
-      <p>For EarDeck, please use <a href="https://github.com/diegoarivada/eardeck/security/advisories/new" target="_blank" rel="noopener noreferrer">GitHub's private vulnerability reporting</a>.</p>
-    </section>
-  </main>
-
-  <footer>
-    &copy; 2026 Diego Rivada. All rights reserved.
-  </footer>
-
-  <script src="site.js" defer></script>
-  <script src="security.js" defer></script>
+<!-- build:footer -->
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; 2026 Diego Rivada. Built by hand, hosted on GitHub Pages.</span>
+    <nav aria-label="Footer">
+      <a href="index.html#contact">Contact</a>
+      <a href="security.html#report">Report a security issue</a>
+      <a href="https://github.com/diegoarivada/diegoarivada.github.io" target="_blank" rel="noopener noreferrer">Source</a>
+    </nav>
+  </div>
+</footer>
+<!-- /build:footer -->
 </body>
 </html>

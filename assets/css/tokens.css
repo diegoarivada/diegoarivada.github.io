@@ -1,0 +1,52 @@
+/* Design tokens shared by diegoarivada.dev and the UltroBot dashboard. See docs/DESIGN_SYSTEM.md. */
+@font-face {
+  font-family: 'Rubik';
+  src: url('../fonts/rubik-latin-wght-normal.woff2') format('woff2');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --blue: #0a66c2;
+  --red: #e63946;
+  --navy: #1d3557;
+  --ok: #2a9d8f;
+  --warn: #c77d12;
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --text: #1d3557;
+  --muted: #56657a;
+  --line: rgba(29, 53, 87, 0.11);
+  --tint: rgba(10, 102, 194, 0.07);
+  --tint-red: rgba(230, 57, 70, 0.09);
+  --tint-ok: rgba(42, 157, 143, 0.12);
+  --glass: rgba(255, 255, 255, 0.74);
+  --shadow: 0 1px 2px rgba(29, 53, 87, 0.06), 0 10px 30px rgba(29, 53, 87, 0.08);
+  --shadow-lg: 0 2px 4px rgba(29, 53, 87, 0.06), 0 18px 44px rgba(29, 53, 87, 0.14);
+  --grad: linear-gradient(120deg, #0a66c2, #e63946);
+  --radius: 20px;
+  --radius-sm: 12px;
+  --mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --blue: #7aa7ff;
+  --red: #f0717f;
+  --ok: #5fd3c3;
+  --warn: #f0b45a;
+  --bg: #0b1220;
+  --card: #131c2e;
+  --text: #e8eef7;
+  --muted: #a5b4ca;
+  --line: rgba(255, 255, 255, 0.09);
+  --tint: rgba(122, 167, 255, 0.12);
+  --tint-red: rgba(240, 113, 127, 0.13);
+  --tint-ok: rgba(95, 211, 195, 0.13);
+  --glass: rgba(11, 18, 32, 0.72);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.3), 0 18px 44px rgba(0, 0, 0, 0.45);
+}

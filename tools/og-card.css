@@ -1,0 +1,8 @@
+﻿html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+.card { position: relative; width: 1200px; height: 630px; display: flex; align-items: center; justify-content: space-between; padding: 0 90px; box-sizing: border-box; color: #fff; font-family: 'Rubik', sans-serif;
+  background: radial-gradient(700px 500px at 0% 0%, #0a66c2 0%, transparent 70%), radial-gradient(700px 500px at 100% 100%, #e63946 0%, transparent 70%), #0d2a52; }
+.eyebrow { display: inline-block; padding: 8px 18px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25); font-size: 24px; font-weight: 500; }
+h1 { font-size: 76px; margin: 26px 0 14px; font-weight: 700; letter-spacing: -1px; }
+p { font-size: 27px; margin: 0; color: rgba(255,255,255,.92); }
+p.sub { font-size: 21px; margin-top: 14px; color: rgba(255,255,255,.75); }
+img { width: 330px; height: 330px; border-radius: 40px; border: 6px solid rgba(255,255,255,.55); object-fit: cover; box-shadow: 0 30px 60px rgba(0,0,0,.35); }

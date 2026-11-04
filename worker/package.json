@@ -1,0 +1,14 @@
+{
+  "name": "ultrobot-status",
+  "private": true,
+  "type": "module",
+  "description": "Cloudflare Worker that tells diegoarivada.dev whether UltroBot is awake. See docs/ULTROBOT_STATUS.md.",
+  "scripts": {
+    "test": "node --test",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "4.157.0"
+  }
+}

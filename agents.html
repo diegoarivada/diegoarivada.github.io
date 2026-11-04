@@ -1,91 +1,176 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="ub-unknown">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; connect-src https://ultrobot-status.homelab-alerts.workers.dev; base-uri 'none'; form-action 'none'" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="UltroBot: a private AI workspace for chat, files, and code, running on Diego Rivada's UltroLab Server." />
-  <link rel="canonical" href="https://diegoarivada.github.io/agents.html" />
-  <meta property="og:title" content="UltroBot – Diego Rivada" />
-  <meta property="og:description" content="A private AI workspace: chat, generate images, documents, slides, audio, and video, run AI coding agents, and draft YouTube videos." />
-  <meta name="twitter:card" content="summary" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>UltroBot | Diego Rivada</title>
+  <meta name="description" content="UltroBot: a private AI workspace for chat, files, code, and video, running on Diego Rivada's UltroLab Server. See whether it's awake right now." />
+  <link rel="canonical" href="https://diegoarivada.dev/agents.html" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/images/og.svg" />
-  <title>UltroBot – Diego Rivada</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta property="og:url" content="https://diegoarivada.dev/agents.html" />
+  <meta property="og:title" content="UltroBot | Diego Rivada" />
+  <meta property="og:description" content="A private AI workspace: chat, make images, documents, slides, audio, and video, run AI coding agents, and draft YouTube videos." />
+  <meta property="og:image" content="https://diegoarivada.dev/assets/img/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="preload" href="assets/fonts/rubik-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/site.css" />
+  <script src="assets/js/theme-init.js"></script>
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/ultrobot-status.js" defer></script>
 </head>
-
 <body>
-  <div id="scroll-progress" aria-hidden="true"></div>
-  <a class="skip-link" href="#maincontent">Skip to content</a>
-
-  <header>
-    <h1>🤖 UltroBot</h1>
-    <p>My private AI workspace on the UltroLab Server. Sign-in is invite only.</p>
-    <nav class="anchor-nav" aria-label="Page sections">
-      <a href="index.html">Home</a>
-      <a href="agents.html">UltroBot</a>
-      <a href="agents.html#studio">Studio</a>
-      <a href="homelab.html">Homelab</a>
-      <a href="index.html#contact">Contact</a>
-    </nav>
-  </header>
-
-  <nav class="page-selector">
-    <label for="pageDropdown">Navigate to:</label>
-    <select id="pageDropdown">
-      <option value="">-- Select a Page --</option>
-      <option value="index.html">🏠 Home</option>
-      <option value="pictures.html">📸 Pictures</option>
-      <option value="coding.html">💻 Coding Projects</option>
-      <option value="homelab.html">🧪 Homelab</option>
-      <option value="security.html">🛡️ Security</option>
-      <option value="youtube.html">📺 YouTube Channel</option>
-      <option value="agents.html">🤖 UltroBot</option>
-    </select>
+<!-- build:sprite -->
+<svg xmlns="http://www.w3.org/2000/svg" class="sr-only" aria-hidden="true" focusable="false">
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="i-branch" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 9v6M18 9a9 9 0 0 1-9 9"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></symbol>
+  <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5M3 21v-5h5"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><path d="M12 19h8"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.7V17c0 .6-.5 1-1 1.2C7.8 18.8 7 20.2 7 22M14 14.7V17c0 .6.5 1 1 1.2 1.2.6 2 2 2 3.8M18 2H6v7a6 6 0 0 0 12 0V2z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></symbol>
+  <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5.5 12 2.5c-.5 3-2 5.4-4 7S5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></symbol>
+  <symbol id="i-grad" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+</svg>
+<!-- /build:sprite -->
+<!-- build:header -->
+<a class="skip-link" href="#maincontent">Skip to content</a>
+<div id="scroll-progress" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="Diego Rivada, home"><span class="monogram" aria-hidden="true">DR</span><span class="brand-name">Diego Rivada</span></a>
+  <nav class="nav" id="site-nav" aria-label="Site">
+    <a href="index.html">Home</a>
+    <a href="security.html">Security</a>
+    <a href="coding.html">Coding</a>
+    <a href="homelab.html">Homelab</a>
+    <a href="agents.html" aria-current="page">UltroBot</a>
+    <a href="pictures.html">Pictures</a>
+    <a href="youtube.html">YouTube</a>
   </nav>
+  <a class="status-pill" href="agents.html" data-ub-pill data-status-url="https://ultrobot-status.homelab-alerts.workers.dev/status">
+    <span class="mini-bot"><svg class="bot" viewBox="0 0 200 180" aria-hidden="true" focusable="false"><g class="body-g"><line class="stem" x1="100" y1="40" x2="100" y2="20"/><circle class="bulb" cx="100" cy="15" r="8"/><rect class="ear" x="16" y="78" width="16" height="32" rx="7"/><rect class="ear" x="168" y="78" width="16" height="32" rx="7"/><rect class="head" x="30" y="38" width="140" height="112" rx="34"/><rect class="visor" x="48" y="62" width="104" height="56" rx="24"/><g class="eyes"><ellipse class="eye" cx="78" cy="90" rx="9" ry="11"/><ellipse class="eye" cx="122" cy="90" rx="9" ry="11"/></g><path class="lid" d="M68 90 Q78 99 88 90"/><path class="lid" d="M112 90 Q122 99 132 90"/><path class="mouth" d="M88 132 Q100 140 112 132"/></g><text class="zz z1" x="150" y="44" font-size="18">z</text><text class="zz z2" x="150" y="44" font-size="24">z</text><text class="zz z3" x="150" y="44" font-size="30">Z</text></svg></span>
+    <span class="pill-text"><span class="if-awake">UltroBot online</span><span class="if-asleep">UltroBot sleeping</span></span>
+    <span class="pill-dot if-awake" aria-hidden="true"></span><span class="pill-zz if-asleep" aria-hidden="true">z z</span>
+  </a>
+  <button class="icon-btn theme-btn" id="theme-toggle" type="button" aria-label="Switch to dark mode"><svg class="i i-moon" aria-hidden="true"><use href="#i-moon"/></svg><svg class="i i-sun" aria-hidden="true"><use href="#i-sun"/></svg></button>
+  <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+</header>
+<!-- /build:header -->
 
-  <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+<section class="bot-hero" aria-labelledby="bot-title">
+  <div class="stars" aria-hidden="true"></div><div class="moon" aria-hidden="true"></div>
+  <div class="hero-grid">
+    <div>
+      <span class="state-badge" role="status">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="if-awake">Online · answered in <span data-ub="latency">a moment</span></span>
+        <span class="if-asleep if-asleep-only">Sleeping · the UltroLab Server is powered down</span>
+        <span class="if-unknown">Status unavailable, probably sleeping</span>
+      </span>
+      <h1 id="bot-title">UltroBot</h1>
+      <p class="lead if-awake">My private AI workspace is awake. Chat, make files, run coding agents, and draft videos, all on my own hardware with nothing sent off to a cloud AI.</p>
+      <p class="lead if-asleep">Shh, it's sleeping. The UltroLab Server naps when I'm not using it to save power, and I wake it up remotely when I need it. Everything on this page still works while it's out.</p>
+      <div class="btn-row">
+        <a class="btn btn-light if-awake" href="https://valid-2.tail317d6.ts.net" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg>Open UltroBot</a>
+        <span class="btn btn-light if-asleep" aria-disabled="true"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg>Open UltroBot (asleep)</span>
+        <a class="btn btn-ghost" href="index.html?invite=ultrobot#contact"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>Request an invite</a>
+      </div>
+      <div class="live-grid">
+        <div class="live"><strong data-ub="tasks_done">—</strong><span>tasks completed</span></div>
+        <div class="live"><strong data-ub="scripts_drafted">—</strong><span>video scripts drafted</span></div>
+        <div class="live"><strong data-ub="uptime">—</strong><span>current uptime</span></div>
+        <div class="live"><strong data-ub="last_seen">—</strong><span>last seen awake</span></div>
+      </div>
+    </div>
+    <div class="pod" aria-hidden="true"><div class="shadow"></div><div class="bot-wrap"><!-- build:bot -->
+<svg class="bot" viewBox="0 0 200 180" aria-hidden="true" focusable="false"><g class="body-g"><line class="stem" x1="100" y1="40" x2="100" y2="20"/><circle class="bulb" cx="100" cy="15" r="8"/><rect class="ear" x="16" y="78" width="16" height="32" rx="7"/><rect class="ear" x="168" y="78" width="16" height="32" rx="7"/><rect class="head" x="30" y="38" width="140" height="112" rx="34"/><rect class="visor" x="48" y="62" width="104" height="56" rx="24"/><g class="eyes"><ellipse class="eye" cx="78" cy="90" rx="9" ry="11"/><ellipse class="eye" cx="122" cy="90" rx="9" ry="11"/></g><path class="lid" d="M68 90 Q78 99 88 90"/><path class="lid" d="M112 90 Q122 99 132 90"/><path class="mouth" d="M88 132 Q100 140 112 132"/></g><text class="zz z1" x="150" y="44" font-size="18">z</text><text class="zz z2" x="150" y="44" font-size="24">z</text><text class="zz z3" x="150" y="44" font-size="30">Z</text></svg>
+<!-- /build:bot --></div></div>
+  </div>
+</section>
 
-  <main id="maincontent">
-    <section>
-      <h2>What it is</h2>
-      <p>UltroBot is an AI workspace I built and host myself. Everything runs privately on the UltroLab Server, with no paid APIs and nothing sent off to a cloud AI.</p>
-      <ul>
-        <li>💬 Chat like ChatGPT or Claude, with saved conversations</li>
-        <li>🎨 Ask for an image, PDF, Word doc, PowerPoint, audio clip, or video and it shows up right in the chat</li>
-        <li>📎 Upload PDFs, Word, PowerPoint, Excel, or text files and have them summarized, answered, or rewritten</li>
-        <li>🛠️ AI coding agents (Architect, Frontend, Backend, and QA) that plan, build, test, and security-review code</li>
-        <li>🛡️ Secret scanning and prompt-injection checks, and every push to GitHub needs a human's approval</li>
-        <li>🔐 Username and password accounts, invite-only sign-up, and each person's chats and files stay private</li>
-      </ul>
-      <p class="card-actions"><a class="links-cta" href="https://valid-2.tail317d6.ts.net" target="_blank" rel="noopener noreferrer">🚀 Open UltroBot</a></p>
-      <p>It's only up while the UltroLab Server is on. Need an invite? <a href="index.html#contact">Reach out</a>.</p>
-    </section>
+<main id="maincontent" class="wrap">
+  <section class="block" aria-labelledby="does-title">
+    <div class="block-head"><div><span class="kicker">What it does</span><h2 id="does-title">One workspace, all local</h2><p>UltroBot is an AI workspace I built and host myself. Everything runs privately on the UltroLab Server, with no paid APIs. Sign-in is invite only.</p></div></div>
+    <div class="grid-3">
+      <div class="card lift"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg></span><h3>Chat</h3><p>Like ChatGPT or Claude, with saved conversations for each person.</p></div>
+      <div class="card lift"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-image"/></svg></span><h3>Make files</h3><p>Ask for an image, PDF, Word doc, PowerPoint, audio clip, or video and it shows up right in the chat.</p></div>
+      <div class="card lift"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-code"/></svg></span><h3>Coding agents</h3><p>Architect, Frontend, Backend, and QA agents that plan, build, test, and security-review code.</p></div>
+      <div class="card lift"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg></span><h3>Read your docs</h3><p>Upload PDFs, Word, PowerPoint, Excel, or text files and have them summarized, answered, or rewritten.</p></div>
+      <div class="card lift"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Guard rails</h3><p>Secret scanning and prompt-injection checks, and every push to GitHub needs a human's approval.</p></div>
+      <div class="card lift"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg></span><h3>Private by default</h3><p>Invite-only accounts, passkeys, and each person's chats and files stay theirs.</p></div>
+    </div>
+  </section>
 
-    <section id="studio">
-      <h2>🎬 Now building: UltroBot Studio</h2>
-      <p>The newest part of UltroBot turns a topic into a finished draft of a ~10-minute video for <a href="youtube.html">my YouTube channel</a>. I type what the video is about, and UltroBot plans it, writes it, voices it, and edits it. I review everything before it goes anywhere.</p>
-      <ul>
-        <li>📝 Plans an outline I can edit, then writes the script in my style, one chapter at a time</li>
-        <li>🔎 Builds a fact checklist of every claim worth double checking, because AI gets facts wrong</li>
-        <li>🎙️ Narrates in my own cloned voice, made only from my own recordings</li>
-        <li>🎞️ Adds stock footage, captions, chapters, music, and a thumbnail</li>
-        <li>📦 Posts every finished file to my Discord, so I can check it from my phone</li>
-        <li>🛡️ Nothing publishes without my approval, and videos with a cloned voice get YouTube's AI disclosure</li>
-      </ul>
-      <p><strong>Where it's at:</strong> the script writer and fact checklist work, and I'm still tuning the voice to actually sound like me. Video rendering is next.</p>
+  <section class="block" id="studio" aria-labelledby="studio-title">
+    <div class="card">
+      <div class="block-head">
+        <div><span class="kicker">Now building</span><h2 id="studio-title">🎬 UltroBot Studio</h2><p>The newest part of UltroBot turns a topic into a finished draft of a ~10-minute video for <a href="youtube.html">my YouTube channel</a>. I type what the video is about, and UltroBot plans it, writes it, voices it, and edits it. I review everything before it goes anywhere.</p></div>
+        <a class="btn btn-outline" href="https://github.com/diegoarivada/local-video-studio" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="#i-branch"/></svg>Local Video Studio</a>
+      </div>
+      <div class="bar" aria-hidden="true"><i class="w-3" data-ub-bar></i></div>
+      <div class="pipeline">
+        <div class="step" data-step="outline" data-state="done"><span class="st">Done</span><b>Outline</b>An editable plan</div>
+        <div class="step" data-step="script" data-state="done"><span class="st">Done</span><b>Script</b>Written in my style, one chapter at a time</div>
+        <div class="step" data-step="facts" data-state="done"><span class="st">Done</span><b>Fact checklist</b>Every claim worth double checking</div>
+        <div class="step" data-step="voice" data-state="doing"><span class="st">In progress</span><b>Voice</b>My own cloned voice, from my own recordings</div>
+        <div class="step" data-step="render" data-state="todo"><span class="st">Next</span><b>Render</b>Stock footage, captions, chapters, music, thumbnail</div>
+      </div>
+      <div class="grid-2 studio-notes">
+        <p class="muted">📦 Every finished file posts to my Discord, so I can check it from my phone.</p>
+        <p class="muted">🛡️ Nothing publishes without my approval, and videos with a cloned voice get YouTube's AI disclosure.</p>
+      </div>
       <p>Want to try it yourself? I made a free, open-source version that runs on your own PC.</p>
-      <p class="card-actions"><a class="links-cta" href="https://github.com/diegoarivada/local-video-studio" target="_blank" rel="noopener noreferrer">🔗 Get Local Video Studio</a></p>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer>
-    &copy; 2026 Diego Rivada. All rights reserved.
-  </footer>
+  <section class="block" aria-labelledby="shipped-title">
+    <div class="block-head"><div><span class="kicker">Live from the board</span><h2 id="shipped-title">Recently shipped</h2><p>Pulled from UltroBot's sprint board while it's awake. Only cards I mark public show up here.</p></div></div>
+    <ul class="feed" data-ub-feed>
+      <li><span class="lane claude">Claude</span><span>Passkey and Discord push sign-in for the Board</span><time datetime="2026-11-03">Nov 3</time></li>
+      <li><span class="lane claude">Claude</span><span>A results channel on Discord for every output file</span><time datetime="2026-11-03">Nov 3</time></li>
+      <li><span class="lane claude">Claude</span><span>Studio script engine: outline to chapters</span><time datetime="2026-11-03">Nov 3</time></li>
+      <li><span class="lane diego">Diego</span><span>Remote wake through Home Assistant</span><time datetime="2026-11-03">Nov 3</time></li>
+    </ul>
+  </section>
+</main>
 
-  <script src="site.js" defer></script>
+<!-- build:footer -->
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; 2026 Diego Rivada. Built by hand, hosted on GitHub Pages.</span>
+    <nav aria-label="Footer">
+      <a href="index.html#contact">Contact</a>
+      <a href="security.html#report">Report a security issue</a>
+      <a href="https://github.com/diegoarivada/diegoarivada.github.io" target="_blank" rel="noopener noreferrer">Source</a>
+    </nav>
+  </div>
+</footer>
+<!-- /build:footer -->
 </body>
 </html>

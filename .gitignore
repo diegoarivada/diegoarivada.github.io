@@ -1,3 +1,8 @@
 # Local secrets. Never commit these.
 .env
 .env.*
+
+# Build tooling
+node_modules/
+worker/node_modules/
+worker/.wrangler/
