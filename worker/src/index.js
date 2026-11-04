@@ -101,7 +101,9 @@ export function publicStatus(stored, nowS) {
 }
 
 async function handleBeat(request, env, nowS) {
-  if (!env.BEAT_SECRET) return json({ error: 'not configured' }, 503);
+  // Trim, because a secret piped in from PowerShell can pick up a trailing line break.
+  const secret = (env.BEAT_SECRET || '').trim();
+  if (!secret) return json({ error: 'not configured' }, 503);
   const ts = request.headers.get('x-beat-timestamp') || '';
   const sig = (request.headers.get('x-beat-signature') || '').replace(/^sha256=/, '');
   if (!/^\d{1,12}$/.test(ts) || !/^[0-9a-f]{64}$/.test(sig)) return json({ error: 'unauthorized' }, 401);
@@ -111,7 +113,7 @@ async function handleBeat(request, env, nowS) {
   const body = await request.text();
   if (enc.encode(body).length > MAX_BODY) return json({ error: 'too large' }, 413);
 
-  const expected = await hmacHex(env.BEAT_SECRET, `${ts}.${body}`);
+  const expected = await hmacHex(secret, `${ts}.${body}`);
   if (!safeEqual(expected, sig)) return json({ error: 'unauthorized' }, 401);
   if (Math.abs(nowS - Number(ts)) > MAX_SKEW_S) return json({ error: 'stale' }, 401);
 
