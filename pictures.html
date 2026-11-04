@@ -1,86 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="ub-unknown">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Photography and personal gallery — photos by Diego Rivada." />
-  <link rel="canonical" href="https://diegoarivada.github.io/pictures.html" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Pictures | Diego Rivada</title>
+  <meta name="description" content="Photography and travel photos by Diego Rivada." />
+  <link rel="canonical" href="https://diegoarivada.dev/pictures.html" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/images/og.svg" />
-  <meta property="og:title" content="Pictures – Diego Rivada" />
+  <meta property="og:url" content="https://diegoarivada.dev/pictures.html" />
+  <meta property="og:title" content="Pictures | Diego Rivada" />
   <meta property="og:description" content="Personal photo gallery and travel photos." />
-  <meta name="twitter:card" content="summary" />
-  <title>Pictures – Diego Rivada</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta property="og:image" content="https://diegoarivada.dev/assets/img/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="preload" href="assets/fonts/rubik-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/site.css" />
+  <script src="assets/js/theme-init.js"></script>
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/ultrobot-status.js" defer></script>
 </head>
-
 <body>
-  <div id="scroll-progress" aria-hidden="true"></div>
-  <a class="skip-link" href="#maincontent">Skip to content</a>
-
-  <header>
-    <h1>📸 Pictures</h1>
-    <p>Personal Gallery</p>
-    <nav class="anchor-nav" aria-label="Page sections">
-      <a href="index.html">Home</a>
-      <a href="pictures.html">Gallery</a>
-      <a href="index.html#projects">Projects</a>
-      <a href="index.html#contact">Contact</a>
-    </nav>
-  </header>
-
-  <nav class="page-selector">
-    <label for="pageDropdown">Navigate to:</label>
-    <select id="pageDropdown">
-      <option value="">-- Select a Page --</option>
-      <option value="index.html">🏠 Home</option>
-      <option value="pictures.html">📸 Pictures</option>
-      <option value="coding.html">💻 Coding Projects</option>
-      <option value="homelab.html">🧪 Homelab</option>
-      <option value="security.html">🛡️ Security</option>
-      <option value="youtube.html">📺 YouTube Channel</option>
-      <option value="agents.html">🤖 UltroBot</option>
-    </select>
+<!-- build:sprite -->
+<svg xmlns="http://www.w3.org/2000/svg" class="sr-only" aria-hidden="true" focusable="false">
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="i-branch" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 9v6M18 9a9 9 0 0 1-9 9"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></symbol>
+  <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5M3 21v-5h5"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><path d="M12 19h8"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.7V17c0 .6-.5 1-1 1.2C7.8 18.8 7 20.2 7 22M14 14.7V17c0 .6.5 1 1 1.2 1.2.6 2 2 2 3.8M18 2H6v7a6 6 0 0 0 12 0V2z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></symbol>
+  <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5.5 12 2.5c-.5 3-2 5.4-4 7S5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></symbol>
+  <symbol id="i-grad" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+</svg>
+<!-- /build:sprite -->
+<!-- build:header -->
+<a class="skip-link" href="#maincontent">Skip to content</a>
+<div id="scroll-progress" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="Diego Rivada, home"><span class="monogram" aria-hidden="true">DR</span><span class="brand-name">Diego Rivada</span></a>
+  <nav class="nav" id="site-nav" aria-label="Site">
+    <a href="index.html">Home</a>
+    <a href="security.html">Security</a>
+    <a href="coding.html">Coding</a>
+    <a href="homelab.html">Homelab</a>
+    <a href="agents.html">UltroBot</a>
+    <a href="pictures.html" aria-current="page">Pictures</a>
+    <a href="youtube.html">YouTube</a>
   </nav>
+  <a class="status-pill" href="agents.html" data-ub-pill data-status-url="">
+    <span class="mini-bot"><svg class="bot" viewBox="0 0 200 180" aria-hidden="true" focusable="false"><g class="body-g"><line class="stem" x1="100" y1="40" x2="100" y2="20"/><circle class="bulb" cx="100" cy="15" r="8"/><rect class="ear" x="16" y="78" width="16" height="32" rx="7"/><rect class="ear" x="168" y="78" width="16" height="32" rx="7"/><rect class="head" x="30" y="38" width="140" height="112" rx="34"/><rect class="visor" x="48" y="62" width="104" height="56" rx="24"/><g class="eyes"><ellipse class="eye" cx="78" cy="90" rx="9" ry="11"/><ellipse class="eye" cx="122" cy="90" rx="9" ry="11"/></g><path class="lid" d="M68 90 Q78 99 88 90"/><path class="lid" d="M112 90 Q122 99 132 90"/><path class="mouth" d="M88 132 Q100 140 112 132"/></g><text class="zz z1" x="150" y="44" font-size="18">z</text><text class="zz z2" x="150" y="44" font-size="24">z</text><text class="zz z3" x="150" y="44" font-size="30">Z</text></svg></span>
+    <span class="pill-text"><span class="if-awake">UltroBot online</span><span class="if-asleep">UltroBot sleeping</span></span>
+    <span class="pill-dot if-awake" aria-hidden="true"></span><span class="pill-zz if-asleep" aria-hidden="true">z z</span>
+  </a>
+  <button class="icon-btn theme-btn" id="theme-toggle" type="button" aria-label="Switch to dark mode"><svg class="i i-moon" aria-hidden="true"><use href="#i-moon"/></svg><svg class="i i-sun" aria-hidden="true"><use href="#i-sun"/></svg></button>
+  <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+</header>
+<!-- /build:header -->
 
-  <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+<section class="page-hero" aria-labelledby="page-title">
+  <span class="orb orb-blue" aria-hidden="true"></span><span class="orb orb-red" aria-hidden="true"></span>
+  <div class="inner">
+    <span class="eyebrow"><svg class="i" aria-hidden="true"><use href="#i-camera"/></svg>Pictures</span>
+    <h1 id="page-title">Personal gallery</h1>
+    <p class="lead">Places I have been and moments I wanted to keep. Tap a photo to see it full size.</p>
+  </div>
+</section>
 
-  <main id="maincontent">
-    <section class="gallery">
+<main id="maincontent" class="wrap">
+  <section class="block" aria-label="Photos">
+    <div class="gallery">
       <figure>
-        <img src="images/photo1.JPG" alt="Tremendo Raton" loading="lazy" />
+        <button type="button" data-full="assets/img/photos/photo1-1920.webp" data-caption="Tremendo Raton" aria-label="Open Tremendo Raton full size">
+          <picture>
+            <source type="image/avif" srcset="assets/img/photos/photo1-640.avif 640w, assets/img/photos/photo1-1280.avif 1280w" sizes="(max-width: 560px) 100vw, 360px" />
+            <source type="image/webp" srcset="assets/img/photos/photo1-640.webp 640w, assets/img/photos/photo1-1280.webp 1280w" sizes="(max-width: 560px) 100vw, 360px" />
+            <img src="assets/img/photos/photo1-640.jpg" srcset="assets/img/photos/photo1-640.jpg 640w, assets/img/photos/photo1-1280.jpg 1280w" sizes="(max-width: 560px) 100vw, 360px" width="640" height="853" alt="Tremendo Raton" loading="lazy" decoding="async" />
+          </picture>
+        </button>
         <figcaption>Tremendo Raton</figcaption>
       </figure>
       <figure>
-        <img src="images/photo2.JPG" alt="The Perfect Day in SD" loading="lazy" />
+        <button type="button" data-full="assets/img/photos/photo2-1920.webp" data-caption="The Perfect Day in SD" aria-label="Open The Perfect Day in SD full size">
+          <picture>
+            <source type="image/avif" srcset="assets/img/photos/photo2-640.avif 640w, assets/img/photos/photo2-1280.avif 1280w" sizes="(max-width: 560px) 100vw, 360px" />
+            <source type="image/webp" srcset="assets/img/photos/photo2-640.webp 640w, assets/img/photos/photo2-1280.webp 1280w" sizes="(max-width: 560px) 100vw, 360px" />
+            <img src="assets/img/photos/photo2-640.jpg" srcset="assets/img/photos/photo2-640.jpg 640w, assets/img/photos/photo2-1280.jpg 1280w" sizes="(max-width: 560px) 100vw, 360px" width="640" height="853" alt="The perfect day in San Diego" loading="lazy" decoding="async" />
+          </picture>
+        </button>
         <figcaption>The Perfect Day in SD</figcaption>
       </figure>
       <figure>
-        <img src="images/photo3.jpeg" alt="On top of the Empire State" loading="lazy" />
+        <button type="button" data-full="assets/img/photos/photo3-1920.webp" data-caption="Empire State" aria-label="Open Empire State full size">
+          <picture>
+            <source type="image/avif" srcset="assets/img/photos/photo3-640.avif 640w, assets/img/photos/photo3-1280.avif 768w" sizes="(max-width: 560px) 100vw, 360px" />
+            <source type="image/webp" srcset="assets/img/photos/photo3-640.webp 640w, assets/img/photos/photo3-1280.webp 768w" sizes="(max-width: 560px) 100vw, 360px" />
+            <img src="assets/img/photos/photo3-640.jpg" srcset="assets/img/photos/photo3-640.jpg 640w, assets/img/photos/photo3-1280.jpg 768w" sizes="(max-width: 560px) 100vw, 360px" width="640" height="853" alt="On top of the Empire State Building" loading="lazy" decoding="async" />
+          </picture>
+        </button>
         <figcaption>Empire State</figcaption>
       </figure>
       <figure>
-        <img src="images/photo4.JPG" alt="Deep in the mountains" loading="lazy" />
+        <button type="button" data-full="assets/img/photos/photo4-1920.webp" data-caption="Deep in the Mountains" aria-label="Open Deep in the Mountains full size">
+          <picture>
+            <source type="image/avif" srcset="assets/img/photos/photo4-640.avif 640w, assets/img/photos/photo4-1280.avif 1280w" sizes="(max-width: 560px) 100vw, 360px" />
+            <source type="image/webp" srcset="assets/img/photos/photo4-640.webp 640w, assets/img/photos/photo4-1280.webp 1280w" sizes="(max-width: 560px) 100vw, 360px" />
+            <img src="assets/img/photos/photo4-640.jpg" srcset="assets/img/photos/photo4-640.jpg 640w, assets/img/photos/photo4-1280.jpg 1280w" sizes="(max-width: 560px) 100vw, 360px" width="640" height="360" alt="Deep in the mountains" loading="lazy" decoding="async" />
+          </picture>
+        </button>
         <figcaption>Deep in the Mountains</figcaption>
       </figure>
       <figure>
-        <img src="images/photo5.JPG" alt="Seattle Rooftop" loading="lazy" />
+        <button type="button" data-full="assets/img/photos/photo5-1920.webp" data-caption="Seattle Rooftop" aria-label="Open Seattle Rooftop full size">
+          <picture>
+            <source type="image/avif" srcset="assets/img/photos/photo5-640.avif 640w, assets/img/photos/photo5-1280.avif 1280w" sizes="(max-width: 560px) 100vw, 360px" />
+            <source type="image/webp" srcset="assets/img/photos/photo5-640.webp 640w, assets/img/photos/photo5-1280.webp 1280w" sizes="(max-width: 560px) 100vw, 360px" />
+            <img src="assets/img/photos/photo5-640.jpg" srcset="assets/img/photos/photo5-640.jpg 640w, assets/img/photos/photo5-1280.jpg 1280w" sizes="(max-width: 560px) 100vw, 360px" width="640" height="480" alt="A Seattle rooftop" loading="lazy" decoding="async" />
+          </picture>
+        </button>
         <figcaption>Seattle Rooftop</figcaption>
       </figure>
       <figure>
-        <img src="images/photo6.jpeg" alt="Space Needle" loading="lazy" />
+        <button type="button" data-full="assets/img/photos/photo6-1920.webp" data-caption="Space Needle" aria-label="Open Space Needle full size">
+          <picture>
+            <source type="image/avif" srcset="assets/img/photos/photo6-640.avif 640w, assets/img/photos/photo6-1280.avif 1280w" sizes="(max-width: 560px) 100vw, 360px" />
+            <source type="image/webp" srcset="assets/img/photos/photo6-640.webp 640w, assets/img/photos/photo6-1280.webp 1280w" sizes="(max-width: 560px) 100vw, 360px" />
+            <img src="assets/img/photos/photo6-640.jpg" srcset="assets/img/photos/photo6-640.jpg 640w, assets/img/photos/photo6-1280.jpg 1280w" sizes="(max-width: 560px) 100vw, 360px" width="640" height="853" alt="The Space Needle" loading="lazy" decoding="async" />
+          </picture>
+        </button>
         <figcaption>Space Needle</figcaption>
       </figure>
-    </section>
-  </main>
+    </div>
+  </section>
+</main>
 
-  <footer>
-    &copy; 2026 Diego Rivada. All rights reserved.
-  </footer>
+<dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+  <button class="icon-btn" type="button" data-close aria-label="Close photo"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
+  <img src="assets/img/photos/photo1-640.jpg" alt="" />
+  <p></p>
+</dialog>
 
-  <script src="site.js" defer></script>
+<!-- build:footer -->
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; 2026 Diego Rivada. Built by hand, hosted on GitHub Pages.</span>
+    <nav aria-label="Footer">
+      <a href="index.html#contact">Contact</a>
+      <a href="security.html#report">Report a security issue</a>
+      <a href="https://github.com/diegoarivada/diegoarivada.github.io" target="_blank" rel="noopener noreferrer">Source</a>
+    </nav>
+  </div>
+</footer>
+<!-- /build:footer -->
 </body>
 </html>

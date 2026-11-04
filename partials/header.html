@@ -1,0 +1,21 @@
+<a class="skip-link" href="#maincontent">Skip to content</a>
+<div id="scroll-progress" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="Diego Rivada, home"><span class="monogram" aria-hidden="true">DR</span><span class="brand-name">Diego Rivada</span></a>
+  <nav class="nav" id="site-nav" aria-label="Site">
+    <a href="index.html">Home</a>
+    <a href="security.html">Security</a>
+    <a href="coding.html">Coding</a>
+    <a href="homelab.html">Homelab</a>
+    <a href="agents.html">UltroBot</a>
+    <a href="pictures.html">Pictures</a>
+    <a href="youtube.html">YouTube</a>
+  </nav>
+  <a class="status-pill" href="agents.html" data-ub-pill data-status-url="{{statusUrl}}">
+    <span class="mini-bot">{{include:bot}}</span>
+    <span class="pill-text"><span class="if-awake">UltroBot online</span><span class="if-asleep">UltroBot sleeping</span></span>
+    <span class="pill-dot if-awake" aria-hidden="true"></span><span class="pill-zz if-asleep" aria-hidden="true">z z</span>
+  </a>
+  <button class="icon-btn theme-btn" id="theme-toggle" type="button" aria-label="Switch to dark mode"><svg class="i i-moon" aria-hidden="true"><use href="#i-moon"/></svg><svg class="i i-sun" aria-hidden="true"><use href="#i-sun"/></svg></button>
+  <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+</header>

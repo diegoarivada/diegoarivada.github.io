@@ -1,0 +1,16 @@
+{
+  "name": "diegoarivada-site",
+  "private": true,
+  "type": "module",
+  "description": "Build helpers for diegoarivada.dev. The site itself is plain HTML, CSS, and JS served by GitHub Pages.",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "images": "node tools/optimize-images.mjs",
+    "check": "node tools/build.mjs --check",
+    "serve": "python -m http.server 8080 --bind 127.0.0.1"
+  },
+  "devDependencies": {
+    "sharp": "0.35.5"
+  },
+  "engines": { "node": ">=20" }
+}

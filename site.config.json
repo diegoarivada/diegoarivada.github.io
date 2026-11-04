@@ -1,0 +1,24 @@
+{
+  "origin": "https://diegoarivada.dev",
+  "statusUrl": "",
+  "pages": ["index.html", "security.html", "coding.html", "homelab.html", "homelab-case-study.html", "agents.html", "pictures.html", "youtube.html", "thankyou.html"],
+  "navAlias": { "homelab-case-study.html": "homelab.html" },
+  "noSitemap": ["thankyou.html"],
+  "csp": {
+    "base": {
+      "default-src": ["'none'"],
+      "script-src": ["'self'"],
+      "style-src": ["'self'"],
+      "font-src": ["'self'"],
+      "img-src": ["'self'"],
+      "connect-src": [],
+      "frame-src": [],
+      "base-uri": ["'none'"],
+      "form-action": ["'none'"]
+    },
+    "pages": {
+      "index.html": { "connect-src": ["https://formspree.io"], "frame-src": ["'self'"], "form-action": ["https://formspree.io"] },
+      "youtube.html": { "frame-src": ["https://www.youtube-nocookie.com"] }
+    }
+  }
+}
