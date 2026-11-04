@@ -7,12 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
   <title>Homelab | Diego Rivada</title>
-  <meta name="description" content="Diego Rivada's homelab: self-hosted services, Proxmox, Pi-hole, WireGuard, Home Assistant, and an Arch Linux + Hyprland workstation." />
+  <meta name="description" content="Diego Rivada's homelab: UniFi with isolated VLANs, Proxmox, TrueNAS, Tailscale, Home Assistant, Pi-hole, and a self-hosted AI server that wakes on demand." />
   <link rel="canonical" href="https://diegoarivada.dev/homelab.html" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://diegoarivada.dev/homelab.html" />
   <meta property="og:title" content="Homelab | Diego Rivada" />
-  <meta property="og:description" content="Self-hosted tech, security testing, and server experiments." />
+  <meta property="og:description" content="Segmented network, Proxmox, Home Assistant, and an AI server that sleeps until it is needed." />
   <meta property="og:image" content="https://diegoarivada.dev/assets/img/og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -56,6 +56,12 @@
   <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></symbol>
   <symbol id="i-grad" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2h-4v-7H9v7H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 8.8a15 15 0 0 1 20 0M5 12.9a10 10 0 0 1 14 0M8.5 16.4a5 5 0 0 1 7 0M12 20h.01"/></symbol>
+  <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.7-9h1.8a4.5 4.5 0 1 1 0 9z"/></symbol>
+  <symbol id="i-power" viewBox="0 0 24 24"><path d="M12 2v10M18.4 6.6a9 9 0 1 1-12.8 0"/></symbol>
   <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
 </svg>
 <!-- /build:sprite -->
@@ -88,7 +94,7 @@
   <div class="inner">
     <span class="eyebrow"><svg class="i" aria-hidden="true"><use href="#i-server"/></svg>Homelab</span>
     <h1 id="page-title">My homelab</h1>
-    <p class="lead">Exploring self-hosted tech, security testing, and server experiments.</p>
+    <p class="lead">A segmented home network, a Proxmox host, Home Assistant, and an AI server that sleeps until it's needed.</p>
   </div>
 </section>
 
@@ -98,7 +104,7 @@
       <div class="card span-2-wide">
         <span class="kicker">Overview</span>
         <h2 id="overview">A digital playground</h2>
-        <p class="muted">My homelab is where I experiment with networking, virtualization, and cybersecurity tools. It's home to self-hosted services, secure network setups, and a minimalist desktop environment tuned for performance and control.</p>
+        <p class="muted">My homelab is where I practice what I do for a living: segment the network, lock down remote access, and automate everything I can. It runs my smart home, my storage and backups, a Discord command center for alerts, and UltroBot, my self-hosted AI agent platform.</p>
         <a class="more" href="homelab-case-study.html">Read the case study<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <a class="card" href="agents.html">
@@ -110,15 +116,33 @@
     </div>
   </section>
 
-  <section class="block" aria-labelledby="technologies">
-    <div class="block-head"><div><span class="kicker">Stack</span><h2 id="technologies">Technologies used</h2></div></div>
+  <section class="block" aria-labelledby="network">
+    <div class="block-head"><div><span class="kicker">Infrastructure</span><h2 id="network">Network and servers</h2></div></div>
     <div class="grid-3">
-      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-server"/></svg></span><h3>Proxmox VE</h3><p>Virtualization platform for VMs and containers.</p></div>
-      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Pi-hole</h3><p>DNS sinkhole and network-wide ad blocker.</p></div>
-      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-cpu"/></svg></span><h3>Docker and Portainer</h3><p>Containerized service orchestration.</p></div>
-      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg></span><h3>WireGuard</h3><p>Secure VPN for remote access.</p></div>
-      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-download"/></svg></span><h3>OpenMediaVault</h3><p>Home NAS for media and backups.</p></div>
-      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-terminal"/></svg></span><h3>Arch Linux + Hyprland</h3><p>A lightweight rolling-release distro with a dynamic Wayland compositor for my desktop.</p></div>
+      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-wifi"/></svg></span><h3>UniFi Dream Machine Pro</h3><p>Routing, Wi-Fi, and firewall. IoT devices live on their own isolated VLAN, and every cross-network rule is a single, named allow.</p></div>
+      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-server"/></svg></span><h3>Proxmox VE</h3><p>Hypervisor for my VMs and LXC containers, including Home Assistant.</p></div>
+      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-database"/></svg></span><h3>TrueNAS</h3><p>Network storage for media, backups, and scheduled snapshots.</p></div>
+      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg></span><h3>Tailscale</h3><p>WireGuard-based mesh VPN. Proxmox acts as a subnet router, and Funnel publishes the UltroBot dashboard without opening a single port.</p></div>
+      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Pi-hole on CasaOS</h3><p>Network-wide DNS filtering and ad blocking, managed through CasaOS.</p></div>
+      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-cpu"/></svg></span><h3>Docker</h3><p>Containerized services that are easy to rebuild, update, and roll back.</p></div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="automation">
+    <div class="block-head"><div><span class="kicker">Automation</span><h2 id="automation">Smart home and alerts</h2></div></div>
+    <div class="grid-3">
+      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg></span><h3>Home Assistant</h3><p>Runs the house, with custom YAML dashboards and themes that match this site.</p></div>
+      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-power"/></svg></span><h3>Remote wake</h3><p>A Home Assistant button sends a Wake-on-LAN packet across VLANs, so the AI server can sleep and still come back on demand.</p></div>
+      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></span><h3>Discord command center</h3><p>A private server for homelab alerts through webhooks, agent approvals, and results, plus a Claude Code session I can reach from my phone.</p></div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="ai">
+    <div class="block-head"><div><span class="kicker">AI and dev</span><h2 id="ai">What runs on top</h2></div></div>
+    <div class="grid-3">
+      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg></span><h3>UltroBot</h3><p>My self-hosted agent platform with local AI models, a chat tab, a sprint board with passkey or Discord push sign-off, and a video studio pipeline.</p></div>
+      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-cloud"/></svg></span><h3>Cloudflare Workers</h3><p>Free-tier Workers for Discord alerts and the live status you see in the header. Heartbeats are HMAC-signed and replay-protected.</p></div>
+      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-branch"/></svg></span><h3>GitHub</h3><p>Every project goes through PRs with CodeQL, Dependabot, ZAP scans, and pinned Actions before it ships.</p></div>
     </div>
   </section>
 
@@ -128,23 +152,24 @@
         <span class="kicker">In progress</span>
         <h2 id="projects">Current projects</h2>
         <ul>
-          <li>🔐 Self-hosted password manager with reverse proxy and 2FA</li>
-          <li>📊 Smart home automation with Home Assistant</li>
-          <li>🧼 Reverse DNS + dynamic DNS setup for remote service access</li>
+          <li>🎬 UltroBot Studio, a local pipeline that turns an idea into a narrated video</li>
+          <li>🌙 A full sleep and wake test of the UltroLab Server, triggered from Home Assistant</li>
+          <li>📊 Home Assistant dashboards that show the whole lab at a glance</li>
+          <li>🔐 Passkeys for every admin action on the UltroBot dashboard</li>
         </ul>
       </div>
       <div class="card">
         <span class="kicker">Daily driver</span>
         <h2 id="workstation">My workstation</h2>
-        <p class="muted">I run <strong>Arch Linux</strong> with <strong>Hyprland</strong> for a clean, high-performance desktop:</p>
+        <p class="muted">I work on <strong>Windows 11</strong>, set up for building and shipping fast:</p>
         <ul>
-          <li><code>waybar</code> for a status bar with custom modules</li>
-          <li><code>kitty</code> as a GPU-accelerated terminal</li>
-          <li><code>neovim</code> configured as my main IDE</li>
-          <li><code>Thunar</code> + <code>zathura</code> for files and PDFs</li>
-          <li>Dotfiles synced with a private Git repo</li>
+          <li><code>PowerShell 7</code> in Windows Terminal with <code>oh-my-posh</code>, plus Git Bash</li>
+          <li><code>Node 24</code>, <code>Python 3.13</code>, <code>Rust</code>, and <code>Bun</code></li>
+          <li><code>git</code> and <code>gh</code> for every repo</li>
+          <li><code>Claude Code</code> as my pair programmer</li>
+          <li><code>gitleaks</code>, <code>osv-scanner</code>, and <code>trivy</code> for scanning</li>
         </ul>
-        <p class="muted">Everything is themed dark and minimal. I prioritize speed, keyboard-driven workflows, and simplicity.</p>
+        <p class="muted">I build web apps with React and Vite, desktop apps with Tauri and Rust, and small tools in Python.</p>
       </div>
     </div>
   </section>
