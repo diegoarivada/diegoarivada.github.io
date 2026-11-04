@@ -32,7 +32,7 @@ UltroLab Server (UltroBot)                 Cloudflare Worker (free)             
 {
   "v": 1,
   "state": "awake",
-  "sent_at": 1793750400,
+  "sent_at": "<unix seconds>",
   "stats": { "tasks_done": 128, "scripts_drafted": 3, "uptime_s": 15120 },
   "studio": { "outline": "done", "script": "done", "facts": "done", "voice": "doing", "render": "todo" },
   "shipped": [ { "title": "Passkey and Discord push sign-in for the Board", "lane": "claude", "date": "2026-11-03" } ]
