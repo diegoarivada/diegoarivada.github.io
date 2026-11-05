@@ -18,6 +18,10 @@
   var GRAVITY = 2600, JUMP_V = 760, CUT_V = 320;
   var START_SPEED = 340, MAX_SPEED = 820, ACCEL = 9;
 
+  // On a phone the canvas is only ~340px wide, which left well under a second to see a bug coming.
+  // Narrow screens zoom the world out so at least VIEW_MIN logical px of track are always in view.
+  // NARROW_H is the logical height there: a bit taller than desktop so the zoomed-out canvas isn't a sliver.
+  var VIEW_MIN = 560, NARROW_H = 300, scale = 1;
   var W = 0, H = 0, GROUND = 0, dpr = 1;
   var hitWhat = 'a bug';
   var state = 'ready';            // ready | running | over
@@ -31,9 +35,18 @@
     var r = canvas.getBoundingClientRect();
     if (!r.width) return false;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    W = r.width; H = r.height; GROUND = H - 30;
-    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var cssW = r.width, cssH;
+    scale = cssW < VIEW_MIN ? cssW / VIEW_MIN : 1;
+    if (scale < 1) {
+      cssH = Math.round(NARROW_H * scale);
+      if (canvas.style.height !== cssH + 'px') canvas.style.height = cssH + 'px';
+    } else {
+      if (canvas.style.height) canvas.style.height = '';
+      cssH = canvas.getBoundingClientRect().height;
+    }
+    W = cssW / scale; H = cssH / scale; GROUND = H - 30;
+    canvas.width = Math.round(cssW * dpr); canvas.height = Math.round(cssH * dpr);
+    ctx.setTransform(dpr * scale, 0, 0, dpr * scale, 0, 0);
     stars = [];
     for (var i = 0; i < Math.round(W / 14); i++) stars.push({ x: rand(0, W), y: rand(6, GROUND - 70), r: rand(.5, 1.6), p: rand(0, 6.28) });
     hills = [];
@@ -302,10 +315,10 @@
 
   function drawCenter(title, sub) {
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#fff'; ctx.font = '700 ' + (W < 420 ? 18 : 22) + 'px Rubik, sans-serif';
+    ctx.fillStyle = '#fff'; ctx.font = '700 ' + (scale < 1 ? 28 : 22) + 'px Rubik, sans-serif';
     ctx.fillText(title, W / 2, H * .36);
-    ctx.fillStyle = 'rgba(255,255,255,.72)'; ctx.font = '500 ' + (W < 420 ? 12 : 14) + 'px Rubik, sans-serif';
-    ctx.fillText(sub, W / 2, H * .36 + 24);
+    ctx.fillStyle = 'rgba(255,255,255,.72)'; ctx.font = '500 ' + (scale < 1 ? 19 : 14) + 'px Rubik, sans-serif';
+    ctx.fillText(sub, W / 2, H * .36 + (scale < 1 ? 32 : 24));
     ctx.textAlign = 'start';
   }
 
