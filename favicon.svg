@@ -2,7 +2,8 @@
   <defs><linearGradient id="dr-g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0a66c2"/><stop offset="1" stop-color="#e63946"/></linearGradient></defs>
   <rect width="64" height="64" rx="18" fill="url(#dr-g)"/>
   <g fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="27" cy="39" r="10"/>
-    <path d="M37 49V25c0-6 4-10 10-10"/>
+    <circle cx="25.5" cy="40" r="10"/>
+    <path d="M36 14v36"/>
+    <path d="M36 42c0-8 4.5-12 12-12"/>
   </g>
 </svg>
