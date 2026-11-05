@@ -324,8 +324,8 @@ a.card, .card.lift { text-decoration: none; color: inherit; }
 .nap-scores b { color: var(--text); margin-left: .25rem; }
 .nap-canvas { display: block; width: 100%; height: 230px; border-radius: var(--radius-sm); background: #0b1530; cursor: pointer; touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
 .nap-canvas:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
-.nap-help { display: flex; align-items: center; gap: .45rem; margin: .8rem 0 0; font-size: .9rem; }
-@media (max-width: 600px) { .nap-canvas { height: 200px; } .nap-scores { width: 100%; } }
+.nap-card > .nap-help, .nap-help { display: flex; align-items: center; gap: .45rem; margin: 1.4rem 0 0; font-size: .9rem; }
+@media (max-width: 600px) { .nap-scores { width: 100%; } }
 
 .pipeline { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .6rem; margin-top: 1rem; }
 .step { padding: .9rem; border-radius: 14px; border: 1px solid var(--line); background: var(--bg); font-size: .85rem; color: var(--muted); }
