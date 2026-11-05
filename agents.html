@@ -24,6 +24,7 @@
   <script src="assets/js/theme-init.js"></script>
   <script src="assets/js/site.js" defer></script>
   <script src="assets/js/ultrobot-status.js" defer></script>
+  <script src="assets/js/nap-game.js" defer></script>
 </head>
 <body>
 <!-- build:sprite -->
@@ -124,6 +125,16 @@
 </section>
 
 <main id="maincontent" class="wrap">
+  <section class="block if-asleep" id="nap-run" aria-labelledby="nap-title">
+    <div class="card nap-card">
+      <div class="block-head">
+        <div><span class="kicker">While you wait</span><h2 id="nap-title">🎮 Oh, since UltroBot is sleeping, enjoy this minigame</h2><p>UltroBot is sleepwalking through the server room. Hop over the bugs and server racks and grab the floating Z's for bonus points.</p></div>
+        <div class="nap-scores" aria-live="off"><span>Score <b data-nap="score">00000</b></span><span>Best <b data-nap="best">00000</b></span></div>
+      </div>
+      <canvas id="nap-canvas" class="nap-canvas" tabindex="0" role="img" aria-label="Nap Run minigame. Press Space or the Up arrow, or tap, to make UltroBot jump."></canvas>
+      <p class="muted nap-help"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg>Space, Up arrow, click, or tap to jump. Hold for a bigger jump.</p>
+    </div>
+  </section>
   <section class="block" aria-labelledby="does-title">
     <div class="block-head"><div><span class="kicker">What it does</span><h2 id="does-title">One workspace, all local</h2><p>UltroBot is an AI workspace I built and host myself. Everything runs privately on the UltroLab Server, with no paid APIs. Sign-in is invite only.</p></div></div>
     <div class="grid-3">
