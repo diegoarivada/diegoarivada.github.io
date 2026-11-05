@@ -45,10 +45,8 @@ code { font-family: var(--mono); font-size: .9em; }
   border-bottom: 1px solid var(--line);
 }
 .brand { display: flex; align-items: center; gap: .6rem; font-weight: 700; color: var(--text); text-decoration: none; white-space: nowrap; }
-.monogram {
-  width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
-  background: var(--grad); color: #fff; font-weight: 800; font-size: .85rem; letter-spacing: .5px;
-}
+.monogram { width: 34px; height: 34px; flex: none; display: block; border-radius: 10px; transition: transform .3s var(--ease); }
+.brand:hover .monogram { transform: rotate(-6deg) scale(1.05); }
 .nav { display: flex; gap: .15rem; margin-left: auto; }
 .nav a {
   color: var(--muted); text-decoration: none; font-weight: 500; font-size: .92rem;
