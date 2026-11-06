@@ -102,15 +102,14 @@
       <span class="state-badge" role="status">
         <span class="dot" aria-hidden="true"></span>
         <span class="if-awake">Online · answered in <span data-ub="latency">a moment</span></span>
-        <span class="if-asleep if-asleep-only">Sleeping · the UltroLab Server is powered down</span>
-        <span class="if-unknown">Status unavailable, probably sleeping</span>
+        <span class="if-asleep if-asleep-only">Napping · the dashboard is still up</span>
+        <span class="if-unknown">Offline right now</span>
       </span>
       <h1 id="bot-title">UltroBot</h1>
       <p class="lead if-awake">My private AI workspace is awake. Chat, make files, run coding agents, and draft videos, all on my own hardware with nothing sent off to a cloud AI.</p>
-      <p class="lead if-asleep">Shh, it's sleeping. The UltroLab Server naps when I'm not using it to save power, and I wake it up remotely when I need it. Everything on this page still works while it's out.</p>
+      <p class="lead if-asleep">Shh, it's sleeping. The UltroLab Server naps when I'm not using it to save power, and I wake it up remotely when I need it.<span class="if-asleep-only"> The dashboard stays up the whole time and wakes it the moment there's work.</span></p>
       <div class="btn-row">
-        <a class="btn btn-light if-awake" href="https://ultrobot.diegoarivada.dev" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg>Open UltroBot</a>
-        <span class="btn btn-light if-asleep" aria-disabled="true"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg>Open UltroBot (asleep)</span>
+        <a class="btn btn-light" href="https://ultrobot.diegoarivada.dev" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg>Open UltroBot</a>
         <a class="btn btn-ghost" href="index.html?invite=ultrobot#contact"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>Request an invite</a>
       </div>
       <div class="live-grid">
@@ -127,10 +126,10 @@
 </section>
 
 <main id="maincontent" class="wrap">
-  <section class="block if-asleep" id="nap-run" aria-labelledby="nap-title">
+  <section class="block" id="nap-run" aria-labelledby="nap-title">
     <div class="card nap-card">
       <div class="block-head">
-        <div><span class="kicker">While you wait</span><h2 id="nap-title">🎮 Oh, since UltroBot is sleeping, enjoy this minigame</h2><p>UltroBot is sleepwalking through the server room. Hop over the bugs and server racks and grab the floating Z's for bonus points.</p></div>
+        <div><span class="kicker">While you wait</span><h2 id="nap-title"><span class="if-asleep">🎮 Oh, since UltroBot is sleeping, enjoy this minigame</span><span class="if-awake">🎮 UltroBot's awake, but Nap Run is always open</span></h2><p>UltroBot is sleepwalking through the server room. Hop over the bugs and server racks and grab the floating Z's for bonus points.</p></div>
         <div class="nap-scores" aria-live="off"><span>Score <b data-nap="score">00000</b></span><span>Best <b data-nap="best">00000</b></span></div>
       </div>
       <div class="nap-stage" id="nap-stage">
