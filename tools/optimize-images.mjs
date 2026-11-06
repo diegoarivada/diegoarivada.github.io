@@ -16,6 +16,7 @@ const photos = [
   ['images/photo4.JPG', 'photo4'],
   ['images/photo5.JPG', 'photo5'],
   ['images/photo6.jpeg', 'photo6'],
+  ['images/photo7.jpg', 'photo7'],
 ];
 const PHOTO_WIDTHS = [640, 1280, 1920];
 
