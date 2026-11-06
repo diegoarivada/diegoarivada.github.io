@@ -7,6 +7,7 @@
 // Usage:
 //   npm run build           rewrite pages in place, then write sitemap.xml
 //   npm run check           exit 1 if any page is out of date (used in CI)
+import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -58,6 +59,15 @@ function csp(page) {
     .join('; ');
 }
 
+const hashCache = new Map();
+async function assetHash(rel) {
+  if (!hashCache.has(rel)) {
+    const text = (await readFile(path.join(root, rel), 'utf8')).replace(/\r\n/g, '\n');
+    hashCache.set(rel, createHash('sha256').update(text).digest('hex').slice(0, 10));
+  }
+  return hashCache.get(rel);
+}
+
 let stale = [];
 for (const page of cfg.pages) {
   const file = path.join(root, page);
@@ -69,6 +79,12 @@ for (const page of cfg.pages) {
   const blocks = [...html.matchAll(/<!-- build:([a-z0-9-]+) -->[\s\S]*?<!-- \/build:\1 -->/g)];
   for (const b of blocks) {
     html = html.replace(b[0], `<!-- build:${b[1]} -->\n${await render(b[1], page)}\n<!-- /build:${b[1]} -->`);
+  }
+  // Cache busting: every local CSS/JS link gets ?v=<content hash>, so a browser never pairs new HTML with an old
+  // cached stylesheet (Pages lets browsers reuse files for 10 minutes). Line endings are normalized so a Windows
+  // checkout and CI produce the same hash.
+  for (const m of [...html.matchAll(/(href|src)="(assets\/(?:css|js)\/[\w.-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?"/g)]) {
+    html = html.replace(m[0], `${m[1]}="${m[2]}?v=${await assetHash(m[2])}"`);
   }
   if (html !== before) {
     stale.push(page);
