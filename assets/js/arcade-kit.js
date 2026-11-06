@@ -164,12 +164,14 @@
     function size() {
       if (!full) screenBox.style.width = '';
       else {
-        var row = getComputedStyle(stage).flexDirection === 'row';
+        // Controls and the score line sit above and below the game, so the game gets the height that's left.
+        var cs = getComputedStyle(stage), gap = parseFloat(cs.rowGap) || 0;
         var pad = stage.querySelector('.arcade-pad');
-        var pw = pad && pad.offsetParent ? pad.offsetWidth + 16 : 0, ph = pad && pad.offsetParent ? pad.offsetHeight + 16 : 0;
-        var top = stage.querySelector('.arcade-fs-score'), th = top && top.offsetParent ? top.offsetHeight + 12 : 0;
-        var availW = stage.clientWidth - 32 - (row ? pw : 0);
-        var availH = stage.clientHeight - 32 - th - (row ? 0 : ph);
+        var ph = pad && pad.offsetParent ? pad.offsetHeight + gap : 0;
+        // A position: fixed score line has no offsetParent and takes no room.
+        var top = stage.querySelector('.arcade-fs-score'), th = top && top.offsetParent ? top.offsetHeight + gap : 0;
+        var availW = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        var availH = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - th - ph;
         screenBox.style.width = Math.floor(Math.max(160, Math.min(availW, availH * view.W / view.H))) + 'px';
       }
       view.fit(); redraw();

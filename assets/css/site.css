@@ -378,13 +378,17 @@ html.nap-locked, html.nap-locked body { overflow: hidden; overscroll-behavior: n
 .arcade-stage.is-full .arcade-fs { position: fixed; top: max(.8rem, env(safe-area-inset-top)); right: max(.8rem, env(safe-area-inset-right)); width: 44px; height: 44px; }
 .arcade-stage.is-full .arcade-fs-score { display: block; font-family: var(--mono); font-size: .9rem; color: rgba(255, 255, 255, .7); }
 .arcade-stage.is-full .arcade-fs-score b { color: #fff; }
+.arcade-fs-score span { white-space: nowrap; }
 .arcade-stage.is-full .arcade-pad { margin: 0; width: auto; }
 .arcade-stage.is-full .arcade-pad.shooter { width: min(100%, 420px); }
+/* Phone landscape: the screen is short, so the controls become one compact row under the game
+   and the score moves to the top-left corner, across from the exit button. */
 @media (orientation: landscape) and (hover: none) and (pointer: coarse) {
-  .arcade-stage.is-full { flex-direction: row; }
-  .arcade-stage.is-full .arcade-fs-score { position: fixed; top: max(1.6rem, env(safe-area-inset-top)); right: calc(max(.8rem, env(safe-area-inset-right)) + 56px); font-size: .8rem; max-width: 170px; text-align: right; line-height: 1.5; }
-  .arcade-stage.is-full .arcade-pad.shooter { width: 200px; grid-template-columns: 1fr 1fr; }
-  .arcade-stage.is-full .arcade-pad.shooter .fire { grid-column: 1 / -1; grid-row: 1; }
+  .arcade-stage.is-full { gap: .5rem; padding-top: max(.5rem, env(safe-area-inset-top)); padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
+  .arcade-stage.is-full .arcade-fs-score { position: fixed; top: max(.8rem, env(safe-area-inset-top)); left: max(1rem, env(safe-area-inset-left)); font-size: .8rem; max-width: 150px; line-height: 1.5; }
+  .arcade-stage.is-full .arcade-pad button { min-height: 44px; }
+  .arcade-stage.is-full .arcade-pad.dpad { grid-template-columns: repeat(4, 64px); grid-template-areas: "left up down right"; }
+  .arcade-stage.is-full .arcade-pad.shooter { width: min(100%, 360px); }
 }
 .arcade-pad { display: none; margin: 1rem auto 0; max-width: 640px; }
 .arcade-pad button { display: grid; place-items: center; gap: .3rem; min-height: 52px; border-radius: 14px; border: 1px solid rgba(99, 148, 248, .35);
