@@ -1,5 +1,5 @@
 # Security contact for diegoarivada.dev (RFC 9116)
-Contact: mailto:diegoarivada@gmail.com
+Contact: mailto:admin@diegoarivada.dev
 Expires: 2027-10-31T23:59:59Z
 Preferred-Languages: en
 Canonical: https://diegoarivada.dev/.well-known/security.txt
