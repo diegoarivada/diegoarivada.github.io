@@ -7,7 +7,7 @@
   var canvas = document.getElementById('blaster-canvas');
   if (!A || !canvas || !canvas.getContext) return;
   var section = canvas.closest('section');
-  function setText(n, v) { section.querySelectorAll('[data-bb="' + n + '"]').forEach(function (e) { e.textContent = v; }); }
+  function setText(n, v) { document.querySelectorAll('[data-bb="' + n + '"]').forEach(function (e) { e.textContent = v; }); }
 
   var W = 420, H = 360, GROUND = H - 22, PY = GROUND - 18;
   var view = A.setup(canvas, W, H), ctx = view.ctx;
@@ -282,13 +282,16 @@
     keys.fire = true;
   });
   canvas.addEventListener('pointerup', function (e) { if (e.pointerType !== 'mouse') keys.fire = false; });
-  canvas.addEventListener('blur', function (e) { if (!(e.relatedTarget && e.relatedTarget.closest('.arcade-pad'))) pause(); });
+  canvas.addEventListener('blur', function (e) { if (A.moving || (e.relatedTarget && e.relatedTarget.closest('.arcade-stage'))) return; pause(); });
   document.addEventListener('visibilitychange', function () { if (document.hidden) pause(); });
   A.touchPad(section.querySelector('.arcade-pad'), function (k, down) {
     var name = MAP[k];
     if (down) { canvas.focus({ preventScroll: true }); if (state === 'ready' || state === 'over' || state === 'paused') startOrResume(); }
     if (name) keys[name] = down;
   });
+
+  var fsBtn = section.querySelector('.arcade-fs');
+  if (fsBtn) A.fullscreen(section.querySelector('.arcade-stage'), canvas, fsBtn, view, draw);
 
   var ro = 'ResizeObserver' in window ? new ResizeObserver(function () { view.fit(); draw(); }) : null;
   if (ro) ro.observe(canvas); else window.addEventListener('resize', function () { view.fit(); draw(); });

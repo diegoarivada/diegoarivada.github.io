@@ -20,13 +20,13 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="preload" href="assets/fonts/rubik-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="assets/css/tokens.css?v=c44ce4972e" />
-  <link rel="stylesheet" href="assets/css/site.css?v=afde52fea1" />
+  <link rel="stylesheet" href="assets/css/site.css?v=cb096b72ec" />
   <script src="assets/js/theme-init.js?v=411765ce08"></script>
   <script src="assets/js/site.js?v=a91261b282" defer></script>
   <script src="assets/js/ultrobot-status.js?v=f8b22fddc1" defer></script>
-  <script src="assets/js/arcade-kit.js?v=c93a4597ec" defer></script>
-  <script src="assets/js/bit-maze.js?v=fb9645f848" defer></script>
-  <script src="assets/js/bug-blaster.js?v=bb77018652" defer></script>
+  <script src="assets/js/arcade-kit.js?v=4c42a949ac" defer></script>
+  <script src="assets/js/bit-maze.js?v=096f25ebb4" defer></script>
+  <script src="assets/js/bug-blaster.js?v=f268ac4d6c" defer></script>
 </head>
 <body>
 <!-- build:sprite -->
@@ -115,12 +115,18 @@
         <div><span class="kicker">Game 1</span><h2 id="mz-title">Bit Maze</h2></div>
         <div class="nap-scores arcade-scores" aria-live="off"><span>Score <b data-mz="score">00000</b></span><span>Best <b data-mz="best">00000</b></span><span>Lives <b data-mz="lives">3</b></span><span>Level <b data-mz="level">1</b></span></div>
       </div>
-      <canvas id="maze-canvas" class="arcade-canvas maze" tabindex="0" role="img" aria-label="Bit Maze game. Press Enter to start, then steer UltroBot with the arrow keys."></canvas>
-      <div class="arcade-pad dpad" aria-hidden="true">
-        <button type="button" tabindex="-1" data-key="ArrowUp" class="up" aria-label="Up"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-        <button type="button" tabindex="-1" data-key="ArrowLeft" class="left" aria-label="Left"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-        <button type="button" tabindex="-1" data-key="ArrowRight" class="right" aria-label="Right"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-        <button type="button" tabindex="-1" data-key="ArrowDown" class="down" aria-label="Down"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <div class="arcade-stage">
+        <div class="arcade-fs-score" aria-hidden="true">Score <b data-mz="score">00000</b> · Lives <b data-mz="lives">3</b> · Level <b data-mz="level">1</b></div>
+        <div class="arcade-screen">
+          <canvas id="maze-canvas" class="arcade-canvas maze" tabindex="0" role="img" aria-label="Bit Maze game. Press Enter to start, then steer UltroBot with the arrow keys."></canvas>
+          <button type="button" class="arcade-fs" aria-label="Full screen" title="Full screen (F)"><svg class="i i-open" aria-hidden="true"><use href="#i-maximize"/></svg><svg class="i i-close" aria-hidden="true"><use href="#i-minimize"/></svg></button>
+        </div>
+        <div class="arcade-pad dpad" aria-hidden="true">
+          <button type="button" tabindex="-1" data-key="ArrowUp" class="up" aria-label="Up"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button type="button" tabindex="-1" data-key="ArrowLeft" class="left" aria-label="Left"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button type="button" tabindex="-1" data-key="ArrowRight" class="right" aria-label="Right"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button type="button" tabindex="-1" data-key="ArrowDown" class="down" aria-label="Down"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </div>
       </div>
       <p class="sr-only" aria-live="polite" data-mz="live"></p>
     </div>
@@ -138,7 +144,7 @@
           <li><b>Steer</b> with the arrow keys or <kbd>WASD</kbd>. On a phone, swipe on the maze or use the arrow pad.</li>
           <li><b>Collect</b> every data bit to clear the level. Bits are 10 points.</li>
           <li><b>Grab</b> a green shield patch (50 points) and the bugs turn blue. Catch them while they're blue for 200, 400, 800, then 1600.</li>
-          <li><b>Avoid</b> bugs the rest of the time. You have 3 lives, and each level makes them faster. <kbd>P</kbd> pauses.</li>
+          <li><b>Avoid</b> bugs the rest of the time. You have 3 lives, and each level makes them faster. <kbd>P</kbd> pauses, and <kbd>F</kbd> or the corner button goes full screen.</li>
         </ol>
       </div>
     </div>
@@ -151,11 +157,17 @@
         <div><span class="kicker">Game 2</span><h2 id="bb-title">Bug Blaster</h2></div>
         <div class="nap-scores arcade-scores" aria-live="off"><span>Score <b data-bb="score">00000</b></span><span>Best <b data-bb="best">00000</b></span><span>Lives <b data-bb="lives">3</b></span><span>Wave <b data-bb="level">1</b></span></div>
       </div>
-      <canvas id="blaster-canvas" class="arcade-canvas" tabindex="0" role="img" aria-label="Bug Blaster game. Press Enter to start. Move with the left and right arrow keys and shoot with Space."></canvas>
-      <div class="arcade-pad shooter" aria-hidden="true">
-        <button type="button" tabindex="-1" data-key="ArrowLeft" class="left" aria-label="Left"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-        <button type="button" tabindex="-1" data-key="Space" class="fire" aria-label="Fire"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg>Fire</button>
-        <button type="button" tabindex="-1" data-key="ArrowRight" class="right" aria-label="Right"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <div class="arcade-stage">
+        <div class="arcade-fs-score" aria-hidden="true">Score <b data-bb="score">00000</b> · Lives <b data-bb="lives">3</b> · Wave <b data-bb="level">1</b></div>
+        <div class="arcade-screen">
+          <canvas id="blaster-canvas" class="arcade-canvas" tabindex="0" role="img" aria-label="Bug Blaster game. Press Enter to start. Move with the left and right arrow keys and shoot with Space."></canvas>
+          <button type="button" class="arcade-fs" aria-label="Full screen" title="Full screen (F)"><svg class="i i-open" aria-hidden="true"><use href="#i-maximize"/></svg><svg class="i i-close" aria-hidden="true"><use href="#i-minimize"/></svg></button>
+        </div>
+        <div class="arcade-pad shooter" aria-hidden="true">
+          <button type="button" tabindex="-1" data-key="ArrowLeft" class="left" aria-label="Left"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button type="button" tabindex="-1" data-key="Space" class="fire" aria-label="Fire"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg>Fire</button>
+          <button type="button" tabindex="-1" data-key="ArrowRight" class="right" aria-label="Right"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </div>
       </div>
       <p class="sr-only" aria-live="polite" data-bb="live"></p>
     </div>
@@ -173,7 +185,7 @@
           <li><b>Move</b> with the left and right arrows (or <kbd>A</kbd> and <kbd>D</kbd>) and <b>shoot</b> with <kbd>Space</kbd>. On a phone, drag on the game to move and UltroBot shoots on its own, or use the buttons.</li>
           <li><b>Score</b> 20 for a bug, 30 for a worm, and 40 for a virus. Hit the floating Z for a surprise bonus.</li>
           <li><b>Hide</b> behind the firewall, but it breaks down as it takes hits from both sides.</li>
-          <li><b>Survive.</b> A red packet costs a life, and if the wave reaches UltroBot it's game over. <kbd>P</kbd> pauses.</li>
+          <li><b>Survive.</b> A red packet costs a life, and if the wave reaches UltroBot it's game over. <kbd>P</kbd> pauses, and <kbd>F</kbd> or the corner button goes full screen.</li>
         </ol>
       </div>
     </div>

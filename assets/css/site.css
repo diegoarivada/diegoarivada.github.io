@@ -359,9 +359,33 @@ html.nap-locked, html.nap-locked body { overflow: hidden; overscroll-behavior: n
 /* Games page (games.html): canvas arcade games that share Nap Run's look (assets/js/arcade-kit.js) */
 .arcade-card .block-head { margin-bottom: 1rem; }
 .arcade-scores { flex-wrap: wrap; }
-.arcade-canvas { display: block; width: 100%; max-width: 640px; margin: 0 auto; aspect-ratio: 420 / 360; border-radius: var(--radius-sm); background: #0b1530; cursor: pointer;
+.arcade-canvas { display: block; width: 100%; aspect-ratio: 420 / 360; border-radius: var(--radius-sm); background: #0b1530; cursor: pointer;
   touch-action: none; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; box-shadow: 0 0 0 1px rgba(99, 148, 248, .25), 0 18px 40px rgba(5, 10, 22, .35); }
 .arcade-canvas:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.arcade-screen { position: relative; width: 100%; max-width: 640px; margin: 0 auto; }
+.arcade-fs { position: absolute; top: .5rem; right: .5rem; width: 38px; height: 38px; display: grid; place-items: center; padding: 0; border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, .22); background: rgba(11, 21, 48, .6); color: #fff; cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background .15s ease; }
+.arcade-fs:hover { background: rgba(255, 255, 255, .16); }
+.arcade-fs:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.arcade-fs .i-close, .arcade-stage.is-full .arcade-fs .i-open { display: none; }
+.arcade-stage.is-full .arcade-fs .i-close { display: block; }
+.arcade-fs-score { display: none; }
+/* Full screen: the real Fullscreen API where it exists, a fixed full-window stage on iPhone */
+.arcade-stage.is-full { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); background: #060c1f; }
+.arcade-stage.is-full .arcade-screen { max-width: none; margin: 0; }
+.arcade-stage.is-full .arcade-canvas { border-radius: 14px; box-shadow: 0 20px 60px rgba(0, 0, 0, .5); }
+.arcade-stage.is-full .arcade-fs { position: fixed; top: max(.8rem, env(safe-area-inset-top)); right: max(.8rem, env(safe-area-inset-right)); width: 44px; height: 44px; }
+.arcade-stage.is-full .arcade-fs-score { display: block; font-family: var(--mono); font-size: .9rem; color: rgba(255, 255, 255, .7); }
+.arcade-stage.is-full .arcade-fs-score b { color: #fff; }
+.arcade-stage.is-full .arcade-pad { margin: 0; width: auto; }
+.arcade-stage.is-full .arcade-pad.shooter { width: min(100%, 420px); }
+@media (orientation: landscape) and (hover: none) and (pointer: coarse) {
+  .arcade-stage.is-full { flex-direction: row; }
+  .arcade-stage.is-full .arcade-fs-score { position: fixed; top: max(1.6rem, env(safe-area-inset-top)); right: calc(max(.8rem, env(safe-area-inset-right)) + 56px); font-size: .8rem; max-width: 170px; text-align: right; line-height: 1.5; }
+  .arcade-stage.is-full .arcade-pad.shooter { width: 200px; grid-template-columns: 1fr 1fr; }
+  .arcade-stage.is-full .arcade-pad.shooter .fire { grid-column: 1 / -1; grid-row: 1; }
+}
 .arcade-pad { display: none; margin: 1rem auto 0; max-width: 640px; }
 .arcade-pad button { display: grid; place-items: center; gap: .3rem; min-height: 52px; border-radius: 14px; border: 1px solid rgba(99, 148, 248, .35);
   background: #0d1631; color: #9cc7ff; font: inherit; font-weight: 700; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }

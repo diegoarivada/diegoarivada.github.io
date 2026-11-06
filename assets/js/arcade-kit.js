@@ -152,10 +152,82 @@
     });
   }
 
+  // Full screen, same approach as Nap Run: the real Fullscreen API where it exists, and a fixed
+  // window-sized stage everywhere (iPhone has no Fullscreen API for page elements, so that's all it gets).
+  // stage holds .arcade-screen (canvas + button) and the optional .arcade-pad.
+  function fullscreen(stage, canvas, btn, view, redraw) {
+    var api = window.Arcade;
+    var full = false, holder = document.createComment('arcade-stage');
+    var screenBox = stage.querySelector('.arcade-screen');
+    var native = !!(stage.requestFullscreen || stage.webkitRequestFullscreen);
+    function fsEl() { return document.fullscreenElement || document.webkitFullscreenElement || null; }
+    function size() {
+      if (!full) screenBox.style.width = '';
+      else {
+        var row = getComputedStyle(stage).flexDirection === 'row';
+        var pad = stage.querySelector('.arcade-pad');
+        var pw = pad && pad.offsetParent ? pad.offsetWidth + 16 : 0, ph = pad && pad.offsetParent ? pad.offsetHeight + 16 : 0;
+        var top = stage.querySelector('.arcade-fs-score'), th = top && top.offsetParent ? top.offsetHeight + 12 : 0;
+        var availW = stage.clientWidth - 32 - (row ? pw : 0);
+        var availH = stage.clientHeight - 32 - th - (row ? 0 : ph);
+        screenBox.style.width = Math.floor(Math.max(160, Math.min(availW, availH * view.W / view.H))) + 'px';
+      }
+      view.fit(); redraw();
+    }
+    function set(on) {
+      if (on === full) return;
+      full = on;
+      // A transformed ancestor would trap position: fixed inside the card, so the stage moves to <body>
+      // while full. Moving it blurs the canvas, so the games are told not to pause for that.
+      api.moving = true;
+      if (on) { stage.before(holder); document.body.append(stage); }
+      else if (holder.parentNode) holder.replaceWith(stage);
+      stage.classList.toggle('is-full', on);
+      document.documentElement.classList.toggle('nap-locked', on);
+      btn.setAttribute('aria-label', on ? 'Exit full screen' : 'Full screen');
+      btn.title = on ? 'Exit full screen (F or Esc)' : 'Full screen (F)';
+      canvas.focus({ preventScroll: true });
+      setTimeout(function () { api.moving = false; }, 100);
+      size();
+      setTimeout(size, 60); setTimeout(size, 250);
+    }
+    function enter() {
+      set(true);
+      if (native && !fsEl()) {
+        var req = stage.requestFullscreen || stage.webkitRequestFullscreen;
+        try {
+          var pr = req.call(stage, { navigationUI: 'hide' });
+          if (pr && pr.then) pr.then(function () {
+            try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(function () {}); } catch (e) { /* unsupported */ }
+          }).catch(function () { /* the window-sized stage still works */ });
+        } catch (e) { /* the window-sized stage still works */ }
+      }
+    }
+    function exit() {
+      if (fsEl()) { var ex = document.exitFullscreen || document.webkitExitFullscreen; try { ex.call(document); } catch (e) { /* ignore */ } }
+      try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch (e) { /* unsupported */ }
+      set(false);
+    }
+    function toggle() { if (full) exit(); else enter(); }
+    btn.addEventListener('mousedown', function (e) { e.preventDefault(); });
+    btn.addEventListener('click', function (e) { e.preventDefault(); toggle(); });
+    ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (ev) {
+      document.addEventListener(ev, function () { if (!fsEl() && full) set(false); else if (full) setTimeout(size, 50); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.code === 'KeyF' && (full || document.activeElement === canvas)) { e.preventDefault(); toggle(); }
+      else if (e.code === 'Escape' && full) { e.preventDefault(); exit(); }
+    });
+    window.addEventListener('resize', function () { if (full) size(); });
+    window.addEventListener('orientationchange', function () { setTimeout(function () { if (full) size(); }, 250); });
+    return { toggle: toggle, isFull: function () { return full; } };
+  }
+
   // What to tell people on the start and pause screens.
   var touch = !!(window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
   var go = touch ? 'Tap' : 'Click or press Enter';
 
-  window.Arcade = { C: C, reduced: reduced, go: go, roundRect: roundRect, setup: setup, sky: sky, bot: bot, bug: bug,
+  window.Arcade = { C: C, reduced: reduced, go: go, moving: false, fullscreen: fullscreen, roundRect: roundRect, setup: setup, sky: sky, bot: bot, bug: bug,
     center: center, pad: pad, loadBest: loadBest, saveBest: saveBest, touchPad: touchPad };
 })();

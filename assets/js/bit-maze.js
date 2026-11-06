@@ -7,7 +7,7 @@
   var canvas = document.getElementById('maze-canvas');
   if (!A || !canvas || !canvas.getContext) return;
   var section = canvas.closest('section');
-  function $(n) { return section.querySelectorAll('[data-mz="' + n + '"]'); }
+  function $(n) { return document.querySelectorAll('[data-mz="' + n + '"]'); }
   function setText(n, v) { $(n).forEach(function (e) { e.textContent = v; }); }
 
   // Left half of the maze plus the center column; the right half is mirrored.
@@ -276,7 +276,7 @@
     steer(Math.abs(dx) > Math.abs(dy) ? [dx > 0 ? 1 : -1, 0] : [0, dy > 0 ? 1 : -1]);
     sx = e.clientX; sy = e.clientY;
   });
-  canvas.addEventListener('blur', function (e) { if (!(e.relatedTarget && e.relatedTarget.closest('.arcade-pad'))) pause(); });
+  canvas.addEventListener('blur', function (e) { if (A.moving || (e.relatedTarget && e.relatedTarget.closest('.arcade-stage'))) return; pause(); });
   document.addEventListener('visibilitychange', function () { if (document.hidden) pause(); });
   A.touchPad(section.querySelector('.arcade-pad'), function (k, down) {
     if (!down) return;
@@ -284,6 +284,9 @@
     if (state !== 'play') startOrResume();
     if (DIRS[k]) steer(DIRS[k]);
   });
+
+  var fsBtn = section.querySelector('.arcade-fs');
+  if (fsBtn) A.fullscreen(section.querySelector('.arcade-stage'), canvas, fsBtn, view, draw);
 
   var ro = 'ResizeObserver' in window ? new ResizeObserver(function () { view.fit(); draw(); }) : null;
   if (ro) ro.observe(canvas); else window.addEventListener('resize', function () { view.fit(); draw(); });
