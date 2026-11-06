@@ -40,7 +40,7 @@ test('a good beat is stored and status reads awake', async () => {
 test('wrong secret is rejected', async () => {
   const e = env();
   assert.equal((await worker.fetch(beat(awakeBeat(), { secret: 'nope' }), e)).status, 401);
-  assert.equal((await (await worker.fetch(status(), e)).json()).state, 'asleep');
+  assert.equal((await (await worker.fetch(status(), e)).json()).state, 'offline');
 });
 
 test('tampered body is rejected', async () => {
@@ -86,10 +86,15 @@ test('a sleeping beat flips the state and keeps last seen', async () => {
   assert.equal(data.last_seen, t);
 });
 
-test('a stale beat reads as asleep', () => {
+test('a stale beat reads as offline (the control server stopped beating)', () => {
   const t = now();
-  const out = publicStatus({ state: 'awake', sent_at: t - 3600, stats: {} }, t);
-  assert.equal(out.state, 'asleep');
+  assert.equal(publicStatus({ state: 'awake', sent_at: t - 3600, stats: {} }, t).state, 'offline');
+  assert.equal(publicStatus({ state: 'sleeping', sent_at: t - 3600, stats: {} }, t).state, 'offline');
+});
+
+test('a fresh sleeping beat reads as asleep (control server up, GPU PC napping)', () => {
+  const t = now();
+  assert.equal(publicStatus({ state: 'sleeping', sent_at: t - 60, stats: {} }, t).state, 'asleep');
 });
 
 test('unknown origins get no CORS header', async () => {

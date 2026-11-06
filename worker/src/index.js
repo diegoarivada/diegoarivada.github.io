@@ -8,7 +8,9 @@
 
 const MAX_BODY = 8 * 1024;
 const MAX_SKEW_S = 300;          // reject beats more than 5 minutes off our clock
-const STALE_AFTER_S = 7 * 60;    // no beat for 7 minutes means asleep
+// UltroBot's always-on control server (a VM) beats every 5 minutes and says whether the GPU PC is awake or
+// sleeping. No beat for 7 minutes means the control server itself is down: offline.
+const STALE_AFTER_S = 7 * 60;
 const STAGES = ['outline', 'script', 'facts', 'voice', 'render'];
 const STAGE_VALUES = new Set(['done', 'doing', 'todo']);
 const LANES = new Set(['claude', 'copilot', 'diego']);
@@ -88,11 +90,11 @@ export function sanitizeBeat(raw) {
 }
 
 export function publicStatus(stored, nowS) {
-  if (!stored) return { state: 'asleep', last_seen: null, stats: {}, studio: null, shipped: [] };
+  if (!stored) return { state: 'offline', last_seen: null, stats: {}, studio: null, shipped: [] };
   const fresh = nowS - stored.sent_at <= STALE_AFTER_S;
   const awake = stored.state === 'awake' && fresh;
   return {
-    state: awake ? 'awake' : 'asleep',
+    state: awake ? 'awake' : fresh ? 'asleep' : 'offline',
     last_seen: awake ? stored.sent_at : (stored.last_awake || null),
     stats: stored.stats || {},
     studio: stored.studio || null,

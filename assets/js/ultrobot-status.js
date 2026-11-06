@@ -1,5 +1,5 @@
 // Live UltroBot status. Asks the status Worker (never the home server) whether UltroBot is awake,
-// then sets ub-awake / ub-asleep / ub-unknown on <html>. CSS handles the robot and every label.
+// then sets ub-awake / ub-asleep / ub-unknown on <html> ("offline" from the Worker shows as unknown). CSS handles the robot and every label.
 // Everything from the Worker is treated as data: only known fields are read, and text goes in with textContent.
 (function () {
   'use strict';
@@ -16,7 +16,7 @@
     root.classList.remove('ub-awake', 'ub-asleep', 'ub-unknown');
     root.classList.add('ub-' + state);
     if (pill) {
-      pill.setAttribute('aria-label', state === 'awake' ? 'UltroBot is online' : state === 'asleep' ? 'UltroBot is sleeping' : 'UltroBot status');
+      pill.setAttribute('aria-label', state === 'awake' ? 'UltroBot is online' : state === 'asleep' ? 'UltroBot is sleeping' : 'UltroBot is offline');
     }
   }
 
@@ -118,7 +118,7 @@
   // First paint: last known answer if it's fresh, so the pill doesn't flash.
   const cached = cache.read();
   if (cached && cached.data && Date.now() - cached.at < 10 * 60 * 1000) {
-    setState(cached.data.state === 'awake' ? 'awake' : 'asleep');
+    setState(cached.data.state === 'awake' || cached.data.state === 'asleep' ? cached.data.state : 'unknown');
     render(cached.data);
   } else {
     setState('unknown');
@@ -138,8 +138,8 @@
       const resp = await fetch(url, { signal: ctrl.signal, credentials: 'omit', referrerPolicy: 'no-referrer' });
       if (!resp.ok) throw new Error('status ' + resp.status);
       const data = await resp.json();
-      if (!data || (data.state !== 'awake' && data.state !== 'asleep')) throw new Error('bad shape');
-      setState(data.state);
+      if (!data || !['awake', 'asleep', 'offline'].includes(data.state)) throw new Error('bad shape');
+      setState(data.state === 'offline' ? 'unknown' : data.state);
       render(data, performance.now() - started);
       cache.write({ at: Date.now(), data });
     } catch {
