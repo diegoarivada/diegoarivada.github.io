@@ -16,7 +16,7 @@
     root.classList.remove('ub-awake', 'ub-asleep', 'ub-unknown');
     root.classList.add('ub-' + state);
     if (pill) {
-      pill.setAttribute('aria-label', state === 'awake' ? 'UltroLab Server is on' : state === 'asleep' ? 'UltroLab Server is sleeping' : 'UltroLab Server is offline');
+      pill.setAttribute('aria-label', state === 'awake' ? 'UltroLab Server is on' : 'UltroLab Server is sleeping');
     }
   }
 
