@@ -356,83 +356,35 @@ html.nap-locked, html.nap-locked body { overflow: hidden; overscroll-behavior: n
 .nap-card > .nap-help, .nap-help { display: flex; align-items: center; gap: .45rem; margin: 1.4rem 0 0; font-size: .9rem; }
 @media (max-width: 600px) { .nap-scores { width: 100%; } }
 
-/* Games page (games.html): Phish or Legit and Firewall Rush */
-/* Darker green/red for text in light mode so it passes WCAG AA on the tinted backgrounds. */
-:root { --ok-text: #1b7068; --bad-text: #b8222f; }
-[data-theme="dark"] { --ok-text: var(--ok); --bad-text: var(--red); }
-.game-scores { display: flex; gap: .5rem; font-family: var(--mono); font-size: .85rem; color: var(--muted); }
-.game-scores span { padding: .35rem .7rem; border-radius: 999px; background: var(--tint); border: 1px solid var(--line); }
-.game-scores b { color: var(--text); margin-left: .25rem; }
-.game-card { padding: clamp(1rem, 3vw, 1.75rem); }
-.game-stage { display: flex; flex-direction: column; gap: 1rem; min-height: 360px; border-radius: var(--radius-sm); }
-.game-stage:focus { outline: none; }
-.game-stage:focus-visible { outline: 3px solid var(--blue); outline-offset: 6px; }
-.game-stage [hidden] { display: none !important; }
-.game-hud { display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: .88rem; font-weight: 600; color: var(--muted); }
-.game-streak { color: var(--ok-text); }
-.game-timer { height: 6px; border-radius: 99px; background: var(--tint); overflow: hidden; }
-.game-timer span { display: block; height: 100%; background: var(--grad); transform-origin: left; transform: scaleX(1); }
-.game-timer span.low { background: var(--red); }
-.game-screen { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: .6rem; padding: 1.5rem 0; }
-.game-screen h3 { margin: .4rem 0 0; font-size: 1.3rem; }
-.game-screen p { margin: 0 0 .6rem; color: var(--muted); max-width: 30rem; }
-.game-actions { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-.game-btn { padding: .95rem 1rem; font-size: 1rem; border: 1px solid var(--line); background: var(--card); color: var(--text); }
-.game-btn.ok { border-color: var(--ok); color: var(--ok-text); background: var(--tint-ok); }
-.game-btn.bad { border-color: var(--red); color: var(--bad-text); background: var(--tint-red); }
-.game-btn:focus-visible, .game-screen .btn:focus-visible, .game-feedback .btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
-.game-stage kbd, .game-steps kbd { font-family: var(--mono); font-size: .75rem; padding: .05rem .4rem; border-radius: 6px; border: 1px solid currentColor; opacity: .75; }
-.game-feedback { padding: 1rem 1.1rem; border-radius: var(--radius-sm); background: var(--bg); border: 1px solid var(--line); }
-.game-feedback p { margin: 0 0 .8rem; color: var(--muted); }
-.game-verdict { font-weight: 700; font-size: 1.05rem; }
-.game-feedback .game-verdict.ok { color: var(--ok-text); }
-.game-feedback .game-verdict.bad { color: var(--bad-text); }
+/* Games page (games.html): canvas arcade games that share Nap Run's look (assets/js/arcade-kit.js) */
+.arcade-card .block-head { margin-bottom: 1rem; }
+.arcade-scores { flex-wrap: wrap; }
+.arcade-canvas { display: block; width: 100%; max-width: 640px; margin: 0 auto; aspect-ratio: 420 / 360; border-radius: var(--radius-sm); background: #0b1530; cursor: pointer;
+  touch-action: none; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; box-shadow: 0 0 0 1px rgba(99, 148, 248, .25), 0 18px 40px rgba(5, 10, 22, .35); }
+.arcade-canvas:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.arcade-pad { display: none; margin: 1rem auto 0; max-width: 640px; }
+.arcade-pad button { display: grid; place-items: center; gap: .3rem; min-height: 52px; border-radius: 14px; border: 1px solid rgba(99, 148, 248, .35);
+  background: #0d1631; color: #9cc7ff; font: inherit; font-weight: 700; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+.arcade-pad button.on { background: #16224a; border-color: #6394f8; color: #fff; }
+.arcade-pad .i { width: 22px; height: 22px; }
+.arcade-pad .left .i { transform: rotate(180deg); }
+.arcade-pad .up .i { transform: rotate(-90deg); }
+.arcade-pad .down .i { transform: rotate(90deg); }
+.arcade-pad.dpad { grid-template-columns: repeat(3, 64px); grid-template-areas: ". up ." "left . right" ". down ."; gap: .4rem; justify-content: center; }
+.arcade-pad.dpad .up { grid-area: up; }
+.arcade-pad.dpad .left { grid-area: left; }
+.arcade-pad.dpad .right { grid-area: right; }
+.arcade-pad.dpad .down { grid-area: down; }
+.arcade-pad.shooter { grid-template-columns: 1fr 1.4fr 1fr; gap: .6rem; }
+.arcade-pad.shooter .fire { display: flex; justify-content: center; color: #6ee7d8; border-color: rgba(110, 231, 216, .4); }
+/* Touch controls only show on touch screens */
+@media (hover: none) and (pointer: coarse) { .arcade-pad { display: grid; } }
 .game-info { margin-top: 1rem; }
+@media (max-width: 600px) { .arcade-card { padding: 1rem .75rem; } }
 .game-steps { color: var(--muted); font-size: .94rem; padding-left: 1.2rem; margin: .7rem 0 0; }
 .game-steps li { margin-bottom: .35rem; }
 .game-steps b { color: var(--text); }
-@media (max-width: 600px) { .game-scores { width: 100%; } }
-@media (hover: none) { .game-actions kbd, .game-feedback kbd { display: none; } }
-
-/* Fake email */
-.mail { border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--bg); padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .45rem; }
-.mail-row { display: flex; gap: .75rem; align-items: baseline; min-width: 0; overflow-wrap: anywhere; }
-.mail-label { flex: none; width: 4.2rem; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-.mail-addr { font-family: var(--mono); font-size: .85rem; color: var(--muted); }
-.mail-body { margin: .5rem 0 .2rem; line-height: 1.55; }
-.mail-link { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem .9rem; }
-.mail-btn { display: inline-block; padding: .45rem .9rem; border-radius: 8px; background: var(--blue); color: #fff; font-weight: 600; font-size: .9rem; }
-[data-theme="dark"] .mail-btn { color: #0b1220; }
-.mail-url { display: inline-flex; align-items: center; gap: .35rem; font-family: var(--mono); font-size: .82rem; color: var(--muted); overflow-wrap: anywhere; min-width: 0; }
-.mail-url .i { width: 14px; height: 14px; }
-
-/* Firewall */
-.fw-grid { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 1.25rem; }
-.fw-rules h3 { margin: 0 0 .6rem; font-size: 1rem; }
-.fw-rules h3 .muted { font-weight: 400; font-size: .85rem; }
-.fw-rules ol { list-style: none; counter-reset: rule; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .4rem; }
-.fw-rule { counter-increment: rule; display: flex; align-items: center; gap: .55rem; padding: .5rem .7rem; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); font-size: .86rem; }
-.fw-rule::before { content: counter(rule); font-family: var(--mono); font-size: .75rem; color: var(--muted); width: 1rem; }
-.fw-tag { flex: none; font-family: var(--mono); font-size: .7rem; font-weight: 700; padding: .1rem .4rem; border-radius: 6px; }
-.fw-rule.allow .fw-tag { background: var(--tint-ok); color: var(--ok-text); }
-.fw-rule.deny .fw-tag { background: var(--tint-red); color: var(--bad-text); }
-.fw-rule.is-new { border-color: var(--blue); animation: rulePulse 1.2s ease 2; }
-@keyframes rulePulse { 50% { box-shadow: 0 0 0 4px var(--tint); } }
-.fw-main { display: flex; flex-direction: column; gap: .9rem; }
-.packet { position: relative; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--bg); padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .5rem; transition: border-color .2s ease, background .2s ease; }
-.packet.allowed { border-color: var(--ok); background: var(--tint-ok); }
-.packet.denied { border-color: var(--red); background: var(--tint-red); }
-.packet-proto { position: absolute; top: .8rem; right: .9rem; font-family: var(--mono); font-size: .78rem; font-weight: 700; padding: .15rem .5rem; border-radius: 6px; background: var(--tint); color: var(--blue); }
-.packet-row { display: flex; gap: .75rem; align-items: baseline; }
-.packet .mono { font-family: var(--mono); font-size: 1.05rem; }
-.fw-msg { margin: 0; min-height: 1.5em; font-size: .92rem; color: var(--muted); }
-.fw-msg.ok { color: var(--ok-text); font-weight: 600; }
-.fw-msg.bad { color: var(--bad-text); }
-.fw-msg.level { color: var(--blue); font-weight: 600; }
-.fw-lives { display: flex; gap: .3rem; }
-.fw-life { width: 12px; height: 12px; border-radius: 50%; background: var(--red); }
-.fw-life.lost { background: transparent; border: 2px solid var(--line); }
-@media (max-width: 760px) { .fw-grid { grid-template-columns: 1fr; } .fw-main { order: -1; } }
+.game-steps kbd { font-family: var(--mono); font-size: .75rem; padding: .05rem .4rem; border-radius: 6px; border: 1px solid currentColor; }
 
 .pipeline { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .6rem; margin-top: 1rem; }
 .step { padding: .9rem; border-radius: 14px; border: 1px solid var(--line); background: var(--bg); font-size: .85rem; color: var(--muted); }

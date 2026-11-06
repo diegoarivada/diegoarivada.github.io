@@ -7,12 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
   <title>Games | Diego Rivada</title>
-  <meta name="description" content="Two quick security mini games by Diego Rivada: spot the phishing email, and run a firewall under pressure." />
+  <meta name="description" content="Retro arcade mini games starring UltroBot: a maze chase and a bug-blasting shooter." />
   <link rel="canonical" href="https://diegoarivada.dev/games.html" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://diegoarivada.dev/games.html" />
   <meta property="og:title" content="Games | Diego Rivada" />
-  <meta property="og:description" content="Spot the phish. Run the firewall. Two quick security mini games." />
+  <meta property="og:description" content="Retro arcade games starring UltroBot. Dodge the bugs, then blast them." />
   <meta property="og:image" content="https://diegoarivada.dev/assets/img/og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -20,12 +20,13 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="preload" href="assets/fonts/rubik-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="assets/css/tokens.css?v=c44ce4972e" />
-  <link rel="stylesheet" href="assets/css/site.css?v=1b4455665a" />
+  <link rel="stylesheet" href="assets/css/site.css?v=afde52fea1" />
   <script src="assets/js/theme-init.js?v=411765ce08"></script>
   <script src="assets/js/site.js?v=a91261b282" defer></script>
   <script src="assets/js/ultrobot-status.js?v=f8b22fddc1" defer></script>
-  <script src="assets/js/phish-game.js?v=3175b127ee" defer></script>
-  <script src="assets/js/firewall-game.js?v=66f7e3da0d" defer></script>
+  <script src="assets/js/arcade-kit.js?v=c93a4597ec" defer></script>
+  <script src="assets/js/bit-maze.js?v=fb9645f848" defer></script>
+  <script src="assets/js/bug-blaster.js?v=bb77018652" defer></script>
 </head>
 <body>
 <!-- build:sprite -->
@@ -101,140 +102,78 @@
   <span class="orb orb-blue" aria-hidden="true"></span><span class="orb orb-red" aria-hidden="true"></span>
   <div class="inner">
     <span class="eyebrow"><svg class="i" aria-hidden="true"><use href="#i-gamepad"/></svg>Games</span>
-    <h1 id="page-title">Play like a security engineer</h1>
-    <p class="lead">Two quick games built from my day job. Each round takes about a minute.</p>
+    <h1 id="page-title">UltroBot's arcade</h1>
+    <p class="lead">Retro games set in the same server room as Nap Run. Pick one and try to beat your best score.</p>
   </div>
 </section>
 <main id="maincontent" class="wrap">
 
   <!-- Game 1 -->
-  <section class="block" id="phish-or-legit" aria-labelledby="pg-title">
-    <div class="block-head">
-      <div><span class="kicker">Game 1</span><h2 id="pg-title">Phish or Legit</h2></div>
-      <div class="game-scores"><span>Score <b data-pg="score">0</b></span><span>Best <b data-pg="best">0</b></span></div>
-    </div>
-    <div class="card game-card">
-      <div class="game-stage" id="pg-stage" tabindex="-1">
-        <div class="game-hud" aria-hidden="true">
-          <span data-pg="round">10 emails</span>
-          <span class="game-streak" data-pg="streak"></span>
-        </div>
-        <div class="game-timer" aria-hidden="true"><span data-pg="timer"></span></div>
-
-        <div class="game-screen" data-pg="intro">
-          <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span>
-          <h3>Your inbox has 10 new emails</h3>
-          <p>Some are real. Some are phishing. You have 15 seconds per email to decide.</p>
-          <button type="button" class="btn btn-solid" data-pg="start"><svg class="i" aria-hidden="true"><use href="#i-play"/></svg>Start</button>
-        </div>
-
-        <article class="mail" data-pg="mail" hidden>
-          <div class="mail-row"><span class="mail-label">From</span><span><b data-pg="from"></b> <span class="mail-addr" data-pg="addr"></span></span></div>
-          <div class="mail-row"><span class="mail-label">Subject</span><b data-pg="subject"></b></div>
-          <p class="mail-body" data-pg="body"></p>
-          <div class="mail-link" data-pg="linkrow"><span class="mail-btn" data-pg="linktext"></span><span class="mail-url"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg><span data-pg="url"></span></span></div>
-        </article>
-
-        <div class="game-actions" data-pg="actions" hidden>
-          <button type="button" class="btn game-btn ok" data-pg="legit"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Legit <kbd>L</kbd></button>
-          <button type="button" class="btn game-btn bad" data-pg="phish"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg>Phish <kbd>P</kbd></button>
-        </div>
-
-        <div class="game-feedback" data-pg="feedback" hidden>
-          <p class="game-verdict" data-pg="verdict"></p>
-          <p data-pg="why"></p>
-          <button type="button" class="btn btn-outline" data-pg="next">Next email <kbd>Enter</kbd></button>
-        </div>
-
-        <div class="game-screen" data-pg="over" hidden>
-          <span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-trophy"/></svg></span>
-          <h3 data-pg="rank"></h3>
-          <p data-pg="summary"></p>
-          <button type="button" class="btn btn-solid" data-pg="again"><svg class="i" aria-hidden="true"><use href="#i-refresh"/></svg>Play again</button>
-        </div>
-        <p class="sr-only" aria-live="polite" data-pg="live"></p>
+  <section class="block" id="bit-maze" aria-labelledby="mz-title">
+    <div class="card nap-card arcade-card">
+      <div class="block-head">
+        <div><span class="kicker">Game 1</span><h2 id="mz-title">Bit Maze</h2></div>
+        <div class="nap-scores arcade-scores" aria-live="off"><span>Score <b data-mz="score">00000</b></span><span>Best <b data-mz="best">00000</b></span><span>Lives <b data-mz="lives">3</b></span><span>Level <b data-mz="level">1</b></span></div>
       </div>
+      <canvas id="maze-canvas" class="arcade-canvas maze" tabindex="0" role="img" aria-label="Bit Maze game. Press Enter to start, then steer UltroBot with the arrow keys."></canvas>
+      <div class="arcade-pad dpad" aria-hidden="true">
+        <button type="button" tabindex="-1" data-key="ArrowUp" class="up" aria-label="Up"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <button type="button" tabindex="-1" data-key="ArrowLeft" class="left" aria-label="Left"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <button type="button" tabindex="-1" data-key="ArrowRight" class="right" aria-label="Right"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <button type="button" tabindex="-1" data-key="ArrowDown" class="down" aria-label="Down"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </div>
+      <p class="sr-only" aria-live="polite" data-mz="live"></p>
     </div>
     <div class="grid-2 game-info">
       <div class="card">
-        <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span>
+        <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-cpu"/></svg></span>
         <h3>What it is</h3>
-        <p>Phishing is still the most common way attackers get in. This game shows you real tricks they use, like lookalike domains, fake deadlines, and gift card requests, mixed in with normal emails. All the companies and addresses are made up.</p>
+        <p>A retro maze chase in the server room. UltroBot is collecting every data bit on the floor while four bugs hunt it down, and each bug has its own way of chasing. Grab a security patch and the tables turn for a few seconds.</p>
       </div>
       <div class="card">
-        <span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg></span>
+        <span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-terminal"/></svg></span>
         <h3>How to play</h3>
         <ol class="game-steps">
-          <li><b>Read</b> the sender's address and the link at the bottom. That's where most of the clues are.</li>
-          <li><b>Pick</b> Legit or Phish before the timer runs out. On a keyboard, press <kbd>L</kbd> or <kbd>P</kbd>.</li>
-          <li><b>Learn</b> from the explanation after each email, then hit Next.</li>
-          <li><b>Score</b> 100 per right answer, plus a speed bonus and a streak bonus.</li>
+          <li><b>Start</b> by clicking the game or pressing <kbd>Enter</kbd>.</li>
+          <li><b>Steer</b> with the arrow keys or <kbd>WASD</kbd>. On a phone, swipe on the maze or use the arrow pad.</li>
+          <li><b>Collect</b> every data bit to clear the level. Bits are 10 points.</li>
+          <li><b>Grab</b> a green shield patch (50 points) and the bugs turn blue. Catch them while they're blue for 200, 400, 800, then 1600.</li>
+          <li><b>Avoid</b> bugs the rest of the time. You have 3 lives, and each level makes them faster. <kbd>P</kbd> pauses.</li>
         </ol>
       </div>
     </div>
   </section>
 
   <!-- Game 2 -->
-  <section class="block" id="firewall-rush" aria-labelledby="fw-title">
-    <div class="block-head">
-      <div><span class="kicker">Game 2</span><h2 id="fw-title">Firewall Rush</h2></div>
-      <div class="game-scores"><span>Score <b data-fw="score">0</b></span><span>Best <b data-fw="best">0</b></span></div>
-    </div>
-    <div class="card game-card">
-      <div class="game-stage fw-stage" id="fw-stage" tabindex="-1">
-        <div class="game-hud" aria-hidden="true">
-          <span data-fw="level">Level 1</span>
-          <span class="fw-lives" data-fw="lives"></span>
-        </div>
-        <div class="game-timer" aria-hidden="true"><span data-fw="timer"></span></div>
-
-        <div class="fw-grid">
-          <div class="fw-rules">
-            <h3>Firewall rules <span class="muted">(top to bottom, first match wins)</span></h3>
-            <ol data-fw="rules"></ol>
-          </div>
-          <div class="fw-main">
-            <div class="game-screen" data-fw="intro">
-              <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span>
-              <h3>You're the firewall</h3>
-              <p>Traffic is coming in. Allow or deny each packet using the rules on the left. You have 3 lives.</p>
-              <button type="button" class="btn btn-solid" data-fw="start"><svg class="i" aria-hidden="true"><use href="#i-play"/></svg>Start</button>
-            </div>
-            <div class="packet" data-fw="packet" hidden>
-              <span class="packet-proto" data-fw="proto"></span>
-              <div class="packet-row"><span class="mail-label">From</span><b class="mono" data-fw="src"></b></div>
-              <div class="packet-row"><span class="mail-label">Port</span><b class="mono" data-fw="port"></b></div>
-            </div>
-            <p class="fw-msg" data-fw="msg"></p>
-            <div class="game-actions" data-fw="actions" hidden>
-              <button type="button" class="btn game-btn ok" data-fw="allow"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Allow <kbd>A</kbd></button>
-              <button type="button" class="btn game-btn bad" data-fw="deny"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg>Deny <kbd>D</kbd></button>
-            </div>
-            <div class="game-screen" data-fw="over" hidden>
-              <span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-trophy"/></svg></span>
-              <h3 data-fw="rank"></h3>
-              <p data-fw="summary"></p>
-              <button type="button" class="btn btn-solid" data-fw="again"><svg class="i" aria-hidden="true"><use href="#i-refresh"/></svg>Play again</button>
-            </div>
-          </div>
-        </div>
-        <p class="sr-only" aria-live="polite" data-fw="live"></p>
+  <section class="block" id="bug-blaster" aria-labelledby="bb-title">
+    <div class="card nap-card arcade-card">
+      <div class="block-head">
+        <div><span class="kicker">Game 2</span><h2 id="bb-title">Bug Blaster</h2></div>
+        <div class="nap-scores arcade-scores" aria-live="off"><span>Score <b data-bb="score">00000</b></span><span>Best <b data-bb="best">00000</b></span><span>Lives <b data-bb="lives">3</b></span><span>Wave <b data-bb="level">1</b></span></div>
       </div>
+      <canvas id="blaster-canvas" class="arcade-canvas" tabindex="0" role="img" aria-label="Bug Blaster game. Press Enter to start. Move with the left and right arrow keys and shoot with Space."></canvas>
+      <div class="arcade-pad shooter" aria-hidden="true">
+        <button type="button" tabindex="-1" data-key="ArrowLeft" class="left" aria-label="Left"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <button type="button" tabindex="-1" data-key="Space" class="fire" aria-label="Fire"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg>Fire</button>
+        <button type="button" tabindex="-1" data-key="ArrowRight" class="right" aria-label="Right"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </div>
+      <p class="sr-only" aria-live="polite" data-bb="live"></p>
     </div>
     <div class="grid-2 game-info">
       <div class="card">
         <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span>
         <h3>What it is</h3>
-        <p>A firewall checks every piece of network traffic against a list of rules, top to bottom, and the first rule that matches decides. This game puts you in its place. New rules show up as you level up, including a blocklist that beats everything below it.</p>
+        <p>A retro shooter where malware comes in waves. Bugs, worms, and viruses march down the screen toward UltroBot, and a blue firewall is the only cover. Every wave you clear sends a faster one.</p>
       </div>
       <div class="card">
         <span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-terminal"/></svg></span>
         <h3>How to play</h3>
         <ol class="game-steps">
-          <li><b>Check</b> the packet's protocol, where it's from, and its port.</li>
-          <li><b>Find</b> the first rule from the top that matches it. Nothing matches? The last rule denies it.</li>
-          <li><b>Pick</b> Allow or Deny before the timer runs out. On a keyboard, press <kbd>A</kbd> or <kbd>D</kbd>.</li>
-          <li><b>Survive.</b> A wrong call or a timeout costs a life. Every 6 right answers adds a rule and speeds things up.</li>
+          <li><b>Start</b> by clicking the game or pressing <kbd>Enter</kbd>.</li>
+          <li><b>Move</b> with the left and right arrows (or <kbd>A</kbd> and <kbd>D</kbd>) and <b>shoot</b> with <kbd>Space</kbd>. On a phone, drag on the game to move and UltroBot shoots on its own, or use the buttons.</li>
+          <li><b>Score</b> 20 for a bug, 30 for a worm, and 40 for a virus. Hit the floating Z for a surprise bonus.</li>
+          <li><b>Hide</b> behind the firewall, but it breaks down as it takes hits from both sides.</li>
+          <li><b>Survive.</b> A red packet costs a life, and if the wave reaches UltroBot it's game over. <kbd>P</kbd> pauses.</li>
         </ol>
       </div>
     </div>
@@ -243,7 +182,7 @@
   <section class="block" aria-label="More games">
     <a class="card" href="agents.html#nap-run">
       <span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg></span>
-      <h3>Looking for Nap Run?</h3><p>The UltroBot runner game still lives on the UltroBot page.</p>
+      <h3>Looking for Nap Run?</h3><p>The original UltroBot runner still lives on the UltroBot page.</p>
       <span class="more">Play Nap Run<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
     </a>
   </section>
