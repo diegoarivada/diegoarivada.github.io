@@ -113,9 +113,9 @@
         <a class="more" href="homelab-case-study.html">Read the case study<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <a class="card" href="agents.html">
-        <span class="status-pill plain"><span class="pill-dot if-awake" aria-hidden="true"></span><span class="pill-zz if-asleep" aria-hidden="true">z z</span><span class="if-awake">Online</span><span class="if-asleep">Sleeping</span></span>
+        <span class="status-pill plain dot-only" role="img" aria-label="UltroLab Server status"><span class="pill-dot if-awake" aria-hidden="true"></span><span class="pill-zz if-asleep" aria-hidden="true">z z</span></span>
         <h3>UltroLab Server</h3>
-        <p>Runs UltroBot. It sleeps to save power and wakes remotely through Home Assistant.</p>
+        <p>Does UltroBot's heavy AI work. It naps after 30 quiet minutes, and an always-on control server wakes it through Home Assistant the moment there's work.</p>
         <span class="more">Meet UltroBot<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
       </a>
     </div>
@@ -125,10 +125,10 @@
     <div class="block-head"><div><span class="kicker">Infrastructure</span><h2 id="network">Network and servers</h2></div></div>
     <div class="grid-3">
       <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-wifi"/></svg></span><h3>UniFi Dream Machine Pro</h3><p>Routing, Wi-Fi, and firewall. IoT devices live on their own isolated VLAN, and every cross-network rule is a single, named allow.</p></div>
-      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-server"/></svg></span><h3>Proxmox VE</h3><p>Hypervisor for my VMs and LXC containers, including Home Assistant.</p></div>
-      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-database"/></svg></span><h3>TrueNAS</h3><p>Network storage for media, backups, and scheduled snapshots.</p></div>
-      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg></span><h3>Tailscale</h3><p>WireGuard-based mesh VPN. Proxmox acts as a subnet router, and Funnel publishes the UltroBot dashboard without opening a single port.</p></div>
-      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Pi-hole on CasaOS</h3><p>Network-wide DNS filtering and ad blocking, managed through CasaOS.</p></div>
+      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-server"/></svg></span><h3>Proxmox VE</h3><p>Hypervisor for Home Assistant, TrueNAS, and the always-on UltroBot control server. My VMs back up to TrueNAS every Sunday.</p></div>
+      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-database"/></svg></span><h3>TrueNAS</h3><p>Network storage for media and snapshots. It holds the weekly Proxmox backups and UltroBot's nightly backups, on a share that can add files but never delete them.</p></div>
+      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg></span><h3>Tailscale</h3><p>WireGuard-based mesh VPN. Proxmox acts as a subnet router, so I can reach the whole lab from anywhere without opening a single port.</p></div>
+      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Pi-hole on CasaOS</h3><p>Network-wide DNS filtering and ad blocking, running in Docker on Ubuntu 24.04 LTS.</p></div>
       <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-cpu"/></svg></span><h3>Docker</h3><p>Containerized services that are easy to rebuild, update, and roll back.</p></div>
     </div>
   </section>
@@ -137,7 +137,7 @@
     <div class="block-head"><div><span class="kicker">Automation</span><h2 id="automation">Smart home and alerts</h2></div></div>
     <div class="grid-3">
       <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg></span><h3>Home Assistant</h3><p>Runs the house, with custom YAML dashboards and themes that match this site.</p></div>
-      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-power"/></svg></span><h3>Remote wake</h3><p>A Home Assistant button sends a Wake-on-LAN packet across VLANs, so the AI server can sleep and still come back on demand.</p></div>
+      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-power"/></svg></span><h3>Remote wake</h3><p>A Home Assistant button sends a Wake-on-LAN packet across VLANs, so the AI server can sleep and still come back on demand. If a sleep silently fails, Discord tells me.</p></div>
       <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></span><h3>Discord command center</h3><p>A private server for homelab alerts through webhooks, agent approvals, and results, plus a Claude Code session I can reach from my phone.</p></div>
     </div>
   </section>
@@ -145,8 +145,8 @@
   <section class="block" aria-labelledby="ai">
     <div class="block-head"><div><span class="kicker">AI and dev</span><h2 id="ai">What runs on top</h2></div></div>
     <div class="grid-3">
-      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg></span><h3>UltroBot</h3><p>My self-hosted agent platform with local AI models, a chat tab, a sprint board with passkey or Discord push sign-off, and a video studio pipeline.</p></div>
-      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-cloud"/></svg></span><h3>Cloudflare Workers</h3><p>Free-tier Workers for Discord alerts and the live status you see in the header. Heartbeats are HMAC-signed and replay-protected.</p></div>
+      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg></span><h3>UltroBot</h3><p>My self-hosted agent platform: chat, a sprint board with passkey or Discord push sign-off, and a video studio. A small control server stays up 24/7 and hands AI work to the UltroLab Server. It also watches Proxmox, TrueNAS, and Home Assistant with read-only access.</p></div>
+      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-cloud"/></svg></span><h3>Cloudflare</h3><p>A Tunnel publishes the UltroBot dashboard with no open ports. Free-tier Workers run Discord alerts and the live status in the header (HMAC-signed, replay-protected heartbeats), and Email Routing handles my domain's mail.</p></div>
       <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-branch"/></svg></span><h3>GitHub</h3><p>Every project goes through PRs with CodeQL, Dependabot, ZAP scans, and pinned Actions before it ships.</p></div>
     </div>
   </section>
@@ -158,9 +158,9 @@
         <h2 id="projects">Current projects</h2>
         <ul>
           <li>🎬 UltroBot Studio, a local pipeline that turns an idea into a narrated video</li>
-          <li>🌙 A full sleep and wake test of the UltroLab Server, triggered from Home Assistant</li>
           <li>📊 Home Assistant dashboards that show the whole lab at a glance</li>
-          <li>🔐 Passkeys for every admin action on the UltroBot dashboard</li>
+          <li>🧹 Cleaning up stale devices and unavailable entities in Home Assistant</li>
+          <li>🎙️ A longer voice recording so Studio's narrator sounds more like me</li>
         </ul>
       </div>
       <div class="card">
@@ -169,7 +169,7 @@
         <p class="muted">I work on <strong>Windows 11</strong>, set up for building and shipping fast:</p>
         <ul>
           <li><code>PowerShell 7</code> in Windows Terminal with <code>oh-my-posh</code>, plus Git Bash</li>
-          <li><code>Node 24</code>, <code>Python 3.13</code>, <code>Rust</code>, and <code>Bun</code></li>
+          <li><code>Node 24</code>, <code>Python 3.14</code>, <code>Rust</code>, and <code>Bun</code></li>
           <li><code>git</code> and <code>gh</code> for every repo</li>
           <li><code>Claude Code</code> as my pair programmer</li>
           <li><code>gitleaks</code>, <code>osv-scanner</code>, and <code>trivy</code> for scanning</li>
