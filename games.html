@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" class="ub-unknown">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; connect-src https://ultrobot-status.homelab-alerts.workers.dev; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Games | Diego Rivada</title>
+  <meta name="description" content="Two quick security mini games by Diego Rivada: spot the phishing email, and run a firewall under pressure." />
+  <link rel="canonical" href="https://diegoarivada.dev/games.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://diegoarivada.dev/games.html" />
+  <meta property="og:title" content="Games | Diego Rivada" />
+  <meta property="og:description" content="Spot the phish. Run the firewall. Two quick security mini games." />
+  <meta property="og:image" content="https://diegoarivada.dev/assets/img/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="preload" href="assets/fonts/rubik-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/css/tokens.css?v=c44ce4972e" />
+  <link rel="stylesheet" href="assets/css/site.css?v=1b4455665a" />
+  <script src="assets/js/theme-init.js?v=411765ce08"></script>
+  <script src="assets/js/site.js?v=a91261b282" defer></script>
+  <script src="assets/js/ultrobot-status.js?v=f8b22fddc1" defer></script>
+  <script src="assets/js/phish-game.js?v=3175b127ee" defer></script>
+  <script src="assets/js/firewall-game.js?v=66f7e3da0d" defer></script>
+</head>
+<body>
+<!-- build:sprite -->
+<svg xmlns="http://www.w3.org/2000/svg" class="sr-only" aria-hidden="true" focusable="false">
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="i-branch" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 9v6M18 9a9 9 0 0 1-9 9"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="i-maximize" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></symbol>
+  <symbol id="i-minimize" viewBox="0 0 24 24"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></symbol>
+  <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5M3 21v-5h5"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><path d="M12 19h8"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.7V17c0 .6-.5 1-1 1.2C7.8 18.8 7 20.2 7 22M14 14.7V17c0 .6.5 1 1 1.2 1.2.6 2 2 2 3.8M18 2H6v7a6 6 0 0 0 12 0V2z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></symbol>
+  <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5.5 12 2.5c-.5 3-2 5.4-4 7S5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></symbol>
+  <symbol id="i-grad" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2h-4v-7H9v7H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 8.8a15 15 0 0 1 20 0M5 12.9a10 10 0 0 1 14 0M8.5 16.4a5 5 0 0 1 7 0M12 20h.01"/></symbol>
+  <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.7-9h1.8a4.5 4.5 0 1 1 0 9z"/></symbol>
+  <symbol id="i-power" viewBox="0 0 24 24"><path d="M12 2v10M18.4 6.6a9 9 0 1 1-12.8 0"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-gamepad" viewBox="0 0 24 24"><path d="M6 11h4M8 9v4M15 12h.01M18 10h.01"/><path d="M17.3 5H6.7a4 4 0 0 0-4 3.6C2.6 9.4 2 14.5 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.4-1.4a2 2 0 0 1 1.4-.6h4.4a2 2 0 0 1 1.4.6L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.5-.6-6.6-.7-7.3A4 4 0 0 0 17.3 5z"/></symbol>
+</svg>
+<!-- /build:sprite -->
+<!-- build:header -->
+<a class="skip-link" href="#maincontent">Skip to content</a>
+<div id="scroll-progress" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="Diego Rivada, home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="monogram" aria-hidden="true" focusable="false"><defs><linearGradient id="dr-g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0a66c2"/><stop offset="1" stop-color="#e63946"/></linearGradient></defs><rect width="64" height="64" rx="18" fill="url(#dr-g)"/><g fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="25.5" cy="40" r="10"/><path d="M36 14v36"/><path d="M36 42c0-8 4.5-12 12-12"/></g></svg><span class="brand-name">Diego Rivada</span></a>
+  <nav class="nav" id="site-nav" aria-label="Site">
+    <a href="index.html">Home</a>
+    <a href="security.html">Security</a>
+    <a href="coding.html">Coding</a>
+    <a href="apps.html">Apps</a>
+    <a href="homelab.html">Homelab</a>
+    <a href="agents.html">UltroBot</a>
+    <a href="pictures.html">Pictures</a>
+    <a href="youtube.html">YouTube</a>
+    <a href="games.html" aria-current="page">Games</a>
+  </nav>
+  <a class="status-pill" href="agents.html" data-ub-pill data-status-url="https://ultrobot-status.homelab-alerts.workers.dev/status" aria-label="UltroLab Server status">
+    <span class="mini-bot"><svg class="bot" viewBox="0 0 200 180" aria-hidden="true" focusable="false"><g class="body-g"><line class="stem" x1="100" y1="40" x2="100" y2="20"/><circle class="bulb" cx="100" cy="15" r="8"/><rect class="ear" x="16" y="78" width="16" height="32" rx="7"/><rect class="ear" x="168" y="78" width="16" height="32" rx="7"/><rect class="head" x="30" y="38" width="140" height="112" rx="34"/><rect class="visor" x="48" y="62" width="104" height="56" rx="24"/><g class="eyes"><ellipse class="eye" cx="78" cy="90" rx="9" ry="11"/><ellipse class="eye" cx="122" cy="90" rx="9" ry="11"/></g><path class="lid" d="M68 90 Q78 99 88 90"/><path class="lid" d="M112 90 Q122 99 132 90"/><path class="mouth" d="M88 132 Q100 140 112 132"/></g><text class="zz z1" x="150" y="44" font-size="18">z</text><text class="zz z2" x="150" y="44" font-size="24">z</text><text class="zz z3" x="150" y="44" font-size="30">Z</text></svg></span>
+    <span class="pill-dot if-awake" aria-hidden="true"></span><span class="pill-zz if-asleep" aria-hidden="true">z z</span>
+  </a>
+  <a class="dash-btn" href="https://ultrobot.diegoarivada.dev" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg><span class="dash-text">Dashboard</span></a>
+  <button class="icon-btn theme-btn" id="theme-toggle" type="button" aria-label="Switch to dark mode"><svg class="i i-moon" aria-hidden="true"><use href="#i-moon"/></svg><svg class="i i-sun" aria-hidden="true"><use href="#i-sun"/></svg></button>
+  <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+</header>
+<!-- /build:header -->
+<section class="page-hero" aria-labelledby="page-title">
+  <span class="orb orb-blue" aria-hidden="true"></span><span class="orb orb-red" aria-hidden="true"></span>
+  <div class="inner">
+    <span class="eyebrow"><svg class="i" aria-hidden="true"><use href="#i-gamepad"/></svg>Games</span>
+    <h1 id="page-title">Play like a security engineer</h1>
+    <p class="lead">Two quick games built from my day job. Each round takes about a minute.</p>
+  </div>
+</section>
+<main id="maincontent" class="wrap">
+
+  <!-- Game 1 -->
+  <section class="block" id="phish-or-legit" aria-labelledby="pg-title">
+    <div class="block-head">
+      <div><span class="kicker">Game 1</span><h2 id="pg-title">Phish or Legit</h2></div>
+      <div class="game-scores"><span>Score <b data-pg="score">0</b></span><span>Best <b data-pg="best">0</b></span></div>
+    </div>
+    <div class="card game-card">
+      <div class="game-stage" id="pg-stage" tabindex="-1">
+        <div class="game-hud" aria-hidden="true">
+          <span data-pg="round">10 emails</span>
+          <span class="game-streak" data-pg="streak"></span>
+        </div>
+        <div class="game-timer" aria-hidden="true"><span data-pg="timer"></span></div>
+
+        <div class="game-screen" data-pg="intro">
+          <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span>
+          <h3>Your inbox has 10 new emails</h3>
+          <p>Some are real. Some are phishing. You have 15 seconds per email to decide.</p>
+          <button type="button" class="btn btn-solid" data-pg="start"><svg class="i" aria-hidden="true"><use href="#i-play"/></svg>Start</button>
+        </div>
+
+        <article class="mail" data-pg="mail" hidden>
+          <div class="mail-row"><span class="mail-label">From</span><span><b data-pg="from"></b> <span class="mail-addr" data-pg="addr"></span></span></div>
+          <div class="mail-row"><span class="mail-label">Subject</span><b data-pg="subject"></b></div>
+          <p class="mail-body" data-pg="body"></p>
+          <div class="mail-link" data-pg="linkrow"><span class="mail-btn" data-pg="linktext"></span><span class="mail-url"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg><span data-pg="url"></span></span></div>
+        </article>
+
+        <div class="game-actions" data-pg="actions" hidden>
+          <button type="button" class="btn game-btn ok" data-pg="legit"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Legit <kbd>L</kbd></button>
+          <button type="button" class="btn game-btn bad" data-pg="phish"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg>Phish <kbd>P</kbd></button>
+        </div>
+
+        <div class="game-feedback" data-pg="feedback" hidden>
+          <p class="game-verdict" data-pg="verdict"></p>
+          <p data-pg="why"></p>
+          <button type="button" class="btn btn-outline" data-pg="next">Next email <kbd>Enter</kbd></button>
+        </div>
+
+        <div class="game-screen" data-pg="over" hidden>
+          <span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-trophy"/></svg></span>
+          <h3 data-pg="rank"></h3>
+          <p data-pg="summary"></p>
+          <button type="button" class="btn btn-solid" data-pg="again"><svg class="i" aria-hidden="true"><use href="#i-refresh"/></svg>Play again</button>
+        </div>
+        <p class="sr-only" aria-live="polite" data-pg="live"></p>
+      </div>
+    </div>
+    <div class="grid-2 game-info">
+      <div class="card">
+        <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span>
+        <h3>What it is</h3>
+        <p>Phishing is still the most common way attackers get in. This game shows you real tricks they use, like lookalike domains, fake deadlines, and gift card requests, mixed in with normal emails. All the companies and addresses are made up.</p>
+      </div>
+      <div class="card">
+        <span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg></span>
+        <h3>How to play</h3>
+        <ol class="game-steps">
+          <li><b>Read</b> the sender's address and the link at the bottom. That's where most of the clues are.</li>
+          <li><b>Pick</b> Legit or Phish before the timer runs out. On a keyboard, press <kbd>L</kbd> or <kbd>P</kbd>.</li>
+          <li><b>Learn</b> from the explanation after each email, then hit Next.</li>
+          <li><b>Score</b> 100 per right answer, plus a speed bonus and a streak bonus.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Game 2 -->
+  <section class="block" id="firewall-rush" aria-labelledby="fw-title">
+    <div class="block-head">
+      <div><span class="kicker">Game 2</span><h2 id="fw-title">Firewall Rush</h2></div>
+      <div class="game-scores"><span>Score <b data-fw="score">0</b></span><span>Best <b data-fw="best">0</b></span></div>
+    </div>
+    <div class="card game-card">
+      <div class="game-stage fw-stage" id="fw-stage" tabindex="-1">
+        <div class="game-hud" aria-hidden="true">
+          <span data-fw="level">Level 1</span>
+          <span class="fw-lives" data-fw="lives"></span>
+        </div>
+        <div class="game-timer" aria-hidden="true"><span data-fw="timer"></span></div>
+
+        <div class="fw-grid">
+          <div class="fw-rules">
+            <h3>Firewall rules <span class="muted">(top to bottom, first match wins)</span></h3>
+            <ol data-fw="rules"></ol>
+          </div>
+          <div class="fw-main">
+            <div class="game-screen" data-fw="intro">
+              <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span>
+              <h3>You're the firewall</h3>
+              <p>Traffic is coming in. Allow or deny each packet using the rules on the left. You have 3 lives.</p>
+              <button type="button" class="btn btn-solid" data-fw="start"><svg class="i" aria-hidden="true"><use href="#i-play"/></svg>Start</button>
+            </div>
+            <div class="packet" data-fw="packet" hidden>
+              <span class="packet-proto" data-fw="proto"></span>
+              <div class="packet-row"><span class="mail-label">From</span><b class="mono" data-fw="src"></b></div>
+              <div class="packet-row"><span class="mail-label">Port</span><b class="mono" data-fw="port"></b></div>
+            </div>
+            <p class="fw-msg" data-fw="msg"></p>
+            <div class="game-actions" data-fw="actions" hidden>
+              <button type="button" class="btn game-btn ok" data-fw="allow"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Allow <kbd>A</kbd></button>
+              <button type="button" class="btn game-btn bad" data-fw="deny"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg>Deny <kbd>D</kbd></button>
+            </div>
+            <div class="game-screen" data-fw="over" hidden>
+              <span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-trophy"/></svg></span>
+              <h3 data-fw="rank"></h3>
+              <p data-fw="summary"></p>
+              <button type="button" class="btn btn-solid" data-fw="again"><svg class="i" aria-hidden="true"><use href="#i-refresh"/></svg>Play again</button>
+            </div>
+          </div>
+        </div>
+        <p class="sr-only" aria-live="polite" data-fw="live"></p>
+      </div>
+    </div>
+    <div class="grid-2 game-info">
+      <div class="card">
+        <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span>
+        <h3>What it is</h3>
+        <p>A firewall checks every piece of network traffic against a list of rules, top to bottom, and the first rule that matches decides. This game puts you in its place. New rules show up as you level up, including a blocklist that beats everything below it.</p>
+      </div>
+      <div class="card">
+        <span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-terminal"/></svg></span>
+        <h3>How to play</h3>
+        <ol class="game-steps">
+          <li><b>Check</b> the packet's protocol, where it's from, and its port.</li>
+          <li><b>Find</b> the first rule from the top that matches it. Nothing matches? The last rule denies it.</li>
+          <li><b>Pick</b> Allow or Deny before the timer runs out. On a keyboard, press <kbd>A</kbd> or <kbd>D</kbd>.</li>
+          <li><b>Survive.</b> A wrong call or a timeout costs a life. Every 6 right answers adds a rule and speeds things up.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-label="More games">
+    <a class="card" href="agents.html#nap-run">
+      <span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg></span>
+      <h3>Looking for Nap Run?</h3><p>The UltroBot runner game still lives on the UltroBot page.</p>
+      <span class="more">Play Nap Run<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+    </a>
+  </section>
+</main>
+<!-- build:footer -->
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; 2026 Diego Rivada. Built by hand, hosted on GitHub Pages.</span>
+    <nav aria-label="Footer">
+      <a href="index.html#contact">Contact</a>
+      <a href="security.html#report">Report a security issue</a>
+      <a href="https://github.com/diegoarivada/diegoarivada.github.io" target="_blank" rel="noopener noreferrer">Source</a>
+    </nav>
+  </div>
+</footer>
+<!-- /build:footer -->
+</body>
+</html>
