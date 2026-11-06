@@ -2,7 +2,7 @@
 
 ## Reporting a problem
 
-Email **diegoarivada@gmail.com** with the steps to reproduce it. You can also use GitHub's private vulnerability reporting on this repository. Please don't open a public issue for a security problem.
+Email **admin@diegoarivada.dev** with the steps to reproduce it. You can also use GitHub's private vulnerability reporting on this repository. Please don't open a public issue for a security problem.
 
 This is a personal site, so there's no bug bounty, but I read every report and will reply.
 
