@@ -73,6 +73,7 @@ code { font-family: var(--mono); font-size: .9em; }
 .status-pill:hover { border-color: var(--blue); }
 .status-pill .mini-bot { width: 26px; height: 24px; display: inline-flex; }
 .status-pill.plain { padding-left: .7rem; }
+.status-pill.dot-only { min-height: 28px; padding: .3rem .7rem; }
 .pill-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); animation: ping 2s infinite; }
 .pill-zz { font-size: .72rem; letter-spacing: 1px; color: var(--muted); animation: zzPill 2.4s ease-in-out infinite; }
 .dash-btn {
