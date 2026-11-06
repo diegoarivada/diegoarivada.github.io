@@ -455,10 +455,7 @@ html.nap-locked, html.nap-locked body { overflow: hidden; overscroll-behavior: n
 /* ---------- Responsive ---------- */
 /* Header: 8 nav links need ~1130px with the full status pill. Shrink the pill
    first, then fold the nav into the menu button. */
-@media (max-width: 1180px) {
-  .topbar .status-pill .pill-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .topbar .status-pill { padding-right: .55rem; }
-}
+.topbar .status-pill { padding-right: .55rem; }
 @media (max-width: 1080px) {
   .nav {
     display: none; position: absolute; top: calc(100% + 1px); left: 0; right: 0; flex-direction: column; gap: .2rem;
