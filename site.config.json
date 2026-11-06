@@ -1,7 +1,7 @@
 {
   "origin": "https://diegoarivada.dev",
   "statusUrl": "https://ultrobot-status.homelab-alerts.workers.dev/status",
-  "pages": ["index.html", "security.html", "coding.html", "apps.html", "homelab.html", "homelab-case-study.html", "agents.html", "pictures.html", "youtube.html", "eardeck-privacy.html", "updateall-privacy.html", "thankyou.html"],
+  "pages": ["index.html", "security.html", "coding.html", "apps.html", "homelab.html", "homelab-case-study.html", "agents.html", "pictures.html", "youtube.html", "games.html", "eardeck-privacy.html", "updateall-privacy.html", "thankyou.html"],
   "navAlias": { "homelab-case-study.html": "homelab.html" },
   "noSitemap": ["thankyou.html"],
   "csp": {
