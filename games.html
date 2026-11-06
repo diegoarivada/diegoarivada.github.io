@@ -20,12 +20,12 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="preload" href="assets/fonts/rubik-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="assets/css/tokens.css?v=c44ce4972e" />
-  <link rel="stylesheet" href="assets/css/site.css?v=61eef79f8a" />
+  <link rel="stylesheet" href="assets/css/site.css?v=553fdc0c89" />
   <script src="assets/js/theme-init.js?v=411765ce08"></script>
   <script src="assets/js/site.js?v=a91261b282" defer></script>
   <script src="assets/js/ultrobot-status.js?v=f8b22fddc1" defer></script>
   <script src="assets/js/arcade-kit.js?v=0974150414" defer></script>
-  <script src="assets/js/bit-maze.js?v=096f25ebb4" defer></script>
+  <script src="assets/js/bit-maze.js?v=2c91ae73c9" defer></script>
   <script src="assets/js/bug-blaster.js?v=f268ac4d6c" defer></script>
 </head>
 <body>
@@ -121,12 +121,6 @@
           <canvas id="maze-canvas" class="arcade-canvas maze" tabindex="0" role="img" aria-label="Bit Maze game. Press Enter to start, then steer UltroBot with the arrow keys."></canvas>
           <button type="button" class="arcade-fs" aria-label="Full screen" title="Full screen (F)"><svg class="i i-open" aria-hidden="true"><use href="#i-maximize"/></svg><svg class="i i-close" aria-hidden="true"><use href="#i-minimize"/></svg></button>
         </div>
-        <div class="arcade-pad dpad" aria-hidden="true">
-          <button type="button" tabindex="-1" data-key="ArrowUp" class="up" aria-label="Up"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-          <button type="button" tabindex="-1" data-key="ArrowLeft" class="left" aria-label="Left"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-          <button type="button" tabindex="-1" data-key="ArrowRight" class="right" aria-label="Right"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-          <button type="button" tabindex="-1" data-key="ArrowDown" class="down" aria-label="Down"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-        </div>
       </div>
       <p class="sr-only" aria-live="polite" data-mz="live"></p>
     </div>
@@ -141,7 +135,7 @@
         <h3>How to play</h3>
         <ol class="game-steps">
           <li><b>Start</b> by clicking the game or pressing <kbd>Enter</kbd>.</li>
-          <li><b>Steer</b> with the arrow keys or <kbd>WASD</kbd>. On a phone, swipe on the maze or use the arrow pad.</li>
+          <li><b>Steer</b> with the arrow keys or <kbd>WASD</kbd>. On a phone, swipe in the direction you want to go.</li>
           <li><b>Collect</b> every data bit to clear the level. Bits are 10 points.</li>
           <li><b>Grab</b> a green shield patch (50 points) and the bugs turn blue. Catch them while they're blue for 200, 400, 800, then 1600.</li>
           <li><b>Avoid</b> bugs the rest of the time. You have 3 lives, and each level makes them faster. <kbd>P</kbd> pauses, and <kbd>F</kbd> or the corner button goes full screen.</li>

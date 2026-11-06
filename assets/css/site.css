@@ -371,7 +371,7 @@ html.nap-locked, html.nap-locked body { overflow: hidden; overscroll-behavior: n
 .arcade-stage.is-full .arcade-fs .i-close { display: block; }
 .arcade-fs-score { display: none; }
 /* Full screen: the real Fullscreen API where it exists, a fixed full-window stage on iPhone */
-.arcade-stage.is-full { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
+.arcade-stage.is-full { touch-action: none; position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
   padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); background: #060c1f; }
 .arcade-stage.is-full .arcade-screen { max-width: none; margin: 0; }
 .arcade-stage.is-full .arcade-canvas { border-radius: 14px; box-shadow: 0 20px 60px rgba(0, 0, 0, .5); }
@@ -387,8 +387,7 @@ html.nap-locked, html.nap-locked body { overflow: hidden; overscroll-behavior: n
   .arcade-stage.is-full { gap: .5rem; padding-top: max(.5rem, env(safe-area-inset-top)); padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
   .arcade-stage.is-full .arcade-fs-score { position: fixed; top: max(.8rem, env(safe-area-inset-top)); left: max(1rem, env(safe-area-inset-left)); font-size: .8rem; max-width: 150px; line-height: 1.5; }
   .arcade-stage.is-full .arcade-pad button { min-height: 44px; }
-  .arcade-stage.is-full .arcade-pad.dpad { grid-template-columns: repeat(4, 64px); grid-template-areas: "left up down right"; }
-  .arcade-stage.is-full .arcade-pad.shooter { width: min(100%, 360px); }
+  .arcade-stage.is-full   .arcade-stage.is-full .arcade-pad.shooter { width: min(100%, 360px); }
 }
 .arcade-pad { display: none; margin: 1rem auto 0; max-width: 640px; }
 .arcade-pad button { display: grid; place-items: center; gap: .3rem; min-height: 52px; border-radius: 14px; border: 1px solid rgba(99, 148, 248, .35);
@@ -396,13 +395,6 @@ html.nap-locked, html.nap-locked body { overflow: hidden; overscroll-behavior: n
 .arcade-pad button.on { background: #16224a; border-color: #6394f8; color: #fff; }
 .arcade-pad .i { width: 22px; height: 22px; }
 .arcade-pad .left .i { transform: rotate(180deg); }
-.arcade-pad .up .i { transform: rotate(-90deg); }
-.arcade-pad .down .i { transform: rotate(90deg); }
-.arcade-pad.dpad { grid-template-columns: repeat(3, 64px); grid-template-areas: ". up ." "left . right" ". down ."; gap: .4rem; justify-content: center; }
-.arcade-pad.dpad .up { grid-area: up; }
-.arcade-pad.dpad .left { grid-area: left; }
-.arcade-pad.dpad .right { grid-area: right; }
-.arcade-pad.dpad .down { grid-area: down; }
 .arcade-pad.shooter { grid-template-columns: 1fr 1.4fr 1fr; gap: .6rem; }
 .arcade-pad.shooter .fire { display: flex; justify-content: center; color: #6ee7d8; border-color: rgba(110, 231, 216, .4); }
 /* Touch controls only show on touch screens */

@@ -225,7 +225,7 @@
     ctx.textAlign = 'center'; ctx.font = '700 11px Rubik, sans-serif';
     pops.forEach(function (p) { ctx.globalAlpha = Math.max(0, p.a); ctx.fillStyle = A.C.mint; ctx.fillText(p.txt, p.x * T + T / 2, p.y * T + T / 2); });
     ctx.globalAlpha = 1; ctx.textAlign = 'start';
-    if (state === 'ready') A.center(ctx, W, H, 'Bit Maze', A.go + ' to start');
+    if (state === 'ready') A.center(ctx, W, H, 'Bit Maze', A.go === 'Tap' ? 'Tap to start, then swipe to steer' : A.go + ' to start');
     else if (state === 'paused') A.center(ctx, W, H, 'Paused', A.go + ' to keep going');
     else if (state === 'clear') A.center(ctx, W, H, 'Level ' + level + ' cleared!', 'The bugs are getting faster...');
     else if (state === 'over') A.center(ctx, W, H, 'Game over', 'Score ' + score + ' · ' + A.go + ' to play again');
@@ -262,28 +262,27 @@
     else if (e.code === 'Enter' || e.code === 'Space') { e.preventDefault(); if (state === 'play') pause(); else startOrResume(); }
     else if (e.code === 'KeyP' || e.code === 'Escape') { if (state === 'play') { e.preventDefault(); pause(); } }
   });
-  canvas.addEventListener('pointerdown', function (e) {
+  // Phones steer by swiping. The whole stage listens (in full screen that's the whole screen), and a
+  // finger can keep swiping without lifting: every 18 px of travel counts as a new swipe.
+  var stage = section.querySelector('.arcade-stage') || canvas;
+  var sx = 0, sy = 0, down = false;
+  stage.addEventListener('pointerdown', function (e) {
+    if (e.target.closest && e.target.closest('.arcade-fs')) return;
     canvas.focus({ preventScroll: true });
-    sx = e.clientX; sy = e.clientY;
+    down = true; sx = e.clientX; sy = e.clientY;
     if (state !== 'play' && state !== 'dying' && state !== 'clear') startOrResume();
   });
-  // Swipe to steer on phones
-  var sx = 0, sy = 0;
-  canvas.addEventListener('pointermove', function (e) {
-    if (e.pointerType === 'mouse' || !e.buttons && e.pressure === 0) return;
+  stage.addEventListener('pointermove', function (e) {
+    if (!down || e.pointerType === 'mouse') return;
     var dx = e.clientX - sx, dy = e.clientY - sy;
     if (Math.max(Math.abs(dx), Math.abs(dy)) < 18) return;
+    e.preventDefault();
     steer(Math.abs(dx) > Math.abs(dy) ? [dx > 0 ? 1 : -1, 0] : [0, dy > 0 ? 1 : -1]);
     sx = e.clientX; sy = e.clientY;
   });
+  ['pointerup', 'pointercancel'].forEach(function (ev) { stage.addEventListener(ev, function () { down = false; }); });
   canvas.addEventListener('blur', function (e) { if (A.moving || (e.relatedTarget && e.relatedTarget.closest('.arcade-stage'))) return; pause(); });
   document.addEventListener('visibilitychange', function () { if (document.hidden) pause(); });
-  A.touchPad(section.querySelector('.arcade-pad'), function (k, down) {
-    if (!down) return;
-    canvas.focus({ preventScroll: true });
-    if (state !== 'play') startOrResume();
-    if (DIRS[k]) steer(DIRS[k]);
-  });
 
   var fsBtn = section.querySelector('.arcade-fs');
   if (fsBtn) A.fullscreen(section.querySelector('.arcade-stage'), canvas, fsBtn, view, draw);
