@@ -75,6 +75,13 @@ code { font-family: var(--mono); font-size: .9em; }
 .status-pill.plain { padding-left: .7rem; }
 .pill-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); animation: ping 2s infinite; }
 .pill-zz { font-size: .72rem; letter-spacing: 1px; color: var(--muted); animation: zzPill 2.4s ease-in-out infinite; }
+.dash-btn {
+  display: inline-flex; align-items: center; gap: .4rem; height: 38px; padding: 0 .85rem; border-radius: 10px;
+  background: var(--grad); color: #fff; font-size: .85rem; font-weight: 600; text-decoration: none; white-space: nowrap;
+  transition: box-shadow .15s ease;
+}
+.dash-btn:hover { box-shadow: 0 6px 18px rgba(230, 57, 70, .3); }
+.dash-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(42, 157, 143, .55); } 80%, 100% { box-shadow: 0 0 0 8px rgba(42, 157, 143, 0); } }
 @keyframes zzPill { 0%, 100% { opacity: .35; transform: translateY(1px); } 50% { opacity: 1; transform: translateY(-2px); } }
 
@@ -475,6 +482,8 @@ html.nap-locked, html.nap-locked body { overflow: hidden; overscroll-behavior: n
 }
 @media (max-width: 560px) {
   .brand .brand-name { display: none; }
+  .dash-btn { width: 38px; padding: 0; justify-content: center; }
+  .dash-btn .dash-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .tile-ultrobot { grid-template-columns: minmax(0, 1fr) 96px; }
   .tile-ultrobot .bot-wrap { width: 96px; height: 90px; }
   .hero-stats > div { flex: 1 1 40%; }
