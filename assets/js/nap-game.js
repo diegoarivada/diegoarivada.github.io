@@ -6,8 +6,11 @@
   var canvas = document.getElementById('nap-canvas');
   if (!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext('2d');
-  var scoreEl = document.querySelector('[data-nap="score"]');
-  var bestEl = document.querySelector('[data-nap="best"]');
+  var scoreEls = document.querySelectorAll('[data-nap="score"]');
+  var bestEls = document.querySelectorAll('[data-nap="best"]');
+  var stage = document.getElementById('nap-stage');
+  var fsBtn = document.getElementById('nap-fs');
+  var full = false;
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var KEY = 'napRunBest';
@@ -20,8 +23,9 @@
 
   // On a phone the canvas is only ~340px wide, which left well under a second to see a bug coming.
   // Narrow screens zoom the world out so at least VIEW_MIN logical px of track are always in view.
-  // NARROW_H is the logical height there: a bit taller than desktop so the zoomed-out canvas isn't a sliver.
-  var VIEW_MIN = 560, NARROW_H = 300, scale = 1;
+  // NARROW_H is the logical height there. Full screen zooms so the playfield is FS_H logical px tall,
+  // so the sprites grow with the screen instead of shrinking into a huge empty sky.
+  var VIEW_MIN = 480, NARROW_H = 250, FS_H = 300, scale = 1;
   var W = 0, H = 0, GROUND = 0, dpr = 1;
   var hitWhat = 'a bug';
   var state = 'ready';            // ready | running | over
@@ -32,17 +36,32 @@
   function rand(a, b) { return a + Math.random() * (b - a); }
 
   function resize() {
-    var r = canvas.getBoundingClientRect();
-    if (!r.width) return false;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var cssW = r.width, cssH;
-    scale = cssW < VIEW_MIN ? cssW / VIEW_MIN : 1;
-    if (scale < 1) {
-      cssH = Math.round(NARROW_H * scale);
-      if (canvas.style.height !== cssH + 'px') canvas.style.height = cssH + 'px';
+    var cssW, cssH;
+    if (full) {
+      // Fill the screen in a wide 2:1 shape (letterboxed), zoomed so the playfield is FS_H logical px tall:
+      // the robot grows with the screen, and at least VIEW_MIN px of track always stay in view.
+      var cs = getComputedStyle(stage);
+      var availW = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      var availH = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - 40;
+      cssH = Math.floor(Math.max(140, Math.min(availH, availW / (availW > availH ? 2 : 1.5))));  // a bit taller in portrait
+      cssW = Math.floor(availW);
+      scale = Math.min(cssH / FS_H, cssW / VIEW_MIN);
+      canvas.style.width = cssW + 'px';
+      canvas.style.height = cssH + 'px';
     } else {
-      if (canvas.style.height) canvas.style.height = '';
-      cssH = canvas.getBoundingClientRect().height;
+      if (canvas.style.width) canvas.style.width = '';
+      var r = canvas.getBoundingClientRect();
+      if (!r.width) return false;
+      cssW = r.width;
+      scale = cssW < VIEW_MIN ? cssW / VIEW_MIN : 1;
+      if (scale < 1) {
+        cssH = Math.round(NARROW_H * scale);
+        if (canvas.style.height !== cssH + 'px') canvas.style.height = cssH + 'px';
+      } else {
+        if (canvas.style.height) canvas.style.height = '';
+        cssH = canvas.getBoundingClientRect().height;
+      }
     }
     W = cssW / scale; H = cssH / scale; GROUND = H - 30;
     canvas.width = Math.round(cssW * dpr); canvas.height = Math.round(cssH * dpr);
@@ -162,8 +181,9 @@
 
   function pad(n) { n = Math.floor(n); return ('00000' + n).slice(-5); }
   function showScore() {
-    if (scoreEl) scoreEl.textContent = pad(score || 0);
-    if (bestEl) bestEl.textContent = pad(best);
+    var s = pad(score || 0), b = pad(best);
+    scoreEls.forEach(function (el) { el.textContent = s; });
+    bestEls.forEach(function (el) { el.textContent = b; });
   }
 
   // ---------- Drawing ----------
@@ -367,6 +387,76 @@
       if (inView) kick();
     }).observe(canvas);
   }
+  // ---------- Full screen ----------
+  // Real full screen where the browser allows it on an element (desktop, Android, iPad). iPhone Safari only
+  // allows it for video, so there the stage simply covers the window and the page stops scrolling.
+  var native = !!(stage && (stage.requestFullscreen || stage.webkitRequestFullscreen));
+  var holder = document.createComment('nap-stage');
+  function fsElement() { return document.fullscreenElement || document.webkitFullscreenElement || null; }
+  function setFull(on) {
+    if (!stage || on === full) return;
+    full = on;
+    // A transformed ancestor (the scroll-in animation) would trap position: fixed inside the card, so the
+    // stage moves to <body> while full and goes back to its spot afterwards.
+    if (on) { stage.before(holder); document.body.append(stage); }
+    else if (holder.parentNode) { holder.replaceWith(stage); }
+    stage.classList.toggle('is-full', on);
+    document.documentElement.classList.toggle('nap-locked', on);
+    if (fsBtn) { fsBtn.setAttribute('aria-label', on ? 'Exit full screen' : 'Full screen'); fsBtn.title = on ? 'Exit full screen (F or Esc)' : 'Full screen (F)'; }
+    if (!on) { canvas.style.width = ''; canvas.style.height = ''; }
+    if (resize()) draw();
+    // The stage's new layout (and the vanished scrollbar) only settle after a frame, so measure again then.
+    requestAnimationFrame(function () { if (resize()) draw(); });
+    setTimeout(function () { if (resize()) draw(); }, 200);
+    canvas.focus({ preventScroll: true });
+    kick();
+  }
+  function enter() {
+    setFull(true);
+    if (native && !fsElement()) {
+      var req = stage.requestFullscreen || stage.webkitRequestFullscreen;
+      try {
+        var pr = req.call(stage, { navigationUI: 'hide' });
+        if (pr && pr.then) pr.then(function () {
+          // Phones: landscape is the better view when the browser lets us lock it; ignore it if not.
+          try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(function () {}); } catch (e) { /* unsupported */ }
+        }).catch(function () { /* the window-sized stage still works */ });
+      } catch (e) { /* the window-sized stage still works */ }
+    }
+  }
+  function exit() {
+    if (fsElement()) {
+      var ex = document.exitFullscreen || document.webkitExitFullscreen;
+      try { ex.call(document); } catch (e) { /* fall through */ }
+    }
+    try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch (e) { /* unsupported */ }
+    setFull(false);
+  }
+  function toggle() { if (full) exit(); else enter(); }
+  // In full screen, a tap anywhere on the dark backdrop jumps too: a much bigger target on a phone.
+  if (stage) stage.addEventListener('pointerdown', function (e) {
+    if (!full || e.target === canvas || (fsBtn && fsBtn.contains(e.target))) return;
+    e.preventDefault(); press();
+  });
+  if (fsBtn) {
+    fsBtn.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
+    fsBtn.addEventListener('click', function (e) { e.preventDefault(); toggle(); });
+  }
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (ev) {
+    document.addEventListener(ev, function () {
+      if (!fsElement() && full) setFull(false);
+      else if (full) setTimeout(function () { if (resize()) draw(); }, 50);
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    var tag = (document.activeElement && document.activeElement.tagName) || '';
+    if (/INPUT|TEXTAREA|SELECT/.test(tag) || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.code === 'KeyF' && (full || document.activeElement === canvas || document.activeElement === fsBtn)) { e.preventDefault(); toggle(); }
+    else if (e.code === 'Escape' && full) { e.preventDefault(); exit(); }
+  });
+  window.addEventListener('resize', function () { if (full && resize()) draw(); });
+  window.addEventListener('orientationchange', function () { setTimeout(function () { if (full && resize()) draw(); }, 250); });
+
   // The section is hidden while UltroBot is awake, so (re)size whenever it gets real width.
   var ro = 'ResizeObserver' in window ? new ResizeObserver(function () { if (resize()) { draw(); kick(); } }) : null;
   if (ro) ro.observe(canvas); else window.addEventListener('resize', function () { if (resize()) draw(); });

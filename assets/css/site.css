@@ -324,6 +324,23 @@ a.card, .card.lift { text-decoration: none; color: inherit; }
 .nap-scores b { color: var(--text); margin-left: .25rem; }
 .nap-canvas { display: block; width: 100%; height: 230px; border-radius: var(--radius-sm); background: #0b1530; cursor: pointer; touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
 .nap-canvas:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.nap-stage { position: relative; }
+.nap-fs { position: absolute; top: .5rem; right: .5rem; width: 38px; height: 38px; display: grid; place-items: center; padding: 0; border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, .22); background: rgba(11, 21, 48, .6); color: #fff; cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background .15s ease; }
+.nap-fs:hover { background: rgba(255, 255, 255, .16); }
+.nap-fs:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.nap-fs .i-close, .nap-stage.is-full .nap-fs .i-open { display: none; }
+.nap-stage.is-full .nap-fs .i-close { display: block; }
+.nap-fs-score, .nap-rotate { display: none; }
+/* Full screen: the real Fullscreen API where it exists, a fixed full-window stage on iPhone (which has none for page elements) */
+.nap-stage.is-full { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .8rem;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); background: #060c1f; }
+.nap-stage.is-full .nap-canvas { border-radius: 14px; box-shadow: 0 20px 60px rgba(0, 0, 0, .5); }
+.nap-stage.is-full .nap-fs { position: fixed; top: max(.8rem, env(safe-area-inset-top)); right: max(.8rem, env(safe-area-inset-right)); width: 44px; height: 44px; }
+.nap-stage.is-full .nap-fs-score { display: block; font-family: var(--mono); font-size: .9rem; color: rgba(255, 255, 255, .7); }
+.nap-stage.is-full .nap-fs-score b { color: #fff; }
+@media (orientation: portrait) and (max-width: 600px) { .nap-stage.is-full .nap-rotate { display: block; margin: 0; color: rgba(255, 255, 255, .6); font-size: .85rem; } }
+html.nap-locked, html.nap-locked body { overflow: hidden; overscroll-behavior: none; }
 .nap-card > .nap-help, .nap-help { display: flex; align-items: center; gap: .45rem; margin: 1.4rem 0 0; font-size: .9rem; }
 @media (max-width: 600px) { .nap-scores { width: 100%; } }
 
