@@ -353,6 +353,15 @@ a.card { display: block; } /* a link card outside a grid is inline, which breaks
 .nap-stage.is-full .nap-fs-score { display: block; font-family: var(--mono); font-size: .9rem; color: rgba(255, 255, 255, .7); }
 .nap-stage.is-full .nap-fs-score b { color: #fff; }
 @media (orientation: portrait) and (max-width: 600px) { .nap-stage.is-full .nap-rotate { display: block; margin: 0; color: rgba(255, 255, 255, .6); font-size: .85rem; } }
+/* Sound on/off (assets/js/arcade-sound.js): same chip as the full-screen button, just to its left. Shared by Nap Run and the Games page. */
+.arcade-snd { position: absolute; top: .5rem; right: calc(.5rem + 46px); width: 38px; height: 38px; display: grid; place-items: center; padding: 0; border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, .22); background: rgba(11, 21, 48, .6); color: #fff; cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background .15s ease; }
+.arcade-snd:hover { background: rgba(255, 255, 255, .16); }
+.arcade-snd:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.arcade-snd .i-off, .arcade-snd.is-muted .i-on { display: none; }
+.arcade-snd.is-muted .i-off { display: block; }
+.arcade-snd.is-muted { color: rgba(255, 255, 255, .7); }
+.nap-stage.is-full .arcade-snd, .arcade-stage.is-full .arcade-snd { position: fixed; top: max(.8rem, env(safe-area-inset-top)); right: calc(max(.8rem, env(safe-area-inset-right)) + 52px); width: 44px; height: 44px; }
 html.nap-locked, html.nap-locked body { overflow: hidden; overscroll-behavior: none; }
 .nap-card > .nap-help, .nap-help { display: flex; align-items: center; gap: .45rem; margin: 1.4rem 0 0; font-size: .9rem; }
 @media (max-width: 600px) { .nap-scores { width: 100%; } }

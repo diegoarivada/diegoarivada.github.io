@@ -12,6 +12,9 @@
   var fsBtn = document.getElementById('nap-fs');
   var full = false;
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Sound and music (arcade-sound.js). Without that file the game just runs silent.
+  var S = window.ArcadeSound || { sfx: function () {}, music: function () {}, stop: function () {}, button: function () {} };
+  S.button(document.getElementById('nap-snd'));
 
   var KEY = 'napRunBest';
   var best = 0;
@@ -84,14 +87,14 @@
   function press() {
     if (state === 'over') {
       if (performance.now() - overAt < 450) return; // don't restart from the tap that just ended it
-      reset(); state = 'running'; kick(); jump(); return;
+      reset(); state = 'running'; S.music('nap'); kick(); jump(); return;
     }
-    if (state === 'ready') { reset(); state = 'running'; kick(); }
+    if (state === 'ready') { reset(); state = 'running'; S.music('nap'); kick(); }
     jump();
   }
   function jump() {
     bot.holding = true;
-    if (bot.onGround) { bot.vy = -JUMP_V; bot.onGround = false; }
+    if (bot.onGround) { bot.vy = -JUMP_V; bot.onGround = false; S.sfx('jump'); }
   }
   function release() {
     bot.holding = false;
@@ -155,7 +158,7 @@
       z.x -= dx;
       if (z.x < -30) { zees.splice(j, 1); continue; }
       if (!z.got && Math.abs(z.x - (bot.x + bot.w / 2)) < 22 && Math.abs(z.y - (bot.y + bot.h / 2)) < 26) {
-        z.got = true; score += 50; pops.push({ x: z.x, y: z.y, a: 1 });
+        z.got = true; score += 50; S.sfx('zee'); pops.push({ x: z.x, y: z.y, a: 1 });
         zees.splice(j, 1);
       }
     }
@@ -174,6 +177,7 @@
   function gameOver(type) {
     hitWhat = type === 'rack' ? 'a server rack' : 'a bug';
     state = 'over'; overAt = performance.now(); bot.holding = false;
+    S.stop(); S.sfx('hit'); setTimeout(function () { if (state === 'over') S.sfx('over'); }, 350);
     var s = Math.floor(score);
     if (s > best) { best = s; try { localStorage.setItem(KEY, String(best)); } catch (e) { /* ignore */ } }
     showScore();
@@ -384,6 +388,8 @@
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (entries) {
       inView = entries[0].isIntersecting;
+      // Scrolled away mid-run: the game freezes, so the music stops with it.
+      if (state === 'running') { if (inView) S.music('nap'); else S.stop(); }
       if (inView) kick();
     }).observe(canvas);
   }

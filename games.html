@@ -20,13 +20,14 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="preload" href="assets/fonts/rubik-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="assets/css/tokens.css?v=c44ce4972e" />
-  <link rel="stylesheet" href="assets/css/site.css?v=01d8d020a6" />
+  <link rel="stylesheet" href="assets/css/site.css?v=a63e2eb59c" />
   <script src="assets/js/theme-init.js?v=411765ce08"></script>
   <script src="assets/js/site.js?v=a91261b282" defer></script>
   <script src="assets/js/ultrobot-status.js?v=f8b22fddc1" defer></script>
+  <script src="assets/js/arcade-sound.js?v=ee1f7fd950" defer></script>
   <script src="assets/js/arcade-kit.js?v=0974150414" defer></script>
-  <script src="assets/js/bit-maze.js?v=2c91ae73c9" defer></script>
-  <script src="assets/js/bug-blaster.js?v=f268ac4d6c" defer></script>
+  <script src="assets/js/bit-maze.js?v=c44ddd4dc0" defer></script>
+  <script src="assets/js/bug-blaster.js?v=3fd0419770" defer></script>
 </head>
 <body>
 <!-- build:sprite -->
@@ -53,6 +54,8 @@
   <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
   <symbol id="i-maximize" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></symbol>
   <symbol id="i-minimize" viewBox="0 0 24 24"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></symbol>
+  <symbol id="i-volume" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></symbol>
+  <symbol id="i-volume-x" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M22 9l-6 6M16 9l6 6"/></symbol>
   <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></symbol>
   <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
   <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5M3 21v-5h5"/></symbol>
@@ -120,6 +123,7 @@
         <div class="arcade-screen">
           <canvas id="maze-canvas" class="arcade-canvas maze" tabindex="0" role="img" aria-label="Bit Maze game. Press Enter to start, then steer UltroBot with the arrow keys."></canvas>
           <button type="button" class="arcade-fs" aria-label="Full screen" title="Full screen (F)"><svg class="i i-open" aria-hidden="true"><use href="#i-maximize"/></svg><svg class="i i-close" aria-hidden="true"><use href="#i-minimize"/></svg></button>
+          <button type="button" class="arcade-snd" aria-label="Mute sound" aria-pressed="false" title="Mute sound (M)"><svg class="i i-on" aria-hidden="true"><use href="#i-volume"/></svg><svg class="i i-off" aria-hidden="true"><use href="#i-volume-x"/></svg></button>
         </div>
       </div>
       <p class="sr-only" aria-live="polite" data-mz="live"></p>
@@ -138,7 +142,7 @@
           <li><b>Steer</b> with the arrow keys or <kbd>WASD</kbd>. On a phone, swipe in the direction you want to go.</li>
           <li><b>Collect</b> every data bit to clear the level. Bits are 10 points.</li>
           <li><b>Grab</b> a green shield patch (50 points) and the bugs turn blue. Catch them while they're blue for 200, 400, 800, then 1600.</li>
-          <li><b>Avoid</b> bugs the rest of the time. You have 3 lives, and each level makes them faster. <kbd>P</kbd> pauses, and <kbd>F</kbd> or the corner button goes full screen.</li>
+          <li><b>Avoid</b> bugs the rest of the time. You have 3 lives, and each level makes them faster. <kbd>P</kbd> pauses, <kbd>F</kbd> or the corner button goes full screen, and <kbd>M</kbd> or the speaker button turns the sound and music on or off.</li>
         </ol>
       </div>
     </div>
@@ -156,6 +160,7 @@
         <div class="arcade-screen">
           <canvas id="blaster-canvas" class="arcade-canvas" tabindex="0" role="img" aria-label="Bug Blaster game. Press Enter to start. Move with the left and right arrow keys and shoot with Space."></canvas>
           <button type="button" class="arcade-fs" aria-label="Full screen" title="Full screen (F)"><svg class="i i-open" aria-hidden="true"><use href="#i-maximize"/></svg><svg class="i i-close" aria-hidden="true"><use href="#i-minimize"/></svg></button>
+          <button type="button" class="arcade-snd" aria-label="Mute sound" aria-pressed="false" title="Mute sound (M)"><svg class="i i-on" aria-hidden="true"><use href="#i-volume"/></svg><svg class="i i-off" aria-hidden="true"><use href="#i-volume-x"/></svg></button>
         </div>
         <div class="arcade-pad shooter" aria-hidden="true">
           <button type="button" tabindex="-1" data-key="ArrowLeft" class="left" aria-label="Left"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
@@ -179,7 +184,7 @@
           <li><b>Move</b> with the left and right arrows (or <kbd>A</kbd> and <kbd>D</kbd>) and <b>shoot</b> with <kbd>Space</kbd>. On a phone, drag on the game to move and UltroBot shoots on its own, or use the buttons.</li>
           <li><b>Score</b> 20 for a bug, 30 for a worm, and 40 for a virus. Hit the floating Z for a surprise bonus.</li>
           <li><b>Hide</b> behind the firewall, but it breaks down as it takes hits from both sides.</li>
-          <li><b>Survive.</b> A red packet costs a life, and if the wave reaches UltroBot it's game over. <kbd>P</kbd> pauses, and <kbd>F</kbd> or the corner button goes full screen.</li>
+          <li><b>Survive.</b> A red packet costs a life, and if the wave reaches UltroBot it's game over. <kbd>P</kbd> pauses, <kbd>F</kbd> or the corner button goes full screen, and <kbd>M</kbd> or the speaker button turns the sound and music on or off.</li>
         </ol>
       </div>
     </div>
