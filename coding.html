@@ -169,39 +169,39 @@
   </section>
 
   <section class="block" aria-labelledby="homelab-title">
-    <article class="card">
-      <span class="kicker">Infrastructure</span>
-      <h2 id="homelab-title">🏠 Homelab: Proxmox + Ubiquiti</h2>
-      <p class="muted">I run a resilient homelab using Proxmox to host VMs and containers and Ubiquiti for networking. Key components: Home Assistant, containerized services, NAS backups, and WireGuard for secure remote access.</p>
-      <img src="images/homelab-arch.svg" alt="Homelab architecture diagram" class="project-diagram" width="800" height="400" loading="lazy" decoding="async" />
-      <div class="grid-2">
-        <div>
-          <h3>Key details</h3>
-          <ul>
-            <li>Virtualization: Proxmox VE (KVM + LXC)</li>
-            <li>Networking: Ubiquiti UniFi for routing, switching, and Wi‑Fi</li>
-            <li>Services: Home Assistant, relay services in containers, reverse proxy</li>
-            <li>Remote access: WireGuard with strict firewall rules</li>
-          </ul>
+    <div class="block-head"><div><span class="kicker">Infrastructure</span><h2 id="homelab-title">Homelab: Proxmox + Ubiquiti</h2></div></div>
+    <div class="grid-2">
+      <article class="card lift">
+        <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-server"/></svg></span>
+        <h3>🖥️ Servers and network</h3>
+        <p>Proxmox VE runs Home Assistant, TrueNAS, and the always-on UltroBot control server, all on a UniFi Dream Machine Pro network.</p>
+        <ul>
+          <li>IoT devices live on their own isolated VLAN, and every cross-network rule is a single, named allow</li>
+          <li>Weekly VM backups to TrueNAS, plus nightly UltroBot backups to a share that can't delete files</li>
+          <li>Pi-hole filters DNS for the whole house, running in Docker on Ubuntu 24.04 LTS</li>
+          <li>UltroBot watches Proxmox, TrueNAS, and Home Assistant with read-only access</li>
+        </ul>
+        <div class="links-row">
+          <a class="more" href="homelab.html#network">See the full setup<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="more" href="homelab-case-study.html">Read the case study<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-        <details>
-          <summary>Sample WireGuard peer config (redacted)</summary>
-          <pre class="code-sample">[Interface]
-Address = &lt;peer-vpn-address&gt;/32
-PrivateKey = &lt;private-key&gt;
-
-[Peer]
-PublicKey = &lt;server-public-key&gt;
-Endpoint = yourdomain.example:51820
-AllowedIPs = 0.0.0.0/0
-PersistentKeepalive = 25</pre>
-        </details>
-      </div>
-      <div class="btn-row">
-        <a class="btn btn-solid" href="homelab-case-study.html"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>Read the full case study</a>
-        <a class="btn btn-outline" href="https://github.com/diegoarivada" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="#i-branch"/></svg>More projects on GitHub</a>
-      </div>
-    </article>
+      </article>
+      <article class="card lift">
+        <span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg></span>
+        <h3>🔐 Remote access with no open ports</h3>
+        <p>Nothing in the house is exposed to the internet. I reach the lab through a private mesh VPN, and public pages go out through Cloudflare.</p>
+        <ul>
+          <li>Tailscale (WireGuard) with Proxmox as a subnet router, so the whole lab is reachable from anywhere</li>
+          <li>A Cloudflare Tunnel publishes the UltroBot dashboard without opening a port</li>
+          <li>The live status in this site's header comes from a Worker the lab pushes signed heartbeats to</li>
+          <li>A Home Assistant button wakes the AI server across VLANs, and Discord tells me if a sleep fails</li>
+        </ul>
+        <div class="links-row">
+          <a class="more" href="homelab.html#ai">What runs on top<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="more" href="security.html">How I secure it<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+    </div>
   </section>
 
   <section class="block" aria-labelledby="more-title">
