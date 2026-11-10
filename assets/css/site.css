@@ -654,3 +654,49 @@ html.nap-locked, html.nap-locked body { overflow: hidden; overscroll-behavior: n
   .app-gallery.is-ready .slide.is-active, .app-gallery.is-ready .slide.is-leaving, .app-gallery.is-ready .slide.is-active img, .app-gallery.is-changing::after { animation: none; }
   .app-gallery-dot, .app-gallery-nav { transition: none; }
 }
+
+/* ---------- Architecture diagram (homelab case study) ---------- */
+.arch { display: grid; grid-template-columns: 1fr 3rem 1fr 3rem 1fr; align-items: stretch; margin: 1.4rem 0 1.2rem; }
+.arch-zone { position: relative; padding: 1.1rem; border-radius: var(--radius); border: 1px solid var(--line); background: var(--bg); overflow: hidden; }
+.arch-zone::before { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: var(--blue); }
+.arch-edge::before { background: var(--red); }
+.arch-lab::before { background: var(--ok); }
+.arch-head { display: flex; align-items: center; gap: .7rem; margin-bottom: .8rem; }
+.arch-head h3 { margin: 0; font-size: 1.02rem; line-height: 1.25; }
+.arch-label { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.arch-note { margin: .2rem 0 .6rem; font-size: .84rem; color: var(--muted); display: flex; align-items: center; gap: .4rem; }
+.arch-nodes, .card .arch-nodes { list-style: none; margin: 0 0 .6rem; padding: 0; display: grid; gap: .5rem; }
+.arch-nodes:last-child { margin-bottom: 0; }
+.arch-node, .card ul li.arch-node { color: var(--text); margin: 0; display: flex; align-items: center; gap: .65rem; padding: .55rem .65rem; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); transition: transform .2s var(--ease), box-shadow .2s var(--ease); }
+.arch-node:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.arch-ic { flex: none; width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--tint); color: var(--blue); }
+.arch-ic .i { width: 17px; height: 17px; }
+.arch-edge .arch-ic { background: var(--tint-red); color: var(--red); }
+.arch-lab .arch-ic { background: var(--tint-ok); color: var(--ok); }
+.arch-txt { min-width: 0; flex: 1; line-height: 1.25; }
+.arch-txt strong { display: block; font-size: .92rem; }
+.arch-txt span { display: block; font-size: .78rem; color: var(--muted); }
+.arch-iot { border-style: dashed; border-color: var(--red); }
+.arch-sleepy .arch-ic { animation: arch-nap 3.2s ease-in-out infinite; }
+.arch-flags { display: flex; gap: .15rem; flex: none; }
+.arch-n { flex: none; width: 1.25rem; height: 1.25rem; border-radius: 50%; display: inline-grid; place-items: center; font-size: .72rem; font-weight: 700; color: #fff; background: var(--blue); }
+.arch-n.f1 { background: #0a66c2; }
+.arch-n.f2 { background: #6a4bc4; }
+.arch-n.f3 { background: #1f7f74; }
+.arch-n.f4 { background: #9a5d08; }
+.arch-n.f5 { background: #c62f3c; }
+.arch-link { position: relative; align-self: center; height: 4px; margin: 0 .2rem; border-radius: 4px; background: var(--grad); opacity: .85; overflow: visible; }
+.arch-pulse { position: absolute; top: 50%; left: 0; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--card); border: 2px solid var(--blue); animation: arch-flow 2.6s linear infinite; }
+.arch-pulse.p2 { border-color: var(--red); animation-direction: reverse; animation-delay: -1.3s; }
+@keyframes arch-flow { from { left: 0; } to { left: 100%; } }
+@keyframes arch-flow-v { from { top: 0; } to { top: 100%; } }
+@keyframes arch-nap { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+.arch-flows, .card .arch-flows { list-style: none; margin: 0 0 1.2rem; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr)); gap: .6rem; }
+.arch-flows li, .card .arch-flows li { color: var(--text); margin: 0; display: flex; gap: .6rem; align-items: flex-start; padding: .75rem; border-radius: var(--radius-sm); background: var(--bg); border: 1px solid var(--line); }
+.arch-flows strong { display: block; font-size: .9rem; }
+.arch-flows span:not(.arch-n) { display: block; font-size: .82rem; color: var(--muted); line-height: 1.45; }
+@media (max-width: 960px) {
+  .arch { grid-template-columns: 1fr; }
+  .arch-link { justify-self: center; width: 4px; height: 2rem; margin: .2rem 0; }
+  .arch-pulse { left: 50%; top: 0; animation-name: arch-flow-v; }
+}

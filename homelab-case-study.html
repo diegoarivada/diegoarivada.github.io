@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
   <title>Homelab Case Study | Diego Rivada</title>
-  <meta name="description" content="Case study: a Proxmox + Ubiquiti backbone for a secure, resilient smart home with segmented IoT, backups, and WireGuard." />
+  <meta name="description" content="Case study: a Proxmox + Ubiquiti backbone for a secure, resilient smart home with segmented IoT, backups, and remote access with no open ports." />
   <link rel="canonical" href="https://diegoarivada.dev/homelab-case-study.html" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://diegoarivada.dev/homelab-case-study.html" />
@@ -20,7 +20,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="preload" href="assets/fonts/rubik-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="assets/css/tokens.css?v=c44ce4972e" />
-  <link rel="stylesheet" href="assets/css/site.css?v=a63e2eb59c" />
+  <link rel="stylesheet" href="assets/css/site.css?v=b417442f79" />
   <script src="assets/js/theme-init.js?v=411765ce08"></script>
   <script src="assets/js/site.js?v=a91261b282" defer></script>
   <script src="assets/js/ultrobot-status.js?v=f8b22fddc1" defer></script>
@@ -113,16 +113,16 @@
       <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg></span><h2 class="h3">Problem</h2><p>I needed a reliable homelab that hosts home automation, media services, and developer tooling while keeping IoT devices isolated and secure.</p></div>
       <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-server"/></svg></span><h2 class="h3">Approach</h2>
         <ul>
-          <li>Proxmox VE for virtualization and container management.</li>
-          <li>Ubiquiti UniFi for routing, VLANs, and Wi‑Fi with clear segmentation.</li>
-          <li>Home Assistant and edge services in containers behind a reverse proxy with TLS.</li>
-          <li>WireGuard for secure remote access with strict ACLs.</li>
+          <li>Proxmox VE runs Home Assistant, TrueNAS, and the always-on UltroBot control server.</li>
+          <li>A UniFi Dream Machine Pro handles routing, Wi-Fi, and VLANs, with IoT devices on their own isolated network.</li>
+          <li>Tailscale (WireGuard) for remote access and a Cloudflare Tunnel for the public dashboard, so no ports are open.</li>
+          <li>Pi-hole filters DNS for the whole house.</li>
         </ul></div>
       <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><h2 class="h3">Result</h2><p>A stable homelab with automated backups, a segmented network, and secure remote access, so I can experiment without touching the IoT devices the house depends on.</p>
         <ul>
-          <li>Uptime above 99.9% for key services</li>
-          <li>Automated backups to the NAS with scheduled snapshots</li>
-          <li>Zero-trust remote access via WireGuard</li>
+          <li>Weekly VM backups and nightly UltroBot backups to TrueNAS, on a share that can never delete files</li>
+          <li>Remote access through Tailscale with zero open ports</li>
+          <li>An AI server that sleeps when idle and wakes on demand</li>
         </ul></div>
     </div>
   </section>
@@ -131,11 +131,54 @@
     <div class="card">
       <span class="kicker">Architecture</span>
       <h2 id="arch-title">How it fits together</h2>
-      <img src="images/homelab-arch.svg" alt="Homelab architecture diagram" class="project-diagram" width="800" height="400" loading="lazy" decoding="async" />
+      <p class="muted">Three layers and five flows. Everything in the house sits behind the firewall, and nothing on the internet can open a connection in.</p>
+      <div class="arch" role="group" aria-label="Homelab architecture: internet services, the UniFi network edge, and the Proxmox lab, connected by the five numbered flows listed below">
+        <div class="arch-zone arch-cloud">
+          <div class="arch-head"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-cloud"/></svg></span><div><span class="arch-label">Internet</span><h3>Outside the house</h3></div></div>
+          <ul class="arch-nodes">
+            <li class="arch-node"><span class="arch-ic"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg></span><span class="arch-txt"><strong>My phone and laptop</strong><span>Tailscale mesh VPN</span></span><span class="arch-flags"><span class="arch-n f1" aria-hidden="true">1</span></span></li>
+            <li class="arch-node"><span class="arch-ic"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg></span><span class="arch-txt"><strong>diegoarivada.dev</strong><span>GitHub Pages, reads status</span></span><span class="arch-flags"><span class="arch-n f3" aria-hidden="true">3</span></span></li>
+            <li class="arch-node"><span class="arch-ic"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg></span><span class="arch-txt"><strong>Status Worker</strong><span>Cloudflare Workers + KV</span></span><span class="arch-flags"><span class="arch-n f3" aria-hidden="true">3</span></span></li>
+            <li class="arch-node"><span class="arch-ic"><svg class="i" aria-hidden="true"><use href="#i-external"/></svg></span><span class="arch-txt"><strong>UltroBot dashboard</strong><span>Cloudflare Tunnel</span></span><span class="arch-flags"><span class="arch-n f2" aria-hidden="true">2</span></span></li>
+            <li class="arch-node"><span class="arch-ic"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></span><span class="arch-txt"><strong>Discord</strong><span>Alerts and approvals</span></span><span class="arch-flags"><span class="arch-n f5" aria-hidden="true">5</span></span></li>
+          </ul>
+        </div>
+        <div class="arch-link" aria-hidden="true"><span class="arch-pulse"></span><span class="arch-pulse p2"></span></div>
+        <div class="arch-zone arch-edge">
+          <div class="arch-head"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><div><span class="arch-label">Edge</span><h3>UniFi Dream Machine Pro</h3></div></div>
+          <p class="arch-note">Firewall, routing, and Wi-Fi. No inbound ports open.</p>
+          <ul class="arch-nodes">
+            <li class="arch-node"><span class="arch-ic"><svg class="i" aria-hidden="true"><use href="#i-server"/></svg></span><span class="arch-txt"><strong>Lab VLAN</strong><span>Servers and my devices</span></span></li>
+            <li class="arch-node arch-iot"><span class="arch-ic"><svg class="i" aria-hidden="true"><use href="#i-wifi"/></svg></span><span class="arch-txt"><strong>IoT VLAN</strong><span>Isolated smart-home devices</span></span></li>
+            <li class="arch-node"><span class="arch-ic"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><span class="arch-txt"><strong>Pi-hole</strong><span>DNS filtering for the house</span></span></li>
+          </ul>
+          <p class="arch-note">Every cross-VLAN rule is a single, named allow.</p>
+        </div>
+        <div class="arch-link" aria-hidden="true"><span class="arch-pulse"></span><span class="arch-pulse p2"></span></div>
+        <div class="arch-zone arch-lab">
+          <div class="arch-head"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-server"/></svg></span><div><span class="arch-label">Lab</span><h3>Proxmox VE host</h3></div></div>
+          <p class="arch-note"><span class="arch-n f1" aria-hidden="true">1</span> Subnet router for Tailscale</p>
+          <ul class="arch-nodes">
+            <li class="arch-node"><span class="arch-ic"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg></span><span class="arch-txt"><strong>Home Assistant</strong><span>Runs the house</span></span><span class="arch-flags"><span class="arch-n f5" aria-hidden="true">5</span></span></li>
+            <li class="arch-node"><span class="arch-ic"><svg class="i" aria-hidden="true"><use href="#i-database"/></svg></span><span class="arch-txt"><strong>TrueNAS</strong><span>Storage and backups</span></span><span class="arch-flags"><span class="arch-n f4" aria-hidden="true">4</span></span></li>
+            <li class="arch-node"><span class="arch-ic"><svg class="i" aria-hidden="true"><use href="#i-cpu"/></svg></span><span class="arch-txt"><strong>UltroBot control</strong><span>Always on, 24/7</span></span><span class="arch-flags"><span class="arch-n f2" aria-hidden="true">2</span><span class="arch-n f3" aria-hidden="true">3</span><span class="arch-n f4" aria-hidden="true">4</span></span></li>
+          </ul>
+          <p class="arch-note">Separate machine</p>
+          <ul class="arch-nodes">
+            <li class="arch-node arch-sleepy"><span class="arch-ic"><svg class="i" aria-hidden="true"><use href="#i-power"/></svg></span><span class="arch-txt"><strong>UltroLab Server</strong><span>AI work, naps when idle</span></span><span class="arch-flags"><span class="arch-n f5" aria-hidden="true">5</span></span></li>
+          </ul>
+        </div>
+      </div>
+      <ol class="arch-flows">
+        <li><span class="arch-n f1">1</span><div><strong>Remote access</strong><span>Tailscale (WireGuard) with Proxmox as a subnet router, so I reach the whole lab from anywhere.</span></div></li>
+        <li><span class="arch-n f2">2</span><div><strong>Public dashboard</strong><span>A Cloudflare Tunnel dials out from the control server, so the dashboard is online without a port forward.</span></div></li>
+        <li><span class="arch-n f3">3</span><div><strong>Live status</strong><span>UltroBot pushes HMAC-signed heartbeats to a Worker. This site only reads the Worker, never the house.</span></div></li>
+        <li><span class="arch-n f4">4</span><div><strong>Backups</strong><span>VMs back up to TrueNAS every Sunday and UltroBot every night, to a share that can add files but never delete them.</span></div></li>
+        <li><span class="arch-n f5">5</span><div><strong>Wake on demand</strong><span>Home Assistant sends Wake-on-LAN across VLANs when there is AI work, and Discord tells me if a sleep fails.</span></div></li>
+      </ol>
       <h3>Tech stack</h3>
-      <ul class="chips"><li>Proxmox</li><li>LXC/KVM</li><li>Docker</li><li>Home Assistant</li><li>Ubiquiti UniFi</li><li>Tailscale (WireGuard)</li><li>Cloudflare Tunnel</li><li>Nginx reverse proxy</li><li>TrueNAS</li><li>Pi-hole</li><li>Cloudflare Workers</li><li>Discord webhooks</li></ul>
+      <ul class="chips"><li>Proxmox</li><li>LXC/KVM</li><li>Docker</li><li>Home Assistant</li><li>UniFi Dream Machine Pro</li><li>UniFi VLANs</li><li>Tailscale (WireGuard)</li><li>Cloudflare Tunnel</li><li>TrueNAS</li><li>Pi-hole</li><li>Cloudflare Workers</li><li>Discord webhooks</li></ul>
       <div class="btn-row block-actions">
-        <a class="btn btn-solid" href="images/homelab-arch.svg"><svg class="i" aria-hidden="true"><use href="#i-image"/></svg>Open the diagram</a>
         <a class="btn btn-outline" href="https://github.com/diegoarivada" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="#i-branch"/></svg>Project repositories</a>
       </div>
     </div>
