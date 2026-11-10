@@ -9,6 +9,8 @@
   var section = canvas.closest('section');
   function $(n) { return document.querySelectorAll('[data-mz="' + n + '"]'); }
   function setText(n, v) { $(n).forEach(function (e) { e.textContent = v; }); }
+  // Sound and music (arcade-sound.js). Without that file the game just runs silent.
+  var S = window.ArcadeSound || { sfx: function () {}, music: function () {}, stop: function () {}, button: function () {} };
 
   // Left half of the maze plus the center column; the right half is mirrored.
   // # wall, . bit, o patch, - pen gate, G pen, B UltroBot start
@@ -55,6 +57,7 @@
     score = 0; lives = 3; level = 1; t = 0;
     resetBoard(); resetActors(); hud();
     state = 'play'; stateT = 0;
+    S.sfx('start'); S.music('maze');
   }
 
   function botSpeed() { return 6.2 + level * 0.15; }
@@ -87,10 +90,10 @@
     var c = grid[y][x];
     if (!c) return;
     grid[y][x] = 0; bitsLeft--;
-    if (c === 1) score += 10;
-    else { score += 50; scaredFor = Math.max(3, 7 - level * 0.6); combo = 0; bugs.forEach(function (b) { if (!b.home) { b.dx = -b.dx; b.dy = -b.dy; b.p = b.dx || b.dy ? 1 - b.p : 0; if (b.dx || b.dy) { b.tx -= b.dx; b.ty -= b.dy; } } }); }
+    if (c === 1) { score += 10; S.sfx('bit'); }
+    else { S.sfx('power'); score += 50; scaredFor = Math.max(3, 7 - level * 0.6); combo = 0; bugs.forEach(function (b) { if (!b.home) { b.dx = -b.dx; b.dy = -b.dy; b.p = b.dx || b.dy ? 1 - b.p : 0; if (b.dx || b.dy) { b.tx -= b.dx; b.ty -= b.dy; } } }); }
     hud();
-    if (bitsLeft <= 0) { state = 'clear'; stateT = 0; say('Level ' + level + ' cleared.'); }
+    if (bitsLeft <= 0) { state = 'clear'; stateT = 0; S.stop(); S.sfx('clear'); say('Level ' + level + ' cleared.'); }
   }
 
   function target(b, i) {
@@ -138,12 +141,13 @@
       if (Math.abs(a.x - q.x) + Math.abs(a.y - q.y) < 0.75) {
         if (scaredFor > 0) {
           combo++; var pts = 100 * Math.pow(2, combo);
-          score += pts; hud();
+          score += pts; hud(); S.sfx('eat');
           pops.push({ x: q.x, y: q.y, txt: '+' + pts, a: 1 });
           b.home = true; b.tx = PEN[i].x; b.ty = PEN[i].y; b.release = 2.5;
         } else {
           lives--; hud();
           state = lives > 0 ? 'dying' : 'over'; stateT = 0;
+          S.stop(); S.sfx('hit'); if (state === 'over') setTimeout(function () { S.sfx('over'); }, 450);
           if (state === 'over') {
             if (score > best) { best = score; A.saveBest(KEY, best); }
             hud(); say('Game over. Score ' + score + '.');
@@ -163,9 +167,9 @@
       moveBot(dt); collide();
       if (state === 'play') { moveBugs(dt); collide(); }
     } else if (state === 'dying' && stateT > 1.4) {
-      resetActors(); state = 'play'; stateT = 0;
+      resetActors(); state = 'play'; stateT = 0; S.music('maze');
     } else if (state === 'clear' && stateT > 1.6) {
-      level++; resetBoard(); resetActors(); hud(); state = 'play'; stateT = 0;
+      level++; resetBoard(); resetActors(); hud(); state = 'play'; stateT = 0; S.music('maze');
     }
   }
 
@@ -251,10 +255,10 @@
 
   function startOrResume() {
     if (state === 'ready' || state === 'over') { newGame(); say('Bit Maze started. Use the arrow keys.'); }
-    else if (state === 'paused') state = 'play';
+    else if (state === 'paused') { state = 'play'; S.sfx('pause'); S.music('maze'); }
     kick();
   }
-  function pause() { if (state === 'play') { state = 'paused'; draw(); } }
+  function pause() { if (state === 'play') { state = 'paused'; S.stop(); S.sfx('pause'); draw(); } }
   function steer(d) { bot.want = d; if (state === 'play' && !bot.dx && !bot.dy) decideBot(); }
 
   canvas.addEventListener('keydown', function (e) {
@@ -267,7 +271,7 @@
   var stage = section.querySelector('.arcade-stage') || canvas;
   var sx = 0, sy = 0, down = false;
   stage.addEventListener('pointerdown', function (e) {
-    if (e.target.closest && e.target.closest('.arcade-fs')) return;
+    if (e.target.closest && e.target.closest('.arcade-fs, .arcade-snd')) return;
     canvas.focus({ preventScroll: true });
     down = true; sx = e.clientX; sy = e.clientY;
     if (state !== 'play' && state !== 'dying' && state !== 'clear') startOrResume();
@@ -285,6 +289,7 @@
   document.addEventListener('visibilitychange', function () { if (document.hidden) pause(); });
 
   var fsBtn = section.querySelector('.arcade-fs');
+  S.button(section.querySelector('.arcade-snd'));
   if (fsBtn) A.fullscreen(section.querySelector('.arcade-stage'), canvas, fsBtn, view, draw);
 
   var ro = 'ResizeObserver' in window ? new ResizeObserver(function () { view.fit(); draw(); }) : null;

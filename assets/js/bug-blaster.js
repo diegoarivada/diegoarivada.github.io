@@ -8,6 +8,8 @@
   if (!A || !canvas || !canvas.getContext) return;
   var section = canvas.closest('section');
   function setText(n, v) { document.querySelectorAll('[data-bb="' + n + '"]').forEach(function (e) { e.textContent = v; }); }
+  // Sound and music (arcade-sound.js). Without that file the game just runs silent.
+  var S = window.ArcadeSound || { sfx: function () {}, music: function () {}, stop: function () {}, button: function () {} };
 
   var W = 420, H = 360, GROUND = H - 22, PY = GROUND - 18;
   var view = A.setup(canvas, W, H), ctx = view.ctx;
@@ -48,6 +50,7 @@
     px = W / 2; cool = 0; pops = []; sparks = [];
     buildWalls(); newWave(); hud();
     state = 'play'; stateT = 0;
+    S.sfx('start'); S.music('blaster');
   }
 
   function alive() { return foes.filter(function (f) { return f.alive; }); }
@@ -75,15 +78,15 @@
     sparks = sparks.filter(function (s) { return s.a > 0; });
     pops.forEach(function (p) { p.y -= 20 * dt; p.a -= dt; });
     pops = pops.filter(function (p) { return p.a > 0; });
-    if (state === 'hit') { if (stateT > 1.3) { state = 'play'; stateT = 0; packets = []; } return; }
-    if (state === 'clear') { if (stateT > 1.6) { level++; newWave(); hud(); state = 'play'; stateT = 0; } return; }
+    if (state === 'hit') { if (stateT > 1.3) { state = 'play'; stateT = 0; packets = []; S.music('blaster'); } return; }
+    if (state === 'clear') { if (stateT > 1.6) { level++; newWave(); hud(); state = 'play'; stateT = 0; S.music('blaster'); } return; }
     if (state !== 'play') return;
 
     // Player
     var mv = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
     px = Math.max(20, Math.min(W - 20, px + mv * 210 * dt));
     cool -= dt;
-    if (keys.fire && cool <= 0 && bolts.length < 2) { bolts.push({ x: px, y: PY - 16 }); cool = 0.3; }
+    if (keys.fire && cool <= 0 && bolts.length < 2) { bolts.push({ x: px, y: PY - 16 }); cool = 0.3; S.sfx('shoot'); }
 
     // Bolts
     for (var i = bolts.length - 1; i >= 0; i--) {
@@ -96,13 +99,13 @@
           if (Math.abs(b.x - p.x) < 12 && Math.abs(b.y - p.y) < 11) {
             live[j].alive = false; gone = true;
             var pts = live[j].kind.pts * (1 + (level - 1) * 0.25) | 0;
-            score += pts; hud(); burst(p.x, p.y, live[j].kind.name === 'virus' ? '#f59ad0' : live[j].kind.name === 'worm' ? '#f0b45a' : '#f0717f');
+            score += pts; hud(); S.sfx('boom'); burst(p.x, p.y, live[j].kind.name === 'virus' ? '#f59ad0' : live[j].kind.name === 'worm' ? '#f0b45a' : '#f0717f');
             break;
           }
         }
         if (!gone && zee && Math.abs(b.x - zee.x) < 14 && Math.abs(b.y - zee.y) < 14) {
           var bonus = [150, 200, 300][Math.floor(Math.random() * 3)];
-          score += bonus; hud(); pops.push({ x: zee.x, y: zee.y, txt: '+' + bonus, a: 1.2 }); burst(zee.x, zee.y, A.C.ice);
+          score += bonus; hud(); S.sfx('zee'); pops.push({ x: zee.x, y: zee.y, txt: '+' + bonus, a: 1.2 }); burst(zee.x, zee.y, A.C.ice);
           zee = null; zeeIn = 14 + Math.random() * 10; gone = true;
         }
       }
@@ -111,7 +114,7 @@
 
     // Formation: speeds up as it thins out
     var live2 = alive();
-    if (!live2.length) { state = 'clear'; stateT = 0; say('Wave ' + level + ' cleared.'); return; }
+    if (!live2.length) { state = 'clear'; stateT = 0; S.stop(); S.sfx('clear'); say('Wave ' + level + ' cleared.'); return; }
     var sp = (16 + level * 4) * (1 + (1 - live2.length / (ROWS * COLS)) * 3);
     fx += fdir * sp * dt;
     var minX = Infinity, maxX = -Infinity, maxY = 0;
@@ -139,7 +142,7 @@
       if (pk.y > GROUND || hitWall(pk.x - 3, pk.y - 3, 6, 6)) { packets.splice(k, 1); continue; }
       if (Math.abs(pk.x - px) < 14 && Math.abs(pk.y - PY) < 14) {
         packets.splice(k, 1);
-        lives--; hud(); burst(px, PY, A.C.ice);
+        lives--; hud(); burst(px, PY, A.C.ice); S.stop(); S.sfx('hit');
         if (lives <= 0) { gameOver(); return; }
         state = 'hit'; stateT = 0; say('UltroBot got hit. ' + lives + ' lives left.');
         return;
@@ -154,6 +157,7 @@
 
   function gameOver() {
     state = 'over'; stateT = 0;
+    S.stop(); setTimeout(function () { S.sfx('over'); }, 300);
     if (score > best) { best = score; A.saveBest(KEY, best); }
     hud(); say('Game over. Score ' + score + '.');
   }
@@ -257,10 +261,10 @@
 
   function startOrResume() {
     if (state === 'ready' || state === 'over') { newGame(); say('Bug Blaster started. Arrow keys to move, Space to shoot.'); }
-    else if (state === 'paused') state = 'play';
+    else if (state === 'paused') { state = 'play'; S.sfx('pause'); S.music('blaster'); }
     kick();
   }
-  function pause() { if (state === 'play') { state = 'paused'; keys.left = keys.right = keys.fire = false; draw(); } }
+  function pause() { if (state === 'play') { state = 'paused'; keys.left = keys.right = keys.fire = false; S.stop(); S.sfx('pause'); draw(); } }
 
   var MAP = { ArrowLeft: 'left', KeyA: 'left', ArrowRight: 'right', KeyD: 'right', Space: 'fire', ArrowUp: 'fire', KeyW: 'fire' };
   canvas.addEventListener('keydown', function (e) {
@@ -291,6 +295,7 @@
   });
 
   var fsBtn = section.querySelector('.arcade-fs');
+  S.button(section.querySelector('.arcade-snd'));
   if (fsBtn) A.fullscreen(section.querySelector('.arcade-stage'), canvas, fsBtn, view, draw);
 
   var ro = 'ResizeObserver' in window ? new ResizeObserver(function () { view.fit(); draw(); }) : null;
