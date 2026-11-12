@@ -21,7 +21,8 @@ jobs:
         run: node --test
       - name: No inline scripts or styles
         run: |
-          if grep -nE '<script>|<script [^>]*>[^<]+</script>|<style|style="' *.html; then
+          # JSON-LD (type="application/ld+json") is data the browser never runs, so it is allowed.
+          if grep -nE '<script>|<script [^>]*>[^<]+</script>|<style|style="' *.html | grep -v 'type="application/ld+json"'; then
             echo "::error::Inline code found. Move it to a file so the CSP never needs 'unsafe-inline'."
             exit 1
           fi
