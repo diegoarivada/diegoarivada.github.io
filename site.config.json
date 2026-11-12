@@ -11,7 +11,7 @@
       "style-src": ["'self'"],
       "font-src": ["'self'"],
       "img-src": ["'self'"],
-      "connect-src": [],
+      "connect-src": ["'self'"],
       "frame-src": [],
       "base-uri": ["'none'"],
       "form-action": ["'none'"]
