@@ -58,7 +58,7 @@
 
   // ---------- Reveal on scroll ----------
   if (!reducedMotion && 'IntersectionObserver' in window) {
-    const targets = document.querySelectorAll('main .card, main .block-head, main .gallery figure');
+    const targets = document.querySelectorAll('main .card, main .block-head, main .gallery figure, main .feature, main .skill-row, main .about');
     const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
