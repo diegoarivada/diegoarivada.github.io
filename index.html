@@ -22,9 +22,9 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="preload" href="assets/fonts/rubik-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="assets/css/tokens.css?v=c44ce4972e" />
-  <link rel="stylesheet" href="assets/css/site.css?v=939546f0db" />
+  <link rel="stylesheet" href="assets/css/site.css?v=bb88b220c0" />
   <script src="assets/js/theme-init.js?v=411765ce08"></script>
-  <script src="assets/js/site.js?v=a91261b282" defer></script>
+  <script src="assets/js/site.js?v=2bce4d4b03" defer></script>
   <script src="assets/js/ultrobot-status.js?v=f8b22fddc1" defer></script>
 </head>
 <body>
@@ -80,15 +80,11 @@
 <header class="topbar">
   <a class="brand" href="index.html" aria-label="Diego Rivada, home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="monogram" aria-hidden="true" focusable="false"><defs><linearGradient id="dr-g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0a66c2"/><stop offset="1" stop-color="#e63946"/></linearGradient></defs><rect width="64" height="64" rx="18" fill="url(#dr-g)"/><g fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="25.5" cy="40" r="10"/><path d="M36 14v36"/><path d="M36 42c0-8 4.5-12 12-12"/></g></svg><span class="brand-name">Diego Rivada</span></a>
   <nav class="nav" id="site-nav" aria-label="Site">
-    <a href="index.html" aria-current="page">Home</a>
     <a href="security.html">Security</a>
     <a href="coding.html">Coding</a>
     <a href="apps.html">Apps</a>
     <a href="homelab.html">Homelab</a>
     <a href="agents.html">UltroBot</a>
-    <a href="pictures.html">Pictures</a>
-    <a href="youtube.html">YouTube</a>
-    <a href="games.html">Games</a>
   </nav>
   <a class="status-pill" href="agents.html" data-ub-pill data-status-url="https://ultrobot-status.homelab-alerts.workers.dev/status" aria-label="UltroLab Server status">
     <span class="mini-bot"><svg class="bot" viewBox="0 0 200 180" aria-hidden="true" focusable="false"><g class="body-g"><line class="stem" x1="100" y1="40" x2="100" y2="20"/><circle class="bulb" cx="100" cy="15" r="8"/><rect class="ear" x="16" y="78" width="16" height="32" rx="7"/><rect class="ear" x="168" y="78" width="16" height="32" rx="7"/><rect class="head" x="30" y="38" width="140" height="112" rx="34"/><rect class="visor" x="48" y="62" width="104" height="56" rx="24"/><g class="eyes"><ellipse class="eye" cx="78" cy="90" rx="9" ry="11"/><ellipse class="eye" cx="122" cy="90" rx="9" ry="11"/></g><path class="lid" d="M68 90 Q78 99 88 90"/><path class="lid" d="M112 90 Q122 99 132 90"/><path class="mouth" d="M88 132 Q100 140 112 132"/></g><text class="zz z1" x="150" y="44" font-size="18">z</text><text class="zz z2" x="150" y="44" font-size="24">z</text><text class="zz z3" x="150" y="44" font-size="30">Z</text></svg></span>
@@ -131,22 +127,18 @@
 <main id="maincontent" class="wrap">
   <section class="block" id="about" aria-labelledby="about-title">
     <div class="block-head"><div><span class="kicker">About</span><h2 id="about-title">A little about me</h2></div></div>
-    <div class="grid-3">
-      <div class="card span-2-wide prose">
-        <p>I'm Diego Rivada, a Product Security Engineer and Backup Team Lead at The Boeing Company in Seattle, with 3+ years securing commercial aircraft systems. I lead security assessments, vulnerability management, and airline customer support to meet FAA and EASA airworthiness and cybersecurity requirements.</p>
+    <div class="about">
+      <div class="about-text">
+        <p class="about-lead">I'm Diego Rivada, a Product Security Engineer and Backup Team Lead at The Boeing Company in Seattle, with 3+ years securing commercial aircraft systems. I lead security assessments, vulnerability management, and airline customer support to meet FAA and EASA airworthiness and cybersecurity requirements.</p>
         <p>I'm currently pursuing my Master's in Systems Architecting and Engineering at USC, deepening my understanding of complex systems and exploring how AI can make engineering more efficient. I'm especially interested in using AI to build next-generation cybersecurity tools, particularly for fighting malware in smarter, more adaptive ways.</p>
         <p>Beyond the technical work, I serve as our Backup Team Lead: helping set priorities, stepping in when our lead is away, mentoring and onboarding new engineers, and bridging engineering, compliance, and customer stakeholders to build secure, resilient systems.</p>
       </div>
-      <div class="card">
-        <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-grad"/></svg></span>
-        <h3>Education</h3>
-        <ul>
-          <li><strong>M.S. Systems Architecting and Engineering</strong>, University of Southern California (expected December 2028)</li>
-          <li><strong>B.S. Computer Engineering</strong>, Cybersecurity concentration, Florida International University (2022)</li>
-        </ul>
-        <h3>Certifications</h3>
-        <ul><li>Effective Prompt Engineering with Chat AI</li></ul>
-      </div>
+      <dl class="facts">
+        <div><dt>Role</dt><dd>Product Security Engineer II and Backup Team Lead, The Boeing Company</dd></div>
+        <div><dt>Based in</dt><dd>Seattle, WA</dd></div>
+        <div><dt>Education</dt><dd><strong>M.S. Systems Architecting and Engineering</strong>, University of Southern California (expected December 2028)</dd><dd><strong>B.S. Computer Engineering</strong>, Cybersecurity concentration, Florida International University (2022)</dd></div>
+        <div><dt>Certifications</dt><dd>Effective Prompt Engineering with Chat AI</dd></div>
+      </dl>
     </div>
   </section>
 
@@ -255,19 +247,13 @@
 
   <section class="block" id="skills" aria-labelledby="skills-title">
     <div class="block-head"><div><span class="kicker">Skills</span><h2 id="skills-title">What I work with</h2><p>Primary areas: aircraft product security, vulnerability management, embedded systems security, and team leadership.</p></div></div>
-    <div class="grid-3">
-      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Security</h3>
-        <ul class="chips"><li>Product Security</li><li>Vulnerability Assessment &amp; Management</li><li>Penetration Testing</li><li>Threat Analysis</li><li>Log Analysis</li><li>Digital Forensics</li><li>Reverse Engineering</li><li>PKI</li><li>SSL/TLS</li><li>Certificate Management</li></ul></div>
-      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-plane"/></svg></span><h3>Aviation and compliance</h3>
-        <ul class="chips"><li>DO-326B</li><li>DO-356B</li><li>DO-178</li><li>FAA</li><li>EASA</li><li>Aircraft Cybersecurity</li><li>Continued Airworthiness</li><li>Embedded Systems Security</li></ul></div>
-      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg></span><h3>Leadership</h3>
-        <ul class="chips"><li>Team Leadership</li><li>Technical Mentoring</li><li>Onboarding</li><li>Cross-Functional Collaboration</li><li>Stakeholder Communication</li><li>Agile/Scrum</li><li>JIRA</li></ul></div>
-      <div class="card"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-terminal"/></svg></span><h3>Tools and languages</h3>
-        <ul class="chips"><li>Nessus</li><li>Nmap</li><li>Wireshark</li><li>Kali Linux</li><li>Docker</li><li>Generative AI</li><li>Prompt Engineering</li><li>Python</li><li>C</li><li>C++</li></ul></div>
-      <div class="card"><span class="ico red"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg></span><h3>Networking</h3>
-        <ul class="chips"><li>VLANs</li><li>WAN</li><li>TCP/IP</li><li>Infrastructure Management</li></ul></div>
-      <div class="card"><span class="ico green"><svg class="i" aria-hidden="true"><use href="#i-camera"/></svg></span><h3>Interests</h3>
-        <p>The blend of security and technology, and how systems engineering meets innovation. Traveling and new perspectives fuel my creativity and curiosity.</p></div>
+    <div class="skill-list">
+      <div class="skill-row"><h3><span class="ico sm red"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span>Security</h3><ul class="chips chips-inline"><li>Product Security</li><li>Vulnerability Assessment &amp; Management</li><li>Penetration Testing</li><li>Threat Analysis</li><li>Log Analysis</li><li>Digital Forensics</li><li>Reverse Engineering</li><li>PKI</li><li>SSL/TLS</li><li>Certificate Management</li></ul></div>
+      <div class="skill-row"><h3><span class="ico sm"><svg class="i" aria-hidden="true"><use href="#i-plane"/></svg></span>Aviation and compliance</h3><ul class="chips chips-inline"><li>DO-326B</li><li>DO-356B</li><li>DO-178</li><li>FAA</li><li>EASA</li><li>Aircraft Cybersecurity</li><li>Continued Airworthiness</li><li>Embedded Systems Security</li></ul></div>
+      <div class="skill-row"><h3><span class="ico sm green"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg></span>Leadership</h3><ul class="chips chips-inline"><li>Team Leadership</li><li>Technical Mentoring</li><li>Onboarding</li><li>Cross-Functional Collaboration</li><li>Stakeholder Communication</li><li>Agile/Scrum</li><li>JIRA</li></ul></div>
+      <div class="skill-row"><h3><span class="ico sm"><svg class="i" aria-hidden="true"><use href="#i-terminal"/></svg></span>Tools and languages</h3><ul class="chips chips-inline"><li>Nessus</li><li>Nmap</li><li>Wireshark</li><li>Kali Linux</li><li>Docker</li><li>Generative AI</li><li>Prompt Engineering</li><li>Python</li><li>C</li><li>C++</li></ul></div>
+      <div class="skill-row"><h3><span class="ico sm red"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg></span>Networking</h3><ul class="chips chips-inline"><li>VLANs</li><li>WAN</li><li>TCP/IP</li><li>Infrastructure Management</li></ul></div>
+      <div class="skill-row"><h3><span class="ico sm green"><svg class="i" aria-hidden="true"><use href="#i-camera"/></svg></span>Interests</h3><p class="skill-note">The blend of security and technology, and how systems engineering meets innovation. Traveling and new perspectives fuel my creativity and curiosity.</p></div>
     </div>
     <blockquote class="quote">"Learn from yesterday, live for today, hope for tomorrow. The important thing is not to stop questioning."<cite>Albert Einstein</cite></blockquote>
   </section>
@@ -321,13 +307,35 @@
 <!-- build:footer -->
 <footer class="site-footer">
   <div class="wrap">
-    <span>&copy; 2026 Diego Rivada. Built by hand, hosted on GitHub Pages. Views are my own, not my employer's.</span>
-    <nav aria-label="Footer">
-      <a href="index.html#contact">Contact</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="security.html#report">Report a security issue</a>
-      <a href="https://github.com/diegoarivada/diegoarivada.github.io" target="_blank" rel="noopener noreferrer">Source</a>
-    </nav>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="index.html" aria-label="Diego Rivada, home"><img class="monogram" src="favicon.svg" width="34" height="34" alt="" /><span class="brand-name">Diego Rivada</span></a>
+        <p>Product security engineer. I build small tools, run a homelab, and host my own AI.</p>
+      </div>
+      <nav class="foot-col" aria-label="Work">
+        <h2>Work</h2>
+        <a href="security.html">Security</a>
+        <a href="coding.html">Coding</a>
+        <a href="apps.html">Apps</a>
+        <a href="homelab.html">Homelab</a>
+        <a href="agents.html">UltroBot</a>
+      </nav>
+      <nav class="foot-col" aria-label="More">
+        <h2>More</h2>
+        <a href="pictures.html">Pictures</a>
+        <a href="youtube.html">YouTube</a>
+        <a href="games.html">Games</a>
+        <a href="resume.pdf">Resume</a>
+      </nav>
+      <nav class="foot-col" aria-label="Site">
+        <h2>Site</h2>
+        <a href="index.html#contact">Contact</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="security.html#report">Report a security issue</a>
+        <a href="https://github.com/diegoarivada/diegoarivada.github.io" target="_blank" rel="noopener noreferrer">Source</a>
+      </nav>
+    </div>
+    <p class="foot-legal">&copy; 2026 Diego Rivada. Built by hand, hosted on GitHub Pages. Views are my own, not my employer's.</p>
   </div>
 </footer>
 <!-- /build:footer -->
